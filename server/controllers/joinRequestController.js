@@ -105,4 +105,23 @@ const rejectRequest = async(req,res)=>{
         })
     }
 }
-module.exports= {sendRequest, approveRequest, rejectRequest}
+
+const getAllRequest = async(req,res)=>{
+    try{
+        const allRequest = await Request.find({project:req.params.projectId}).populate('requestee','username email')
+            res.status(200).json({
+            success:true,
+            statusCode:200,
+            message:'Request found',
+            data: allRequest
+        })
+
+    }
+    catch(err){
+        res.status(500).json({
+            message:err.message || 'internal server error'
+        })
+
+    }
+}
+module.exports= {sendRequest, approveRequest, rejectRequest, getAllRequest};

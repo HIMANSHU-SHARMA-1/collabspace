@@ -1,12 +1,23 @@
+const http = require('http')
+const {Server} = require('socket.io')
 const express = require('express')
 require('dotenv').config()
 const connectDB =  require('./config/db')
 const authRoutes = require('./routes/authRoutes')
 const projectRoutes = require('./routes/projectRoutes')
 const joinRequestRoutes = require('./routes/joinRequestRoutes')
-
+const messageRoutes = require('./routes/messageRoutes')
 
 const app = express()
+
+const server = http.createServer(app)
+const io = new Server(server,{
+    cors:{
+        origin:'*',
+    }
+})
+const initSocket = require('./config/socket')
+initSocket(io)
 
 connectDB()
 
@@ -19,7 +30,8 @@ app.get('/', (req,res)=>{
 app.use('/api/auth',authRoutes)
 app.use('/api/project',projectRoutes)
 app.use('/api/joinRequest',joinRequestRoutes)
+app.use('/api/message',messageRoutes)
 
-app.listen(process.env.PORT, ()=>{
+server.listen(process.env.PORT, ()=>{
     console.log(`Server is Running on https://localhost:${process.env.PORT}`)
 })
