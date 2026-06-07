@@ -1,5 +1,6 @@
 const Request = require('../models/joinRequest')
 const Project = require('../models/Project')
+const Notification = require('../models/notification')
 
 const sendRequest = async(req,res)=>{
     try{
@@ -40,7 +41,11 @@ const sendRequest = async(req,res)=>{
                 reciever:savedRequest.reciever
             }
         })
-
+        const newNotification = new Notification({
+            user: recieverId,
+            message:'New join Request Received',
+        })
+        const savedNotification = await newNotification.save()
         }
         
     }

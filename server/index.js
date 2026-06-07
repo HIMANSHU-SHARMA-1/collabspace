@@ -7,6 +7,7 @@ const authRoutes = require('./routes/authRoutes')
 const projectRoutes = require('./routes/projectRoutes')
 const joinRequestRoutes = require('./routes/joinRequestRoutes')
 const messageRoutes = require('./routes/messageRoutes')
+const notificationRoutes = require('./routes/notificationRoutes')
 
 const app = express()
 
@@ -31,6 +32,7 @@ app.use('/api/auth',authRoutes)
 app.use('/api/project',projectRoutes)
 app.use('/api/joinRequest',joinRequestRoutes)
 app.use('/api/message',messageRoutes)
+app.use('/api/notifications', notificationRoutes)
 
 server.listen(process.env.PORT, ()=>{
     console.log(`Server is Running on https://localhost:${process.env.PORT}`)
