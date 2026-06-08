@@ -56,7 +56,7 @@ const sendRequest = async(req,res)=>{
     }
 }
 
-const approveRequest = async(req,res)=>{
+const approveRequest = async(req,res)=>{//this takes request id not the leader id
     try{
         const request = await Request.findByIdAndUpdate(req.params.id,{
             $set:{status:'approved'},
@@ -71,6 +71,11 @@ const approveRequest = async(req,res)=>{
         const project = await Project.findByIdAndUpdate(request.project,{
             $push:{members: request.requestee}
         })
+        const newNotification = new Notification({
+            user:request.requestee,
+            message:'Your join request was approved'
+        })
+        const savedNotification = await newNotification.save()
         
         res.status(200).json({
                 success:true,

@@ -6,8 +6,8 @@ const auth = require('../middleware/auth')
 router.post('/register',authController.register)
 
 router.post('/login',authController.login)
-//!bearer token :eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMDVlMTRmNDAyNWMzMWE4NjhjZGUyZCIsImlhdCI6MTc4MDQ2NTkwNywiZXhwIjoxNzgxMDcwNzA3fQ.JjqCGdga92g2Qu9jPk_kBtLsUvoXc4Ntq1N9g7XSDL0
-
+//!bearer(rohit)leader token : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMjU4Mjg1Yzk2NmViZGJlNjJmYjhjZCIsImlhdCI6MTc4MDkxMDc4MSwiZXhwIjoxNzgxNTE1NTgxfQ.BX_E8F4iqxF5P6Dcnh-omUpKZ7tv3FfMwV-wNYFQ5bg
+//!bearer(himanshu) token :
 router.get('/me',auth , (req,res)=>{
 res.json({message:'protected user route works', user:req.user})
 })

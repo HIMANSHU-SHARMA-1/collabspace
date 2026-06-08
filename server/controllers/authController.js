@@ -30,7 +30,7 @@ const register = async(req,res)=>{
             id:savedUser._id,
             username:savedUser.username,
             email:savedUser.email,
-            skill:savedUser.skills
+            skills:savedUser.skills
         } 
     })
    }
