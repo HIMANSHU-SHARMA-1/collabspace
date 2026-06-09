@@ -97,6 +97,12 @@ const rejectRequest = async(req,res)=>{
         const request = await Request.findByIdAndUpdate(req.params.id,{
             $set:{status:'rejected'}
         },{new:true,runValidators:true})
+
+        const newNotification = new Notification({
+            user:request.requestee,
+            message:'Your join request was rejected'
+        })
+        const savedNotification = await newNotification.save()
         if(!request){
             return res.status(404).json({
                 success:false,
