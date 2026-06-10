@@ -65,20 +65,23 @@ const approveRequest = async(req,res)=>{//this takes request id not the leader i
                 message:'request not found'
             })
         }
-          if(req.user.id == request.receiver){
-           const request = await Request.findByIdAndUpdate(req.params.id,{
-                $set:{status:'Approved'}
-            },{new:true,runValidators:true})
-          }
-          else{
-            return res.status(403).json({
+        //console.log(request)
+        if(request.status !== 'pending'){
+            return res.status(400).json({message:'Request already processed'})
+        }
+          if((request.receiver.toString()) !== req.user.id ){
+                return res.status(403).json({
                 success:false,
-                message:'forbidden action'
+                message:'Not project leader'
             })
           }
+          const updatedRequest = await Request.findByIdAndUpdate(req.params.id,{
+            $set:{status:'approved'}
+        },{new:true,runValidators:true})
 
+        //$addToSet→ prevents duplicates
         const project = await Project.findByIdAndUpdate(request.project,{
-            $push:{members: request.requestee}
+            $addToSet:{members: request.requestee}
         })
         const newNotification = new Notification({
             user:request.requestee,
@@ -103,7 +106,22 @@ const approveRequest = async(req,res)=>{//this takes request id not the leader i
 
 const rejectRequest = async(req,res)=>{
     try{
-        const request = await Request.findByIdAndUpdate(req.params.id,{
+        const request = await Request.findById(req.params.id)
+
+        if(!request){
+            return res.status(404).json({
+                success:false,
+                message:'request not found'
+            })
+        }
+        if(request.status !== 'pending'){
+            return res.status(400).json({message:'Request already processed'})
+        }
+        if(request.receiver.toString() !== req.user.id){
+            return res.status(403).json({message:'not project leader, forbidden !'})
+        }
+        
+        const updatedRequest = await Request.findByIdAndUpdate(req.params.id,{
             $set:{status:'rejected'}
         },{new:true,runValidators:true})
 
@@ -112,12 +130,7 @@ const rejectRequest = async(req,res)=>{
             message:'Your join request was rejected'
         })
         const savedNotification = await newNotification.save()
-        if(!request){
-            return res.status(404).json({
-                success:false,
-                message:'request not found'
-            })
-        }
+       
         res.status(200).json({
             success:true,
             statuscode:200,
