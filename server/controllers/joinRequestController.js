@@ -58,15 +58,24 @@ const sendRequest = async(req,res)=>{
 
 const approveRequest = async(req,res)=>{//this takes request id not the leader id
     try{
-        const request = await Request.findByIdAndUpdate(req.params.id,{
-            $set:{status:'approved'},
-        },{new:true,runValidators:true})
+        const request = await Request.findById(req.params.id)
         if(!request){
             return res.status(404).json({
                 success:false,
                 message:'request not found'
             })
         }
+          if(req.user.id == request.receiver){
+           const request = await Request.findByIdAndUpdate(req.params.id,{
+                $set:{status:'Approved'}
+            },{new:true,runValidators:true})
+          }
+          else{
+            return res.status(403).json({
+                success:false,
+                message:'forbidden action'
+            })
+          }
 
         const project = await Project.findByIdAndUpdate(request.project,{
             $push:{members: request.requestee}
