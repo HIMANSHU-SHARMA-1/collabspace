@@ -8,7 +8,7 @@ const projectRoutes = require('./routes/projectRoutes')
 const joinRequestRoutes = require('./routes/joinRequestRoutes')
 const messageRoutes = require('./routes/messageRoutes')
 const notificationRoutes = require('./routes/notificationRoutes')
-
+const aiRoutes = require('./routes/aiRoutes')
 const app = express()
 
 const server = http.createServer(app)
@@ -33,6 +33,7 @@ app.use('/api/project',projectRoutes)
 app.use('/api/joinRequest',joinRequestRoutes)
 app.use('/api/message',messageRoutes)
 app.use('/api/notifications', notificationRoutes)
+app.use('/api/openAi',aiRoutes)
 
 server.listen(process.env.PORT, ()=>{
     console.log(`Server is Running on https://localhost:${process.env.PORT}`)
