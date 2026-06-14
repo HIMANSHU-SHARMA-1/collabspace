@@ -61,7 +61,7 @@ const getProjectRecommendations = async(userskills, projects)=>{
 //     console.log(prompt);
 // console.log(prompt.length);
      const response = await callAi(prompt);   
-     return response;
+     return JSON.parse(response);
 }
 
 module.exports = {testAIConnection, getProjectRecommendations}
