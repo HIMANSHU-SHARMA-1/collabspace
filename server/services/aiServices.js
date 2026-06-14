@@ -11,11 +11,18 @@ const testAIConnection = async()=>{
         messages: [
             {
                 role:"user",
-                "content":"Reply with only: AI connection working"}
+                content:"Reply with only: AI connection working"}
         ],
         temperature:0
     });
     return completion.choices[0].message.content;
 
 };
-module.exports = {testAIConnection}
+
+const getProjectRecommendations = async(userskills, projects)=>{
+    console.log(userskills)
+console.log(projects)
+    return 'working'
+}
+
+module.exports = {testAIConnection, getProjectRecommendations}
