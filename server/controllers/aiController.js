@@ -17,14 +17,14 @@ const testAi = async(req,res)=>{
 
 const recommendProjects = async(req,res)=>{
    try{
-    console.time("Find User");
+    // console.time("Find User");
     const user = await User.findById(req.user.id)
-    console.timeEnd("Find User");
+    // console.timeEnd("Find User");
     if(!user){
         return res.status(404).json({success:false,message:'User not found'})
     }
 
-    console.time("Find Projects");
+    // console.time("Find Projects");
     const project = await Project.find(
         {
             status:'open',
@@ -32,17 +32,17 @@ const recommendProjects = async(req,res)=>{
             members:{$ne:req.user.id}
         }
     )
-    console.timeEnd("Find Projects");
+    // console.timeEnd("Find Projects");
 
     if(!project.length === 0){
         return res.status(404).json({message:'No open project for you to join now'})
     }
-    console.time("AI Recommendation");
+    // console.time("AI Recommendation");
     const recommendation = await getProjectRecommendations(
         user.skills,
         project
     )
-    console.timeEnd("AI Recommendation");
+    // console.timeEnd("AI Recommendation");
     res.status(200).json({sucess:true, data:recommendation})
    }
    catch(err){
