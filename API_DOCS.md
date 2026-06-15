@@ -177,7 +177,7 @@ Required
 ## Get Project Requests
 
 ```http
-GET /api/joinRequest/all/projectId
+GET /api/joinRequest/all/:projectId
 ```
 
 ### Description
