@@ -1,0 +1,21 @@
+import React from 'react'
+import { Routes,Route } from 'react-router-dom'
+import Login from './pages/Login/Login'
+import Register from './pages/Register/Register'
+import Dashboard from './pages/Dashboard/Dashboard'
+
+const App = () => {
+  return (
+    <>
+         <h1>Collabspace frontend started</h1>
+         <Routes>
+          <Route path='/' element={<Login/>}/>
+          <Route path='/register' element={<Register/>}/>
+          <Route path='/dashboard' element={<Dashboard/>}/>
+
+         </Routes>
+    </>
+  )
+}
+
+export default App
