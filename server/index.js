@@ -1,3 +1,4 @@
+const cors = require('cors')
 const http = require('http')
 const {Server} = require('socket.io')
 const express = require('express')
@@ -10,6 +11,10 @@ const messageRoutes = require('./routes/messageRoutes')
 const notificationRoutes = require('./routes/notificationRoutes')
 const aiRoutes = require('./routes/aiRoutes')
 const app = express()
+
+app.use(cors({
+    origin:'http://localhost:5173',
+}))
 
 const server = http.createServer(app)
 const io = new Server(server,{
