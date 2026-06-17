@@ -7,12 +7,10 @@ import Dashboard from './pages/Dashboard/Dashboard'
 const App = () => {
   return (
     <>
-         <h1>Collabspace frontend started</h1>
          <Routes>
           <Route path='/' element={<Login/>}/>
           <Route path='/register' element={<Register/>}/>
           <Route path='/dashboard' element={<Dashboard/>}/>
-
          </Routes>
     </>
   )
