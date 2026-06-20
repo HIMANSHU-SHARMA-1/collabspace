@@ -51,6 +51,33 @@ const handleAddSkill=()=>{
 
 
 const validateForm = ()=>{
+  setError('')
+  //username check
+if(formData.username.trim()=== null){
+  setError('Username is required')
+  return false;
+}
+//email check
+const regex = /^\S+@\S+\.\S+$/
+if(formData.email === regex){
+  setError("Email is required");
+  return false;
+}
+
+//password check
+if(formData.password.trim()=== null){
+  setError("Password is required");
+  return false;
+}
+if(formData.password.length()<6){
+  setError("Password must be atleast 6 character long");
+  return false;
+//skills check
+if(formData.skills.length===0){
+  setError("Please add at least one skill");
+  return false;
+}
+return true
 
 }
 
@@ -58,6 +85,11 @@ const validateForm = ()=>{
   const handleSubmit = async(e)=>{
   setLoading(true)
     e.preventDefault()
+    if(!validateForm()){
+      // validation failed – error message already set, stop here
+      setLoading(false)
+      return;
+    }
     try{
       await register(formData) //we don't need the result here
       const loginData = await login(formData.email,formData.password)
