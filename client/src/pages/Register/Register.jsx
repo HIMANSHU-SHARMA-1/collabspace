@@ -77,8 +77,9 @@ if(formData.skills.length===0){
   setError("Please add at least one skill");
   return false;
 }
-return true
+return true;
 
+}
 }
 
 
