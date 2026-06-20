@@ -20,9 +20,6 @@ const handleSubmit = async (e)=>{
   catch(err){
     console.log(err.message)
   }
-  finally{
-    e.target.reset()
-  }
  
 // console.log(formData)
 
