@@ -30,15 +30,19 @@ setSkillRating(Number(e.target.value))
 
 const handleAddSkill=()=>{
   if(!skillName.trim()){
-    return alert("Skill can't be empty");
+    // 1️⃣ Validate the temporary fields
+    return alert("Skill Name can't be empty");
   }
-  if(NaN(skillRating) || skillRating<1 || skillRating>5){
+  if(isNaN(skillRating) || skillRating<1 || skillRating>5){
     return alert('Rating must be a number between 1 to 5')
   }
+    // 2️⃣ Add the skill to the formData.skills array (immutably)
+
   setFormData(prev =>({
     ...prev,
     skills:[...prev.skills, {name:skillName.trim(),rating:skillRating}]
   }))
+   // 3️⃣ Clear the temporary input
   setSkillName('')
   setSkillRating('')
 }
@@ -125,7 +129,7 @@ const validateForm = ()=>{
     <div>
       <h3>Skills</h3>
       <div>
-        <lable>Skill Name:</lable>
+        <label>Skill Name:</label>
         <input
         type='text'
         value={skillName}
@@ -154,9 +158,9 @@ const validateForm = ()=>{
                   <li key={index}><span>{skill.name}-{skill.rating}/5</span>
                    <button type='button' onClick={()=>{setFormData(
                     prev=>{
-                      const copy = [...prev.skills]
-                      copy.slice(index,1)
-                      return {...prev, skills:copy}
+                      const newSkills = [...prev.skills]
+                      newSkills.splice(index,1) //! removes 1 element starting at index
+                      return {...prev, skills:newSkills}
                     }
                   )}}>Remove</button>
                   </li> 
