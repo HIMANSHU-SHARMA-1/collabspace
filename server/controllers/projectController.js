@@ -3,7 +3,7 @@ const Project = require('../models/Project')
 
 const createProject = async(req,res)=>{
     try{
-        const {projectname, requiredSkill, teamsize, githubLink, description, leader, members, status} = req.body
+        const {projectname, requiredSkill, teamsize, githubLink, description, members, status} = req.body
         // const isProjectExist = await Project.findOne({projectname})
         // if(isProjectExist){
         //     return res.status(400).json({
