@@ -31,8 +31,8 @@ const addData = (e)=>{
   return (
     <>
     <form action="" onSubmit={(e)=>{handleSubmit(e)}}>
-    <input type="text" name='email'  onInput={(e)=>{addData(e)}} placeholder='enter your email'/>
-    <input type='password' name='password'  onInput={(e)=>{addData(e)}} placeholder='enter your password'/>
+    <input type="text" name='email'  onChange={(e)=>{addData(e)}} placeholder='enter your email' required/>
+    <input type='password' name='password'  onChange={(e)=>{addData(e)}} placeholder='enter your password' required/>
     <button type='submit'>Login</button>
     </form>
     </>
