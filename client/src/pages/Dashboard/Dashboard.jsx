@@ -15,7 +15,7 @@ const Dashboard = () => {
     setLoading(true)
     setError('')
     try{
-      const response = await api.get('/api/project/getAll',{headers:{Authorization:`Bearer ${localStorage.getItem('token')}`}})
+      const response = await api.get('/api/project/getAll')
       // console.log(response.data.data)
       setProjects(response.data.data)
       setLoading(false)
