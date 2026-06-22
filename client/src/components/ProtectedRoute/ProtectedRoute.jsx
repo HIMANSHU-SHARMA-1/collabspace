@@ -1,8 +1,10 @@
 import { Navigate } from "react-router-dom";
 import {jwtDecode}  from "jwt-decode";
+import { useAuth } from "../../context/AuthContext";
+
 
 const ProtectedRoute = ({ children }) => {
-  const token = localStorage.getItem("token");
+  const {token} = useAuth()
   if (!token) {
     return <Navigate to="/" />;
   } 
