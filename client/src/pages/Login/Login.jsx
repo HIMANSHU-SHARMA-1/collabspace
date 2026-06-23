@@ -15,17 +15,17 @@ const Login = () => {
       if (data.success === true) {
         localStorage.setItem("token", data.token);
         setToken(data.token);
+        localStorage.setItem('user', JSON.stringify( {
+          id:data.id,
+          name:data.username,
+          email:data.email
+        }))
         setUser(
-           {
+           {  
             id:data.id,
           name:data.username,
           email:data.email
         })
-          localStorage.setItem('user', JSON.stringify( {
-            id:data.id,
-          name:data.username,
-          email:data.email
-        }))
         navigate("/dashboard");
       }
     } catch (err) {
