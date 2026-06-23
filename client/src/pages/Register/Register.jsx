@@ -1,6 +1,7 @@
 import { React, useState } from "react";
 import { login, register } from "../../services/authService";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const [skillName, setSkillName] = useState("");
   const [skillRating, setSkillRating] = useState("");
+  const {setToken, setUser} = useAuth()
 
   const handleSkill = (e) => {
     setSkillName(e.target.value);
@@ -99,7 +101,18 @@ const Register = () => {
       await register(formData); //we don't need the result here
       const loginData = await login(formData.email, formData.password);
       if (loginData.success === true) {
-        localStorage.setItem("token", loginData.token);
+        localStorage.setItem('token', loginData.token)
+        setToken(loginData.token)
+        localStorage.setItem('user',JSON.stringify({ id:loginData.id,
+          name:loginData.username,
+          email:loginData.email}))
+        setUser(
+          {  
+            id:loginData.id,
+          name:loginData.username,
+          email:loginData.email
+        }
+        )
         setSuccess(true);
         navigate("/dashboard");
       } else {
