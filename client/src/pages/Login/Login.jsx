@@ -6,7 +6,7 @@ import { useAuth } from "../../context/AuthContext";
 const Login = () => {
   const [formData, setformData] = useState({});
   const navigate = useNavigate(); //redirect after after submit
-  const { setToken } = useAuth();
+  const { setToken, setUser } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,6 +15,12 @@ const Login = () => {
       if (data.success === true) {
         localStorage.setItem("token", data.token);
         setToken(data.token);
+        setUser(
+          {
+            id:data.id,
+            name:data.username,
+            email:data.email
+          })
         navigate("/dashboard");
       }
     } catch (err) {
