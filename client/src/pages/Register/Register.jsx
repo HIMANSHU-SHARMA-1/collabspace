@@ -102,15 +102,17 @@ const Register = () => {
       const loginData = await login(formData.email, formData.password);
       if (loginData.success === true) {
         localStorage.setItem('token', loginData.token)
+      //  console.log(loginData)
         setToken(loginData.token)
-        localStorage.setItem('user',JSON.stringify({ id:loginData.id,
-          name:loginData.username,
-          email:loginData.email}))
+        localStorage.setItem('user',JSON.stringify({ 
+          id:loginData.data.id,
+          name:loginData.data.username,
+          email:loginData.data.email}))
         setUser(
           {  
-            id:loginData.id,
-          name:loginData.username,
-          email:loginData.email
+            id:loginData.data.id,
+          name:loginData.data.username,
+          email:loginData.data.email
         }
         )
         setSuccess(true);
