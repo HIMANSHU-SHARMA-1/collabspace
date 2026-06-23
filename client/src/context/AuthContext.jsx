@@ -5,7 +5,7 @@ const AuthContext= createContext()
 
 const AuthProvider = ({children}) => {
 const [token, setToken] = useState(localStorage.getItem('token'))
-const [user, setUser] = useState({})
+const [user, setUser] = useState((JSON.parse(localStorage.getItem('user'))))
 
   return (
     <AuthContext.Provider value={{user, setUser, token, setToken}}>
