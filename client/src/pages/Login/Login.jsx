@@ -16,11 +16,16 @@ const Login = () => {
         localStorage.setItem("token", data.token);
         setToken(data.token);
         setUser(
-          {
+           {
             id:data.id,
-            name:data.username,
-            email:data.email
-          })
+          name:data.username,
+          email:data.email
+        })
+          localStorage.setItem('user', JSON.stringify( {
+            id:data.id,
+          name:data.username,
+          email:data.email
+        }))
         navigate("/dashboard");
       }
     } catch (err) {
