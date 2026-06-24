@@ -16,7 +16,7 @@ const Dashboard = () => {
     setError('')
     try{
       const response = await api.get('/api/project/getAll')
-      // console.log(response.data.data)
+      console.log(response.data.data)
       setProjects(response.data.data)
       setLoading(false)
       setSuccess(true)
@@ -26,6 +26,15 @@ const Dashboard = () => {
       setLoading(false)
       
     }
+  }
+
+  const joinRequest = async(projectId)=>{
+   try{
+    const joinResponse =  await api.post('/api/joinRequest/send',{projectId})
+   console.log(joinResponse.data.data)
+   }catch(err){
+      alert( err.response?.data?.message || 'Already Applied')
+   }
   }
   useEffect(()=>{
     getProjects()
@@ -45,6 +54,7 @@ const Dashboard = () => {
         <li>Team Size: {p.teamsize}</li>
         <li>Members: {p.members.length}</li>
         <li>Leader: {p.leader.username}</li>
+        <button type='submit' onClick={()=>{joinRequest(p._id)}}>Join</button>
         </ul>
       ))}</div>
      )
