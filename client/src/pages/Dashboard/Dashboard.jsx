@@ -18,7 +18,7 @@ const Dashboard = () => {
     setError('')
     try{
       const response = await api.get('/api/project/getAll')
-      console.log(response.data.data)
+      //console.log(response.data.data)
       setProjects(response.data.data)
       setLoading(false)
       setSuccess(true)
