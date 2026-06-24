@@ -18,11 +18,13 @@ const handleLogout =()=>{
 
   return (
     <nav>
-        <Link to='/dashboard'>Dashboard</Link>
-        <Link to='create-project'>Create Project</Link>
-        <p>Welcome {user?.name?.toUpperCase()}</p>
-        <button onClick={handleLogout}>Logout</button>
-    </nav>
+        <li><Link to='/dashboard'>Dashboard</Link></li>
+       <li> <Link to='/create-project'>Create Project</Link></li>
+       
+        <li><p>Welcome {user?.name?.toUpperCase()}</p></li>
+        <li>  <button onClick={handleLogout}>Logout</button></li>
+            
+</nav>
   )
 }
 
