@@ -29,6 +29,9 @@ const MyProject = () => {
     const fetchRequests = async(ProjectId)=>{
         try{
             const requestData = await api.get(`/api/joinRequest/all/${ProjectId}`)
+            if(requestData.data.data.length === 0){
+                return alert('No requests found')
+            } 
         // console.log(requestData)
         setRequests((prev)=>({...prev,[ProjectId]:requestData.data.data}))
 
@@ -61,7 +64,6 @@ const MyProject = () => {
     useEffect(()=>{
         myProjects()
         // console.log(requests)
-
     },[])
 
     return (
