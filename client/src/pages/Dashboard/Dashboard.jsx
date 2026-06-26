@@ -41,7 +41,8 @@ const Dashboard = () => {
       }
 
     const joinResponse =  await api.post('/api/joinRequest/send',{projectId:project._id})
-   console.log(joinResponse.data.data)
+  //  console.log(joinResponse.data.data)
+  alert('Join request sent')
    }catch(err){
       alert( err.response?.data?.message || 'Already Applied')
    }
