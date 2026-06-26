@@ -10,6 +10,7 @@ const MyProject = () => {
     const [projects, setProjects] = useState([])
     const[error,setError] = useState()
     const [loading, setLoading] = useState(false)
+    const [requests, setRequests] = useState({})
 
     const myProjects = async()=>{
         setLoading(true)
@@ -25,8 +26,42 @@ const MyProject = () => {
        }
     }
 
+    const fetchRequests = async(ProjectId)=>{
+        try{
+            const requestData = await api.get(`/api/joinRequest/all/${ProjectId}`)
+        // console.log(requestData)
+        setRequests((prev)=>({...prev,[ProjectId]:requestData.data.data}))
+
+        }
+        catch(err){
+            setError(err?.response?.message || err.message || 'request fetching failed')
+        }
+    }
+
+    const handleApprove = async(requestee, ProjectId)=>{
+        try{
+        const approve = await api.put(`/api/joinRequest/approve/${requestee}`)
+        fetchRequests(ProjectId)
+        }
+        catch(err){
+            setError(err?.response?.message || err.message || 'request approving failed')
+        }
+    }
+    const handleReject = async(requestee, ProjectId)=>{
+        try{
+            const reject = await api.put(`/api/joinRequest/reject/${requestee}`)
+        fetchRequests(ProjectId)
+
+            }
+            catch(err){
+                setError(err?.response?.message || err.message || 'request approving failed')
+            }
+    }
+
     useEffect(()=>{
         myProjects()
+        // console.log(requests)
+
     },[])
 
     return (
@@ -44,6 +79,16 @@ const MyProject = () => {
                 <li>Team Size: {project.teamsize}</li>
                 <li>Members : {project.members.length}</li>
                 <li>Leader: {project.leader.username}</li>
+                <button onClick={()=>{fetchRequests(project._id)}}>View Requests</button>
+                {
+                    requests[project._id] && requests[project._id].map((requests)=>(
+                        <ol key={requests._id}>
+                           <li>{requests.requestee.username}</li> 
+                            <button onClick={()=>{handleApprove(requests._id,project._id)}}>Approve</button>
+                            <button onClick={()=>{handleReject(requests._id,project._id)}}>Reject</button>
+                        </ol>
+                    ))
+                }
                 </ul>
             ))
         )
