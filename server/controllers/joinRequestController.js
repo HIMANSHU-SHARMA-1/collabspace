@@ -85,7 +85,7 @@ const approveRequest = async(req,res)=>{//this takes request id not the leader i
         })
         const newNotification = new Notification({
             user:request.requestee,
-            message:'Your join request was approved'
+            message:'Your join request was sent'
         })
         const savedNotification = await newNotification.save()
         
