@@ -82,10 +82,12 @@ const MyProject = () => {
                 <button onClick={()=>{fetchRequests(project._id)}}>View Requests</button>
                 {
                     requests[project._id] && requests[project._id].map((requests)=>(
-                        <ol key={requests._id}>
+                        <ol key={requests._id} style={{opacity: requests.status==='pending'?1:0.4}}>
                            <li>{requests.requestee.username}</li> 
-                            <button onClick={()=>{handleApprove(requests._id,project._id)}}>Approve</button>
-                            <button onClick={()=>{handleReject(requests._id,project._id)}}>Reject</button>
+                           {requests.status === 'pending'?(<><button onClick={()=>{handleApprove(requests._id,project._id)}}>Approve</button>
+                           <button onClick={()=>{handleReject(requests._id,project._id)}}>Reject</button></>):(<span>{requests.status}</span>)}
+
+                            
                         </ol>
                     ))
                 }
