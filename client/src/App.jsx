@@ -7,6 +7,7 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 import PublicRoute from './components/PublicRoute/PublicRoute'
 import CreateProject from './pages/Projects/CreateProject'
 import MyProject from './pages/Projects/MyProject'
+import Notification from './components/Notification/Notification'
 const App = () => {
   return (
     <>
@@ -16,6 +17,7 @@ const App = () => {
   <Route path='/dashboard' element={<ProtectedRoute><Dashboard/></ProtectedRoute>}/>
   <Route path='/create-project' element={<ProtectedRoute><CreateProject/></ProtectedRoute>}/>
   <Route path='/my-project' element={<ProtectedRoute><MyProject/></ProtectedRoute>}/>
+  <Route path='/notifications' element={<ProtectedRoute><Notification/></ProtectedRoute>}/>
 
 </Routes>
     </>
