@@ -15,7 +15,7 @@ const Notification = () => {
         try{
             setLoading(true)
             const allNotifications = await api.get('/api/notifications/getAll')
-            console.log(allNotifications.data.data)
+            // console.log(allNotifications.data.data)
             setNotifications(allNotifications.data.data)
             setLoading(false)
 
