@@ -8,6 +8,7 @@ import PublicRoute from './components/PublicRoute/PublicRoute'
 import CreateProject from './pages/Projects/CreateProject'
 import MyProject from './pages/Projects/MyProject'
 import Notification from './components/Notification/Notification'
+import Recommendation from './pages/Projects/Recommendation'
 const App = () => {
   return (
     <>
@@ -18,6 +19,7 @@ const App = () => {
   <Route path='/create-project' element={<ProtectedRoute><CreateProject/></ProtectedRoute>}/>
   <Route path='/my-project' element={<ProtectedRoute><MyProject/></ProtectedRoute>}/>
   <Route path='/notifications' element={<ProtectedRoute><Notification/></ProtectedRoute>}/>
+  <Route path='/recommend-projects' element={<ProtectedRoute><Recommendation/></ProtectedRoute>}/>
 
 </Routes>
     </>
