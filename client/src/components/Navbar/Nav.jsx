@@ -1,6 +1,6 @@
 import {Link, useNavigate, NavLink } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-// import Notification from "../Notification/Notification";
+import Notification from "../Notification/Notification";
 
 
 const Nav = () => {
@@ -22,7 +22,7 @@ const handleLogout =()=>{
         <li><Link to='/dashboard'>Dashboard</Link></li>
        <li> <Link to='/create-project'>Create Project</Link></li>
        <li> <Link to='/my-project'>My Projects</Link></li>
-       <li> <Link to='/notifications'>Notification</Link></li>
+       <li> <Notification/></li>
        
         <li><p>Welcome {user?.name?.toUpperCase()}</p></li>
         <li>  <button onClick={handleLogout}>Logout</button></li>
