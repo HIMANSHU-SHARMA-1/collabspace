@@ -38,6 +38,10 @@ const Login = () => {
   const addData = (e) => {
     setformData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  const createAcc = ()=>{
+    navigate('/register')
+  }
   return (
     <>
       <form
@@ -66,6 +70,7 @@ const Login = () => {
         />
         <button type="submit">Login</button>
       </form>
+      <p>Create New Account <button onClick={createAcc}>Register</button>      </p>
     </>
   );
 };
