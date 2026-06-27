@@ -29,6 +29,7 @@ const Notification = () => {
     const isRead = async(notificationId)=>{
        try{
         const isReadNotification = await api.patch(`/api/notifications/read/${notificationId}`)
+        fetchNotifications()
        }catch(err){
         setError(err?.response?.data?.message || err.message || 'Notification fetching failed')
 
@@ -44,9 +45,17 @@ const Notification = () => {
 
   return (
     <>
+
+    {
+        <button onClick={()=>{setIsOpen(!isOpen)}}>
+            🔔{notifications.filter(n=>!n.isRead).length}
+
+        </button>
+    }
+
     {
 
-        notifications && notifications.map((notification)=>(
+       isOpen &&  notifications.map((notification)=>(
             <ol key={notification._id} style={{opacity: notification.isRead?0.4:1}}>
                 <li><button onClick={()=>{isRead(notification._id)}}>{notification.message}</button></li>
             </ol>
