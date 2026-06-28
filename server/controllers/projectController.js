@@ -92,6 +92,24 @@ const getProjectbyID = async(req,res)=>{
             
 }
 
+const getJoinedProjects = async(req,res)=>{
+   try{
+    const getProjects = await Project.find({members:req.user.id}).populate('leader', 'username email')
+    if(getProjects.length === 0){
+        return res.status(404).json({
+            success:false,message:'Projects not found'
+        })
+    }
+    res.status(200).json({
+        success:true,message:'Projects found',data:getProjects
+    })
+   }catch(err){
+    res.status(500).json({
+        message:err.message||'Internal server Error!'
+    })
+   }
+}
+
 //fetch all the projects where req.user.id === leader
 const getMyProjects = async(req,res)=>{
 try{
@@ -178,4 +196,4 @@ const deleteProjects = async(req,res)=>{
 }
 
 
-module.exports= {createProject,getAllProjects, getProjectbyID, updateProjects, deleteProjects,getMyProjects}
+module.exports= {createProject,getAllProjects, getProjectbyID, updateProjects, deleteProjects,getMyProjects, getJoinedProjects}
