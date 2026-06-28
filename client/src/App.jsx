@@ -9,6 +9,7 @@ import CreateProject from './pages/Projects/CreateProject'
 import MyProject from './pages/Projects/MyProject'
 import Notification from './components/Notification/Notification'
 import Recommendation from './pages/Projects/Recommendation'
+import JoinedProjects from './pages/Projects/JoinedProjects'
 const App = () => {
   return (
     <>
@@ -20,6 +21,7 @@ const App = () => {
   <Route path='/my-project' element={<ProtectedRoute><MyProject/></ProtectedRoute>}/>
   <Route path='/notifications' element={<ProtectedRoute><Notification/></ProtectedRoute>}/>
   <Route path='/recommend-projects' element={<ProtectedRoute><Recommendation/></ProtectedRoute>}/>
+  <Route path='/joined-projects' element={<ProtectedRoute><JoinedProjects/></ProtectedRoute>}/>
 
 </Routes>
     </>
