@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import api from '../../api/axios'
 import Nav from '../../components/Navbar/Nav'
+import Chat from '../chat/Chat'
 
 
 
 
 const MyProject = () => {
 
+    const [openChat, setopenChat] = useState(null)
     const [projects, setProjects] = useState([])
     const[error,setError] = useState()
     const [loading, setLoading] = useState(false)
@@ -81,23 +83,23 @@ const MyProject = () => {
                 <li>Team Size: {project.teamsize}</li>
                 <li>Members : {project.members.length}</li>
                 <li>Leader: {project.leader.username}</li>
+                <button onClick={()=>{setopenChat(project._id)}}>💬 Chat</button>
                 <button onClick={()=>{fetchRequests(project._id)}}>View Requests</button>
                 {
                     requests[project._id] && requests[project._id].map((requests)=>(
                         <ol key={requests._id} style={{opacity: requests.status==='pending'?1:0.4}}>
                            <li>{requests.requestee.username}</li> 
                            {requests.status === 'pending'?(<><button onClick={()=>{handleApprove(requests._id,project._id)}}>Approve</button>
-                           <button onClick={()=>{handleReject(requests._id,project._id)}}>Reject</button></>):(<span>{requests.status}</span>)}
-
-                            
+                           <button onClick={()=>{handleReject(requests._id,project._id)}}>Reject</button></>):(<span>{requests.status}</span>)}    
                         </ol>
                     ))
                 }
                 </ul>
             ))
         )
-        }
+    }
 
+    {openChat && <Chat projectId={openChat} members={projects.find(p=>p._id === openChat)?.members}/>}
     
     
     </>
