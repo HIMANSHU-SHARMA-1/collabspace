@@ -1,20 +1,6 @@
 # 📚 CollabSpace API Documentation
 
-## Base URL
 
-```http
-http://localhost:5000
-```
-
----
-
-# Authentication APIs
-
-## Register User
-
-```http
-POST /api/auth/register
-```
 
 ### Description
 
