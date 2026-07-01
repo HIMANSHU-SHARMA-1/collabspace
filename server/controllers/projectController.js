@@ -138,31 +138,43 @@ catch(err){
 const updateProjects = async(req,res)=>{
     const {projectname,requiredSkill,githubLink,description} = req.body
    try{
-    const updateProject = await Project.findByIdAndUpdate(req.params.id,
-        {
-           $set:{
-            projectname,
-            requiredSkill,
-            githubLink,
-            description
-           }
-        },{new:true,runValidators:true}
-    )
-    if(updateProject){
-        return res.status(200).json({
-            success:true,
-            statusCode:200,
-            message:'Project found and updated',
-            data:updateProject
-        })
+    const fetchProjectDetails = await Project.findById(req.params.id)
+    if(!fetchProjectDetails){
+        return res.status(404).json({message:'project not found'})
     }
-    else{
-        return res.status(404).json({
-            success:false,
-            statusCode:404,
-            message:'project not found'
-        })
-   }
+    if(fetchProjectDetails.leader.equals(req.user.id )){
+        const updateProject = await Project.findByIdAndUpdate(req.params.id,
+            {
+               $set:{
+                projectname,
+                requiredSkill,
+                githubLink,
+                description,
+                status
+               }
+            },{new:true,runValidators:true}
+        )
+        if(updateProject){
+                    return res.status(200).json({
+                        success:true,
+                        statusCode:200,
+                        message:'Project found and updated',
+                        data:updateProject
+                    })
+                }
+                else{
+                    return res.status(404).json({
+                        success:false,
+                        statusCode:404,
+                        message:'project not found'
+                    })
+               }
+    }else{
+            return res.status(403).json({
+                message:'You are not authorized to Updated Project'
+            })
+        }
+    
 }
     catch(err){
         res.status(500).json({
