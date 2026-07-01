@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import api from '../../api/axios'
 import { useAuth } from '../../context/AuthContext'
 import Nav from '../../components/Navbar/Nav'
+import {useNavigate } from 'react-router-dom'
 const Dashboard = () => {
 
   
@@ -11,6 +12,7 @@ const Dashboard = () => {
   const [error,setError] = useState()
   const [success,setSuccess] = useState()
   const {user} = useAuth()
+  const navigate = useNavigate()
   
   
   const getProjects = async()=> {
@@ -47,6 +49,10 @@ const Dashboard = () => {
       alert( err.response?.data?.message || 'Already Applied')
    }
   }
+
+  const viewProjectDetaisl =(projectId)=>{
+    navigate(`/project-view/${projectId}`)
+  }
   useEffect(()=>{
     getProjects()
   },[])
@@ -59,14 +65,15 @@ const Dashboard = () => {
      loading?(<p>Loading Projects</p>): error?(<p>{error}</p>): projects.length === 0?(<p>No Projects yet</p>):(
       <div >{projects.map((p)=>(
         <ul  key={p._id} style={{border:'2px solid black'}}>
-          <li>Project Name: {p.projectname}</li>
-        <li>Description: {p.description}</li>
-        <li>Required Skill: {p.requiredSkill.join(', ')}</li>
-        <li>Status: {p.status}</li>
-        <li>Team Size: {p.teamsize}</li>
-        <li>Members: {p.members.length}</li>
-        <li>Leader: {p.leader.username}</li>
+          <li>{p.projectname}</li>
+        <li>{p.description}</li>
+        <li>{p.requiredSkill.join(', ')}</li>
+        {/* <li>Status: {p.status}</li> */}
+        {/* <li>Team Size: {p.teamsize}</li> */}
+        {/* <li>Members: {p.members.length}</li> */}
+        {/* <li>Leader: {p.leader.username}</li> */}
         <button type='submit' onClick={()=>{joinRequest(p)}}>Join</button>
+        <button onClick={()=>{viewProjectDetaisl(p._id)}}>View Project</button>
         </ul>
       ))}</div>
      )
