@@ -21,6 +21,7 @@ const JoinedProjects = () => {
         setLoading(false)
         }catch(err){
             setError(err?.response?.data?.message || err.message || 'Projects fetching failed')
+            setLoading(false)
         }
     }
 useEffect(()=>{
