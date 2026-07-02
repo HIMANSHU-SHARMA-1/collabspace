@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 //! this function below register and check the if user exist or not,and hashing password processing, it uses a new method of creating a user which first creates a user and then save it to db
 const register = async(req,res)=>{
    try{
-    const{username, email,  password, bio, skills} = req.body
+    const{username, email,  password, bio, skills, githubProfile} = req.body
     const existingUser = await User.findOne({email})
     if(existingUser){
        return res.status(400).json({
@@ -19,6 +19,7 @@ const register = async(req,res)=>{
         email,
         password: hashedPassword,
         bio,
+        githubProfile,
         skills,
     })
     const savedUser = await user.save()
@@ -88,4 +89,31 @@ const login = async(req,res)=>{
     // }
 }
 
-module.exports= {register,login}
+const getCurrentUser =async(req,res)=>{
+    try{
+        const user = await User.findById(req.user.id)
+    if(!user){
+        return res.status(404).json({success:false,message:'User not Found'})
+    }
+    res.status(200).json({
+        success:true,
+        message:'User Found',
+        data:{
+            username:user.username,
+            email:user.email,
+            bio:user.bio,
+            githubProfile:user.githubProfile,
+            skills:user.skills,
+            profilePicture:user.profilePicture
+        }
+    })
+    }catch(err){
+        res.status(500).json({
+            success:false,
+            message:err.message || 'Internal server error'
+        })
+
+    }
+}
+
+module.exports= {register,login,getCurrentUser}
