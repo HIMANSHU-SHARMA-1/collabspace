@@ -16,7 +16,7 @@ const sendRequest = async(req,res)=>{
             })
         }
         const receiverId = project.leader
-        const isRequest = await Request.findOne({project:projectId,requestee:requesteeId})
+        const isRequest = await Request.findOne({project:projectId,requestee:requesteeId,status:'pending'})
         if(isRequest){
             return res.status(400).json({
                 message:'already applied'
@@ -30,6 +30,12 @@ const sendRequest = async(req,res)=>{
                 status:'pending'
             })
         const savedRequest = await newRequest.save()
+        const newNotification = new Notification({
+            user: receiverId,
+            message:'New join Request Received',
+        })
+        const savedNotification = await newNotification.save()
+        }
         res.status(201).json({
             success:true,
             statusCode:201,
@@ -41,12 +47,6 @@ const sendRequest = async(req,res)=>{
                 receiver:savedRequest.receiver
             }
         })
-        const newNotification = new Notification({
-            user: receiverId,
-            message:'New join Request Received',
-        })
-        const savedNotification = await newNotification.save()
-        }
         
     }
     catch(err){
