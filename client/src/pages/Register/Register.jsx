@@ -11,6 +11,7 @@ const Register = () => {
     email: "",
     password: "",
     bio: "",
+    githubProfile:'',
     skills: [],
   });
 
@@ -143,7 +144,7 @@ const Register = () => {
         }}
       >
         <div>
-          <label>Username:</label>
+          <label>User Name:</label>
           <input
             type="text"
             name="username"
@@ -176,6 +177,10 @@ const Register = () => {
         <div>
           <label>Bio:</label>
           <textarea name="bio" value={formData.bio} onChange={addData} />
+        </div>
+        <div>
+          <label>Github Profile:</label>
+          <textarea name="githubProfile" value={formData.githubProfile} onChange={addData} />
         </div>
         <div>
           <h3>Skills</h3>
