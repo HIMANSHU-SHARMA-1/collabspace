@@ -11,6 +11,7 @@ import Notification from './components/Notification/Notification'
 import Recommendation from './pages/Projects/Recommendation'
 import JoinedProjects from './pages/Projects/JoinedProjects'
 import ProjectDetails from './pages/Projects/ProjectDetails'
+import Profile from './pages/Profile/Profile'
 const App = () => {
   return (
     <>
@@ -24,6 +25,7 @@ const App = () => {
   <Route path='/recommend-projects' element={<ProtectedRoute><Recommendation/></ProtectedRoute>}/>
   <Route path='/joined-projects' element={<ProtectedRoute><JoinedProjects/></ProtectedRoute>}/>
   <Route path='/project-view/:projectId' element={<ProtectedRoute><ProjectDetails/></ProtectedRoute>}/>
+  <Route path='/profile' element={<ProtectedRoute><Profile/></ProtectedRoute>}/>
 
 </Routes>
     </>
