@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     bio: { type: String, required:true, default:'No bio yet'},
+    githubProfile: { type: String, },
     profilePicture: { type: String},
     skills: [{ name: {type:String,}, rating:{type: Number} }],
 },{timestamps: true})
