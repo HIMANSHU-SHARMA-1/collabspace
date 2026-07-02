@@ -27,7 +27,7 @@ const handleLogout =()=>{
        <li><Link to='/recommend-projects'>Projects Recommendation</Link></li>
        <li><Link to='/joined-projects'>Joined Projects</Link></li>
        
-        <li><p>Welcome {user?.name?.toUpperCase()}</p></li>
+        <li><p>Welcome <Link to='/profile'>{user?.name?.toUpperCase()}</Link></p></li>
         <li>  <button onClick={handleLogout}>Logout</button></li>
             
 </nav>
