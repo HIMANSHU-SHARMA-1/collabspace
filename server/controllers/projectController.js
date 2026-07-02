@@ -1,5 +1,7 @@
 const Project = require('../models/Project')
+const Request = require('../models/joinRequest')
 // const authController = require('../controllers/authController')
+const Notification = require('../models/notification')
 
 const createProject = async(req,res)=>{
     try{
@@ -96,8 +98,9 @@ const getJoinedProjects = async(req,res)=>{
    try{
     const getProjects = await Project.find({members:req.user.id}).populate('leader', 'username email')
     if(getProjects.length === 0){
-        return res.status(404).json({
-            success:false,message:'Projects not found'
+        return res.status(200).json({
+            success:true,
+            data:[]
         })
     }
     res.status(200).json({
@@ -136,13 +139,13 @@ catch(err){
 }
 
 const updateProjects = async(req,res)=>{
-    const {projectname,requiredSkill,githubLink,description} = req.body
+    const {projectname,requiredSkill,githubLink,description,teamsize,status} = req.body
    try{
-    const fetchProjectDetails = await Project.findById(req.params.id)
-    if(!fetchProjectDetails){
+    const project = await Project.findById(req.params.id)
+    if(!project){
         return res.status(404).json({message:'project not found'})
     }
-    if(fetchProjectDetails.leader.equals(req.user.id )){
+    if(project.leader.equals(req.user.id )){
         const updateProject = await Project.findByIdAndUpdate(req.params.id,
             {
                $set:{
@@ -150,6 +153,7 @@ const updateProjects = async(req,res)=>{
                 requiredSkill,
                 githubLink,
                 description,
+                teamsize,
                 status
                }
             },{new:true,runValidators:true}
@@ -157,8 +161,7 @@ const updateProjects = async(req,res)=>{
         if(updateProject){
                     return res.status(200).json({
                         success:true,
-                        statusCode:200,
-                        message:'Project found and updated',
+                        message:'Project updated successfully',
                         data:updateProject
                     })
                 }
@@ -182,23 +185,69 @@ const updateProjects = async(req,res)=>{
         })
     }
 }
+const removeMember = async (req, res) => {
+    try {
+        const {projectId, memberId} = req.params
+
+        const project = await Project.findById(projectId)
+        if(!project){
+            return res.status(404).json({message:'Project not found'})
+        }
+        if(!project.leader.equals(req.user.id)){
+            return res.status(403).json({message:'You are not authorized to remove members.'})
+        } 
+        const memberExists = project.members.some(member=>member.equals(memberId))
+        if(!memberExists){
+            return res.status(404).json({message:'Member not found in this project.'})
+        }
+        //remove member
+        project.members = project.members.filter(
+            member=> !member.equals(memberId)
+        )
+        await project.save()
+
+        //create notification for at the time of member removing
+        await Notification.create({
+            user:memberId,
+            message:`You have been removed from the project "${project.projectname}".`
+        })
+
+        const updatedProject = await Project.findById(projectId).populate('leader','username email').populate('members', 'username email')
+
+        res.status(200).json({
+            success:true,
+            message:'Member removed successfully.',
+            data:updatedProject
+        })
+
+    } catch (err) {
+        res.status(500).json({
+            message: err.message || 'Internal Server Error'
+        })
+    }
+}
 
 const deleteProjects = async(req,res)=>{
     try{
+        const project = await Project.findById(req.params.id)
+        if(!project){
+            return res.status(404).json({message:'Project not found to delete'})
+        }
+        if(!project.leader.equals(req.user.id)){
+            return res.status(403).json({success:false,message:'Unauthaorized activity'})
+        }
         const deleteProject = await Project.findByIdAndDelete(req.params.id)
     if(deleteProject){
+        await Request.deleteMany({project:req.params.id})
         return res.status(200).json({
             success:true,
             statuscode:200,
             message:'project Deleted Successfully',
         })
+    }else{
+        return res.status(404).json({message:'Project not found to delete'})
     }
-    else{
-        return res.status(404).json({
-            success:false,
-            message:'project not found'
-        })
-    }
+    
     }
     catch(err){
         res.status(500).json({
@@ -208,4 +257,4 @@ const deleteProjects = async(req,res)=>{
 }
 
 
-module.exports= {createProject,getAllProjects, getProjectbyID, updateProjects, deleteProjects,getMyProjects, getJoinedProjects}
+module.exports= {createProject,getAllProjects, getProjectbyID, updateProjects, deleteProjects,getMyProjects, getJoinedProjects, removeMember}
