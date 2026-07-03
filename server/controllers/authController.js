@@ -116,4 +116,24 @@ const getCurrentUser =async(req,res)=>{
     }
 }
 
-module.exports= {register,login,getCurrentUser}
+const updateProfile = async(req,res)=>{
+    try{
+        const {username, bio, githubProfile, skills} = req.body
+        const updateUser = await User.findByIdAndUpdate(req.user.id,
+            {$set:{username,bio,githubProfile,skills}},
+            {new:true,runValidators:true}
+        ).select('-password')
+        if(!updateUser){
+            return res.status(404).json({success:false,message:'User not found'})
+        }
+        res.status(200).json({
+            success:true,
+            message:'Profile updated Successfully',
+            data: updateUser
+        })
+    }catch(err){
+        res.status(500).json({ message: err.message || 'Internal server error' });
+    }
+}
+
+module.exports= {register,login,getCurrentUser,updateProfile}
