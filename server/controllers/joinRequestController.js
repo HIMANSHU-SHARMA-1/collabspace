@@ -22,7 +22,7 @@ const sendRequest = async(req,res)=>{
                 message:'already applied'
             })
         }
-        else{
+        
             const newRequest = new Request({
                 project:projectId,
                 requestee:requesteeId,
@@ -35,7 +35,10 @@ const sendRequest = async(req,res)=>{
             message:'New join Request Received',
         })
         const savedNotification = await newNotification.save()
-        }
+
+        req.app.get('io').to(receiverId.toString()).emit('newNotification',savedNotification)
+
+
         res.status(201).json({
             success:true,
             statusCode:201,
@@ -85,9 +88,12 @@ const approveRequest = async(req,res)=>{//this takes request id not the leader i
         })
         const newNotification = new Notification({
             user:request.requestee,
-            message:'Your join request was sent'
+            message:'Your join request was approved'
         })
         const savedNotification = await newNotification.save()
+
+        req.app.get('io').to(request.requestee.toString()).emit('newNotification',savedNotification)
+
         
         res.status(200).json({
                 success:true,
@@ -130,6 +136,8 @@ const rejectRequest = async(req,res)=>{
             message:'Your join request was rejected'
         })
         const savedNotification = await newNotification.save()
+
+        req.app.get('io').to(request.requestee.toString()).emit('newNotification',savedNotification)
        
         res.status(200).json({
             success:true,

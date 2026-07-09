@@ -10,7 +10,7 @@ const register = async(req,res)=>{
     if(existingUser){
        return res.status(400).json({
             success:false,
-            message:'User already Existed'
+            message:'User with that email already exists'
         })
     }
     const hashedPassword = await bcrypt.hash(password,10)
