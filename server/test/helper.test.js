@@ -1,5 +1,5 @@
 require('./setup')
-const {registerAndLogin} = require('./helper')
+const {registerAndLogin} = require('./helpers')
 
 test('registerAndLogin returns a real token and userId', async()=>{
 
