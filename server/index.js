@@ -13,7 +13,7 @@ const aiRoutes = require('./routes/aiRoutes')
 const app = express()
 
 app.use(cors({
-    origin:'http://localhost:5173',
+    origin:'http://localhost:5173'
 }))
 
 const server = http.createServer(app)
@@ -22,10 +22,12 @@ const io = new Server(server,{
         origin:'*',
     }
 })
+app.set('io', io)
+
 const initSocket = require('./config/socket')
 initSocket(io)
 
-connectDB()
+
 
 app.use(express.json())
 
@@ -40,6 +42,11 @@ app.use('/api/message',messageRoutes)
 app.use('/api/notifications', notificationRoutes)
 app.use('/api/openAi',aiRoutes)
 
-server.listen(process.env.PORT, ()=>{
-    console.log(`Server is Running on https://localhost:${process.env.PORT}`)
-})
+if(require.main === module){
+    connectDB()
+    server.listen(process.env.PORT, ()=>{
+        console.log(`Server is Running on https://localhost:${process.env.PORT}`)
+    })
+
+}
+module.exports = app

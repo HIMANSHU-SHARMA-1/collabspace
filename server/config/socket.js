@@ -13,6 +13,10 @@ module.exports = (io) =>{
             socket.join(projectId)
             console.log(`User joined the room ${projectId}`)
         })
+        //Listen for event per user to send message
+        socket.on('registerUser',(UserId)=>{
+            socket.join(UserId)
+        })
     //listen for sendMessage Event
     socket.on('sendMessage', async (data)=>{
         const {projectId, senderId, content} = data
@@ -22,7 +26,7 @@ module.exports = (io) =>{
             content: content
         })
          
-        const savedMessage = await message.save()
+        const savedMessage = await (await message.save()).populate('sender','username email')
         io.to(projectId).emit('receiveMessage', savedMessage)
     })
     
