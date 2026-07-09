@@ -1,29 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../context/AuthContext";
-import { io } from "socket.io-client";
 import api from "../../api/axios";
-const socket = io("http://localhost:5000");
+import { useSocket } from "../../context/SocketContext";
 
 const Chat = ({ projectId, members }) => {
+  const { socket } = useSocket();
   const { user } = useAuth();
   const [messages, setMessages] = useState([]);
-  const [error, setError] = useState();
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [newMessages, setNewMessages] = useState("");
+  const messageEndRef = useRef(null);
 
   const fetchMessage = async (projectId) => {
     try {
       setLoading(true);
       const messageData = await api.get(`/api/message/${projectId}`);
-      console.log(messageData.data);
       setMessages(messageData.data.data);
       setLoading(false);
     } catch (err) {
-      setError(
-        err?.response?.data?.message ||
-          err.message ||
-          "Message Fetching failed",
-      );
+      setError(err?.response?.data?.message || err.message || "Message Fetching failed");
       setLoading(false);
     }
   };
@@ -39,6 +35,7 @@ const Chat = ({ projectId, members }) => {
   };
 
   useEffect(() => {
+    if (!socket) return;
     socket.emit("joinRoom", projectId);
     socket.on("receiveMessage", (message) => {
       setMessages((prev) => [...prev, message]);
@@ -49,90 +46,82 @@ const Chat = ({ projectId, members }) => {
     return () => {
       socket.off("receiveMessage");
     };
-  }, []);
+  }, [socket, projectId]);
+
+  useEffect(() => {
+    // Scroll to bottom on new messages
+    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   return (
-    <>
-      <div
-        style={{
-          position: "fixed",
-          right: 0,
-          top: 0,
-          width: "300px",
-          height: "100vh",
-          border: "2px solid black",
-          display: "flex",
-          flexDirection: "column",
-          background: "white",
-          zIndex: 100,
-        }}
-      >
-        {/* Header */}
-        <div
-          style={{
-            padding: "10px",
-            borderBottom: "1px solid black",
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          <h3>Project chat</h3>
-        </div>
-
-        {/* messages */}
-        <div style={{ flex: 1, overflowY: "auto", padding: "10px" }}>
-          {loading ? (
-            <p>Loading.....</p>
-          ) : error ? (
-            <p>{error}</p>
-          ) : (
-            messages &&
-            messages.map((msg, index) => (
+    <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+      {/* Messages List Area */}
+      <div style={{ flexGrow: 1, overflowY: "auto", display: "flex", flexDirection: "column", gap: "12px", paddingRight: "4px" }}>
+        {loading ? (
+          <div style={{ display: "flex", justifyContent: "center", padding: "20px 0" }}>
+            <span className="indicator-light"></span>
+          </div>
+        ) : error ? (
+          <p style={{ color: "var(--danger)", fontSize: "0.85rem", textAlign: "center" }}>{error}</p>
+        ) : (
+          messages.map((msg, index) => {
+            const isMe = msg.sender._id === user.id;
+            return (
               <div
                 key={index}
                 style={{
-                  marginBottom: "10px",
-                  textAlign: msg.sender === user.id ? "right" : "left",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: isMe ? "flex-end" : "flex-start",
                 }}
               >
-                <p
+                {!isMe && (
+                  <span style={{ fontSize: "0.75rem", color: "var(--text-secondary)", marginBottom: "4px", paddingLeft: "6px" }}>
+                    {msg.sender.username}
+                  </span>
+                )}
+                <div
                   style={{
-                    display: "inline-block",
-                    padding: "5px 10px",
-                    background: msg.sender === user.id ? "#007bff" : "#f0f0f0",
-                    color: msg.sender === user.id ? "white" : "black",
-                    borderRadius: "10px",
+                    padding: "10px 16px",
+                    maxWidth: "85%",
+                    fontSize: "0.9rem",
+                    lineHeight: 1.5,
+                    borderRadius: isMe ? "16px 16px 4px 16px" : "16px 16px 16px 4px",
+                    background: isMe ? "var(--accent-primary)" : "var(--tag-bg)",
+                    color: isMe ? "white" : "var(--text-primary)",
+                    boxShadow: isMe ? "0 4px 12px var(--accent-glow)" : "none",
+                    border: isMe ? "none" : "1px solid var(--border-color)",
                   }}
                 >
                   {msg.content}
-                </p>
+                </div>
               </div>
-            ))
-          )}
-        </div>
-
-        {/* input */}
-        <div
-          style={{
-            padding: "10px",
-            borderTop: "1px solid black",
-            display: "flex",
-          }}
-        >
-          <input
-            type="text"
-            value={newMessages}
-            onChange={(e) => {
-              setNewMessages(e.target.value);
-            }}
-            onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-            placeholder="Type a message..."
-            style={{ flex: 1, marginRight: "5px" }}
-          />
-          <button onClick={sendMessage}>Send</button>
-        </div>
+            );
+          })
+        )}
+        <div ref={messageEndRef} />
       </div>
-    </>
+
+      {/* Input controls */}
+      <div style={{ display: "flex", gap: "10px", marginTop: "16px", borderTop: "1px solid var(--border-color)", paddingTop: "12px" }}>
+        <input
+          type="text"
+          value={newMessages}
+          onChange={(e) => setNewMessages(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+          placeholder="Write a message..."
+          className="ceramic-input"
+          style={{ flexGrow: 1, padding: "10px 16px", borderRadius: "12px" }}
+        />
+        <button
+          onClick={sendMessage}
+          className="ceramic-btn primary"
+          style={{ padding: "10px 16px", borderRadius: "12px", minWidth: "50px" }}
+        >
+          <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>send</span>
+        </button>
+      </div>
+    </div>
   );
 };
 
