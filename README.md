@@ -6,7 +6,7 @@ CollabSpace is a MERN-stack web application that helps students discover project
 
 ---
 
-## 📌 Features
+## 📌Features
 
 ### Authentication & User Management
 

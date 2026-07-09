@@ -1,94 +1,200 @@
 import React, { useState } from "react";
 import Nav from "../../components/Navbar/Nav";
 import api from "../../api/axios";
-import { Navigate, useNavigate } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 
 const CreateProject = () => {
-
-    const navigate = useNavigate()
-
+  const navigate = useNavigate();
   const [skillName, setSkillName] = useState("");
-
   const [formData, setformData] = useState({
     projectname: "",
     description: "",
     requiredSkill: [],
     teamsize: "",
     githubLink: "",
-    //leader:'', backend will auto. handles the leader insertion and members insertion through logics already in the backend
-    //members:[],
     status: "open",
   });
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const[error,setError] = useState()
-  const handleSkill=(e)=>{
-        setSkillName(e.target.value)
-  }
+  const handleSkill = (e) => {
+    setSkillName(e.target.value);
+  };
 
-  const handleAddSkill=()=>{
-    setformData((prev)=>({
-        ...prev,
-        requiredSkill:[...prev.requiredSkill,skillName.trim()]
-    })
-    )
-    setSkillName('')
-
-  }
+  const handleAddSkill = () => {
+    if (!skillName.trim()) return alert("Skill can't be empty");
+    setformData((prev) => ({
+      ...prev,
+      requiredSkill: [...prev.requiredSkill, skillName.trim()],
+    }));
+    setSkillName("");
+  };
 
   const addData = (e) => {
     setformData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async(e) => {
-    e.preventDefault()
-    try{
-          const projectData = await api.post('/api/project/create',formData)
-          if(projectData){
-            navigate('/dashboard')
-          }
-    }
-    catch(err){
-        setError(err.response?.data?.message || err.message || 'Project Creation failed')
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    try {
+      const projectData = await api.post("/api/project/create", formData);
+      if (projectData) {
+        navigate("/dashboard");
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || err.message || "Project Creation failed");
+    } finally {
+      setLoading(false);
     }
   };
-//   console.log(formData)
- 
+
   return (
-    <>
-      <Nav />
-      <h1>Create Project</h1>
-      <form onSubmit={handleSubmit}>
-        <label>Project Name:</label>
-        <input type="text" name="projectname" onChange={addData} />
-
-        <label>Description:</label>
-        <textarea name="description" onChange={addData} />
-
-        <div><label>Required Skill:</label>
-        <input type="text" value={skillName} onChange={(e)=>{handleSkill(e)}}/>
-        <button type="button" onClick={handleAddSkill}>Add Skill</button>
-        {formData.requiredSkill && (formData.requiredSkill.map((skills,index)=>(
-            <li key={index}>{skills}</li>
-        )))}
+    <Nav>
+      <div style={{ maxWidth: "700px", margin: "0 auto" }}>
+        <div style={{ marginBottom: "32px" }}>
+          <h1 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "2rem", fontWeight: 700 }}>
+            Create New Project
+          </h1>
+          <p style={{ color: "var(--text-secondary)", marginTop: "4px" }}>
+            Design your project and recruit teammates
+          </p>
         </div>
 
-        <label>Team Size:</label>
-        <input type="number" name="teamsize" onChange={addData} />
+        <div className="ceramic-card" style={{ padding: "40px" }}>
+          <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+            <div className="ceramic-input-group">
+              <label htmlFor="projectname">Project Name</label>
+              <input
+                id="projectname"
+                type="text"
+                name="projectname"
+                onChange={addData}
+                placeholder="e.g. EcoTrack AI"
+                required
+                className="ceramic-input"
+              />
+            </div>
 
-        <label>Github Link</label>
-        <input type="text" name="githubLink" onChange={addData} />
+            <div className="ceramic-input-group">
+              <label htmlFor="description">Description</label>
+              <textarea
+                id="description"
+                name="description"
+                onChange={addData}
+                placeholder="Describe your project, milestones, and what you are building..."
+                className="ceramic-input"
+                style={{ minHeight: "100px", resize: "vertical" }}
+                required
+              />
+            </div>
 
-        <label>Status:</label>
-        <select name="status" onChange={addData}>
-          <option value="open">Open</option>
-          <option value="in-progress">In Progress</option>
-          <option value="done">Done</option>
-        </select>
+            <div className="ceramic-card" style={{ boxShadow: "var(--shadow-inset)", padding: "20px" }}>
+              <div className="ceramic-input-group" style={{ marginBottom: "12px" }}>
+                <label htmlFor="skillName">Required Skill / Tech Stack</label>
+                <div style={{ display: "flex", gap: "12px" }}>
+                  <input
+                    id="skillName"
+                    type="text"
+                    value={skillName}
+                    onChange={handleSkill}
+                    placeholder="e.g. React, Python"
+                    className="ceramic-input"
+                    style={{ flexGrow: 1 }}
+                  />
+                  <button type="button" onClick={handleAddSkill} className="ceramic-btn">
+                    <span className="material-symbols-outlined">add</span>
+                    Add
+                  </button>
+                </div>
+              </div>
 
-        <button type="submit">Create Project</button>
-      </form>
-    </>
+              {formData.requiredSkill.length > 0 && (
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                  {formData.requiredSkill.map((skill, index) => (
+                    <span key={index} className="skill-tag">
+                      {skill}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setformData((prev) => {
+                            const nextSkills = [...prev.requiredSkill];
+                            nextSkills.splice(index, 1);
+                            return { ...prev, requiredSkill: nextSkills };
+                          });
+                        }}
+                        style={{
+                          background: "none",
+                          border: "none",
+                          cursor: "pointer",
+                          color: "var(--danger)",
+                          display: "flex",
+                          alignItems: "center",
+                        }}
+                      >
+                        <span className="material-symbols-outlined" style={{ fontSize: "16px" }}>close</span>
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
+              <div className="ceramic-input-group">
+                <label htmlFor="teamsize">Target Team Size</label>
+                <input
+                  id="teamsize"
+                  type="number"
+                  name="teamsize"
+                  onChange={addData}
+                  placeholder="e.g. 5"
+                  required
+                  className="ceramic-input"
+                />
+              </div>
+
+              <div className="ceramic-input-group">
+                <label htmlFor="status">Project Status</label>
+                <select id="status" name="status" onChange={addData} className="ceramic-input" style={{ appearance: "none" }}>
+                  <option value="open">Open (Recruiting)</option>
+                  <option value="in-progress">In Progress</option>
+                  <option value="done">Done</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="ceramic-input-group">
+              <label htmlFor="githubLink">Github Repository Link (Optional)</label>
+              <input
+                id="githubLink"
+                type="text"
+                name="githubLink"
+                onChange={addData}
+                placeholder="https://github.com/your-org/your-repo"
+                className="ceramic-input"
+              />
+            </div>
+
+            {error && (
+              <p style={{ color: "var(--danger)", fontSize: "0.85rem", textAlign: "center", fontWeight: 500 }}>
+                {error}
+              </p>
+            )}
+
+            <div style={{ display: "flex", justify: "flex-end", gap: "16px", marginTop: "12px" }}>
+              <button type="button" onClick={() => navigate("/dashboard")} className="ceramic-btn">
+                Cancel
+              </button>
+              <button type="submit" disabled={loading} className="ceramic-btn primary">
+                {loading ? "Creating..." : "Create Project"}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </Nav>
   );
 };
 

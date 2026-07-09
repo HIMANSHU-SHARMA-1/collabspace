@@ -1,2 +1,13 @@
 server/.env
 server/node_modules
+client/node_modules
+
+# AI agent temporary working directory (not source code)
+.agents/
+
+# VS Code editor settings (personal IDE config)
+.vscode/
+
+# Build output
+dist/
+build/

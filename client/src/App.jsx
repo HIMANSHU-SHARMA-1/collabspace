@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Routes,Route } from 'react-router-dom'
 import Login from './pages/Login/Login'
 import Register from './pages/Register/Register'
@@ -12,10 +12,18 @@ import Recommendation from './pages/Projects/Recommendation'
 import JoinedProjects from './pages/Projects/JoinedProjects'
 import ProjectDetails from './pages/Projects/ProjectDetails'
 import Profile from './pages/Profile/Profile'
+import { initTheme } from './utils/theme'
+import NetworkBackground from './components/NetworkBackground/NetworkBackground'
+
 const App = () => {
+  useEffect(() => {
+    initTheme();
+  }, []);
+
   return (
     <>
-         <Routes>
+      <NetworkBackground />
+      <Routes>
   <Route path='/' element={<PublicRoute><Login/></PublicRoute>}/>
   <Route path='/register' element={<PublicRoute><Register/></PublicRoute>}/>
   <Route path='/dashboard' element={<ProtectedRoute><Dashboard/></ProtectedRoute>}/>

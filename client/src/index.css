@@ -1,0 +1,328 @@
+/* src/index.css */
+
+/* Refined palette from user's reference image - Dark Mode default */
+:root {
+  --bg-color: #0c0c0f; /* Pitch-black slate default background */
+  --panel-bg: #141418;
+  --text-primary: #e5e1e6;
+  --text-secondary: #9c98a0;
+  --border-color: rgba(255, 255, 255, 0.03);
+  --shadow-outset: 8px 8px 16px #060608, -8px -8px 16px #202028;
+  --shadow-inset: inset 4px 4px 8px #060608, inset -4px -4px 8px #202028;
+  --accent-primary: #d0865c; /* Warm Copper highlight */
+  --accent-secondary: #10b981;
+  --accent-glow: rgba(208, 134, 92, 0.25);
+  --tag-bg: #1d1d23;
+  --danger: #f87171;
+}
+
+:root[data-theme="light"] {
+  --bg-color: #e5e3e0; /* Softer, slightly darker background to make the dashboard pop */
+  --panel-bg: #f4f3f1; /* Crisp matte warm white ceramic */
+  --text-primary: #383635; /* Soft charcoal */
+  --text-secondary: #74716e; /* Warm gray */
+  --border-color: rgba(255, 255, 255, 0.85);
+  --shadow-outset: 10px 10px 20px #c1bfbc, -10px -10px 20px #ffffff;
+  --shadow-inset: inset 4px 4px 8px #c8c6c3, inset -4px -4px 8px #ffffff;
+  --shadow-outset-hover: 12px 12px 24px #b2b0ad, -12px -12px 24px #ffffff;
+  --accent-primary: #b49b85; /* Warm Sand / Taupe from progress bars and active state */
+  --accent-secondary: #a48268; /* Slightly darker sand for hover states */
+  --accent-glow: rgba(180, 155, 133, 0.2);
+  --tag-bg: #edeae6;
+  --danger: #ef4444;
+}
+
+:root[data-theme="dark"] {
+  --bg-color: #0c0c0f;
+  --panel-bg: #141418;
+  --text-primary: #e5e1e6;
+  --text-secondary: #9c98a0;
+  --border-color: rgba(255, 255, 255, 0.03);
+  --shadow-outset: 8px 8px 16px #060608, -8px -8px 16px #202028;
+  --shadow-inset: inset 4px 4px 8px #060608, inset -4px -4px 8px #202028;
+  --shadow-outset-hover: 12px 12px 24px #050506, -12px -12px 24px #262630;
+  --accent-primary: #d0865c;
+  --accent-secondary: #10b981;
+  --accent-glow: rgba(208, 134, 92, 0.25);
+  --tag-bg: #1d1d23;
+  --danger: #f87171;
+}
+
+/* Base Settings */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Hide scrollbar globally across all browsers */
+::-webkit-scrollbar {
+  display: none;
+}
+
+html, body {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  background-color: transparent;
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+input, button, textarea, select {
+  font-family: inherit;
+  color: inherit;
+  outline: none;
+}
+
+/* Main Dashboard Shell exactly matching the image */
+.ceramic-dashboard-shell {
+  background: var(--panel-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 36px;
+  box-shadow: var(--shadow-outset);
+  min-height: calc(100vh - 80px);
+  max-width: 1300px;
+  margin: 40px auto;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Header row inside the shell */
+.ceramic-shell-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+/* Layout container containing left sidebar and right content pane */
+.ceramic-shell-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 48px;
+  flex-grow: 1;
+  align-items: stretch;
+}
+
+@media (max-width: 900px) {
+  .ceramic-shell-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+/* Left Sidebar Navbar */
+.ceramic-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ceramic-sidebar-link {
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 12px 20px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid transparent;
+  transition: all 0.2s ease-in-out;
+}
+
+.ceramic-sidebar-link:hover {
+  color: var(--text-primary);
+  transform: translateX(4px);
+}
+
+.ceramic-sidebar-link.active {
+  background: var(--panel-bg);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-inset);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Outset Ceramic Card */
+.ceramic-card {
+  background: var(--panel-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 28px;
+  box-shadow: var(--shadow-outset);
+  padding: 32px;
+}
+
+/* Inset Ceramic Pod */
+.ceramic-inset {
+  background: var(--panel-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  box-shadow: var(--shadow-inset);
+  padding: 16px 20px;
+  width: 100%;
+}
+
+/* Tactile Ceramic Button */
+.ceramic-btn {
+  background: var(--panel-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 24px;
+  box-shadow: var(--shadow-outset);
+  padding: 12px 28px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.ceramic-btn:hover {
+  box-shadow: var(--shadow-inset);
+  color: var(--accent-primary);
+  transform: scale(0.98);
+}
+
+.ceramic-btn.primary {
+  color: var(--text-primary);
+  border-color: var(--accent-primary);
+  box-shadow: var(--shadow-outset);
+}
+
+.ceramic-btn.primary:hover {
+  box-shadow: var(--shadow-inset);
+}
+
+/* Form inputs */
+.ceramic-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.ceramic-input-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding-left: 8px;
+}
+
+.ceramic-input {
+  background: var(--panel-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  box-shadow: var(--shadow-inset);
+  padding: 14px 20px;
+  font-size: 0.95rem;
+  width: 100%;
+}
+
+.ceramic-input:focus {
+  border-color: var(--accent-primary);
+}
+
+/* Chip tags */
+.skill-tag {
+  background: var(--tag-bg);
+  border-radius: 12px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-secondary);
+}
+
+/* Pulsing soft indicator */
+.indicator-light {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--accent-primary);
+  box-shadow: 0 0 8px var(--accent-primary);
+  display: inline-block;
+  animation: pulse-glow 2s infinite;
+}
+
+.indicator-light.danger {
+  background-color: var(--danger);
+  box-shadow: 0 0 8px var(--danger);
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.6; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+/* Progress indicator bar */
+.ceramic-progress-track {
+  width: 100%;
+  height: 10px;
+  background: var(--panel-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  box-shadow: var(--shadow-inset);
+  overflow: hidden;
+  position: relative;
+}
+
+.ceramic-progress-bar {
+  height: 100%;
+  background: var(--accent-primary);
+  border-radius: 10px;
+  width: 0%;
+  transition: width 1s ease-in-out;
+}
+
+.ceramic-theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 50%;
+  box-shadow: var(--shadow-inset);
+  width: 36px;
+  height: 36px;
+  transition: all 0.3s;
+}
+
+.ceramic-theme-toggle:hover {
+  color: var(--accent-primary);
+  box-shadow: var(--shadow-outset);
+}
+
+/* Dashboard Grid */
+.ceramic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 32px;
+  margin-top: 40px;
+}
+
+/* Landing Page Backdrop & Static Ceramic Glows */
+.landing-bg-wrapper {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+}

@@ -1,140 +1,301 @@
-import React, { useEffect, useState } from 'react'
-import Nav from '../../components/Navbar/Nav'
-import { useAuth } from '../../context/AuthContext'
-import api from '../../api/axios'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import Nav from "../../components/Navbar/Nav";
+import { useAuth } from "../../context/AuthContext";
+import api from "../../api/axios";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const [profile, setProfile] = useState({})
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
+  const [profile, setProfile] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const [isEditing, setIsEditing] = useState(false)
-  const [skillName, setSkillName] = useState('')
-  const [skillRating, setSkillRating] = useState('')
+  const [isEditing, setIsEditing] = useState(false);
+  const [skillName, setSkillName] = useState("");
+  const [skillRating, setSkillRating] = useState("");
   const [formData, setFormData] = useState({
-    username: '',
-    bio: '',
-    githubProfile: '',
+    username: "",
+    bio: "",
+    githubProfile: "",
     skills: [],
-  })
+  });
 
   const getProfile = async () => {
     try {
-      setLoading(true)
-      const response = await api.get('/api/auth/me')
-      setProfile(response.data.data)
-      setLoading(false)
+      setLoading(true);
+      const response = await api.get("/api/auth/me");
+      setProfile(response.data.data);
+      setLoading(false);
     } catch (err) {
-      setError(err?.response?.data?.message || err.message || 'Profile fetching failed')
-      setLoading(false)
+      setError(err?.response?.data?.message || err.message || "Profile fetching failed");
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    getProfile()
-  }, [])
+    getProfile();
+  }, []);
 
   const startEditing = () => {
     setFormData({
-      username: profile.username || '',
-      bio: profile.bio || '',
-      githubProfile: profile.githubProfile || '',
+      username: profile.username || "",
+      bio: profile.bio || "",
+      githubProfile: profile.githubProfile || "",
       skills: profile.skills || [],
-    })
-    setIsEditing(true)
-  }
+    });
+    setIsEditing(true);
+  };
 
   const addData = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleAddSkill = () => {
-    if (!skillName.trim()) return
+    if (!skillName.trim()) return;
     setFormData((prev) => ({
       ...prev,
       skills: [...prev.skills, { name: skillName.trim(), rating: Number(skillRating) || 0 }],
-    }))
-    setSkillName('')
-    setSkillRating('')
-  }
+    }));
+    setSkillName("");
+    setSkillRating("");
+  };
 
   const handleRemoveSkill = (indexToRemove) => {
     setFormData((prev) => ({
       ...prev,
       skills: prev.skills.filter((_, i) => i !== indexToRemove),
-    }))
-  }
+    }));
+  };
 
   const updateProfile = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      const response = await api.put('/api/auth/update-profile', formData)
-      setProfile(response.data.data)
-      setIsEditing(false)
+      const response = await api.put("/api/auth/update-profile", formData);
+      setProfile(response.data.data);
+      setIsEditing(false);
     } catch (err) {
-      setError(err?.response?.data?.message || err.message || 'Profile update failed')
+      setError(err?.response?.data?.message || err.message || "Profile update failed");
     }
-  }
+  };
 
   return (
-    <>
-      <Nav />
-      {loading ? (
-        <p>Loading Profile</p>
-      ) : error ? (
-        <p>{error}</p>
-      ) : isEditing ? (
-        <form onSubmit={updateProfile} style={{ border: '2px solid black', padding: '10px' }}>
-          <label>Name:</label>
-          <input type="text" name="username" value={formData.username} onChange={addData} />
-
-          <label>Bio:</label>
-          <input type="text" name="bio" value={formData.bio} onChange={addData} />
-
-          <label>Github Profile:</label>
-          <input type="text" name="githubProfile" value={formData.githubProfile} onChange={addData} />
-
+    <Nav>
+      <div style={{ maxWidth: "750px", margin: "0 auto" }}>
+        <div style={{ marginBottom: "32px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div>
-            <label>Skills:</label>
-            <input type="text" placeholder="Skill name" value={skillName} onChange={(e) => setSkillName(e.target.value)} />
-            <input type="number" placeholder="Rating" value={skillRating} onChange={(e) => setSkillRating(e.target.value)} />
-            <button type="button" onClick={handleAddSkill}>Add Skill</button>
-            {formData.skills.map((skill, index) => (
-              <li key={index}>
-                {skill.name} — {skill.rating}
-                <button type="button" onClick={() => handleRemoveSkill(index)}>X</button>
-              </li>
-            ))}
+            <h1 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "2rem", fontWeight: 700 }}>
+              My Profile
+            </h1>
+            <p style={{ color: "var(--text-secondary)", marginTop: "4px" }}>
+              Configure your developer details and portfolio links
+            </p>
           </div>
-
-          <button type="submit">Save Changes</button>
-          <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
-        </form>
-      ) : (
-        <div>
-          <ul style={{ border: '2px solid black' }}>
-            <li>Name: {profile.username}</li>
-            <li>Email: {profile.email}</li>
-            <li>Bio: {profile.bio}</li>
-            <li>Github Profile: {profile.githubProfile}</li>
-            <li>
-              Skills:
-              <ul>
-                {profile.skills?.map((skill, index) => (
-                  <li key={index}>{skill.name} — {skill.rating}</li>
-                ))}
-              </ul>
-            </li>
-          </ul>
-          <button onClick={startEditing}>Edit Profile</button>
-          <button onClick={() => navigate('/joined-projects')}>See Joined Projects</button>
+          {!isEditing && (
+            <button onClick={startEditing} className="ceramic-btn">
+              <span className="material-symbols-outlined">edit</span>
+              Edit Profile
+            </button>
+          )}
         </div>
-      )}
-    </>
-  )
-}
 
-export default Profile
+        {loading ? (
+          <div style={{ display: "flex", justifyContent: "center", padding: "80px 0" }}>
+            <span className="indicator-light"></span>
+          </div>
+        ) : error ? (
+          <div className="ceramic-card" style={{ textAlign: "center", color: "var(--danger)" }}>
+            <p>{error}</p>
+          </div>
+        ) : isEditing ? (
+          <div className="ceramic-card" style={{ padding: "40px" }}>
+            <form onSubmit={updateProfile} style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+              <div className="ceramic-input-group">
+                <label htmlFor="username">Full Name</label>
+                <input
+                  id="username"
+                  type="text"
+                  name="username"
+                  value={formData.username}
+                  onChange={addData}
+                  required
+                  className="ceramic-input"
+                />
+              </div>
+
+              <div className="ceramic-input-group">
+                <label htmlFor="bio">Professional Bio</label>
+                <textarea
+                  id="bio"
+                  name="bio"
+                  value={formData.bio}
+                  onChange={addData}
+                  className="ceramic-input"
+                  style={{ minHeight: "100px", resize: "vertical" }}
+                />
+              </div>
+
+              <div className="ceramic-input-group">
+                <label htmlFor="githubProfile">Github Profile Link</label>
+                <input
+                  id="githubProfile"
+                  type="text"
+                  name="githubProfile"
+                  value={formData.githubProfile}
+                  onChange={addData}
+                  className="ceramic-input"
+                />
+              </div>
+
+              <div className="ceramic-card" style={{ boxShadow: "var(--shadow-inset)", padding: "20px" }}>
+                <h3 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1rem", fontWeight: 700, marginBottom: "16px" }}>
+                  Manage Developer Skills
+                </h3>
+                <div style={{ display: "flex", gap: "12px", marginBottom: "16px" }}>
+                  <input
+                    type="text"
+                    placeholder="Skill e.g. React"
+                    value={skillName}
+                    onChange={(e) => setSkillName(e.target.value)}
+                    className="ceramic-input"
+                    style={{ flexGrow: 2 }}
+                  />
+                  <input
+                    type="number"
+                    min="1"
+                    max="5"
+                    placeholder="Rate 1-5"
+                    value={skillRating}
+                    onChange={(e) => setSkillRating(e.target.value)}
+                    className="ceramic-input"
+                    style={{ flexGrow: 1 }}
+                  />
+                  <button type="button" onClick={handleAddSkill} className="ceramic-btn">
+                    Add
+                  </button>
+                </div>
+
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+                  {formData.skills.map((skill, index) => (
+                    <span key={index} className="skill-tag" style={{ padding: "8px 14px", borderRadius: "16px" }}>
+                      {skill.name} ({skill.rating}/5)
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveSkill(index)}
+                        style={{
+                          background: "none",
+                          border: "none",
+                          cursor: "pointer",
+                          color: "var(--danger)",
+                          display: "flex",
+                          alignItems: "center",
+                          marginLeft: "6px",
+                        }}
+                      >
+                        <span className="material-symbols-outlined" style={{ fontSize: "16px" }}>close</span>
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div style={{ display: "flex", justify: "flex-end", gap: "16px" }}>
+                <button type="button" onClick={() => setIsEditing(false)} className="ceramic-btn">
+                  Cancel
+                </button>
+                <button type="submit" className="ceramic-btn primary">
+                  Save Settings
+                </button>
+              </div>
+            </form>
+          </div>
+        ) : (
+          <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
+            <div className="ceramic-card" style={{ display: "flex", gap: "32px", alignItems: "center" }}>
+              <div
+                style={{
+                  width: "90px",
+                  height: "90px",
+                  borderRadius: "50%",
+                  background: "var(--tag-bg)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "2rem",
+                  fontWeight: 800,
+                  color: "var(--accent-primary)",
+                  boxShadow: "var(--shadow-outset)",
+                }}
+              >
+                {profile.username ? profile.username[0].toUpperCase() : "U"}
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                <h2 style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700 }}>{profile.username}</h2>
+                <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem" }}>{profile.email}</p>
+                {profile.githubProfile && (
+                  <a
+                    href={profile.githubProfile}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      color: "var(--accent-primary)",
+                      fontSize: "0.85rem",
+                      fontWeight: 600,
+                      textDecoration: "none",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "4px",
+                    }}
+                  >
+                    <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>code</span>
+                    GitHub Portfolio
+                  </a>
+                )}
+              </div>
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "32px" }}>
+              {/* Bio card */}
+              <div className="ceramic-card" style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                <h3 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1.1rem", fontWeight: 700, borderBottom: "1px solid var(--border-color)", paddingBottom: "12px" }}>
+                  Developer Bio
+                </h3>
+                <p style={{ fontSize: "0.95rem", lineHeight: 1.6, color: "var(--text-primary)" }}>
+                  {profile.bio || "No biography provided yet. Edit your profile to share details about your development interests!"}
+                </p>
+              </div>
+
+              {/* Skills rating card */}
+              <div className="ceramic-card" style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                <h3 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1.1rem", fontWeight: 700, borderBottom: "1px solid var(--border-color)", paddingBottom: "12px" }}>
+                  Technical Expertise
+                </h3>
+                <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                  {profile.skills?.length === 0 ? (
+                    <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", fontStyle: "italic" }}>
+                      No skills added yet.
+                    </p>
+                  ) : (
+                    profile.skills?.map((skill, index) => (
+                      <div key={index}>
+                        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.85rem", fontWeight: 600, marginBottom: "6px" }}>
+                          <span>{skill.name}</span>
+                          <span>{skill.rating} / 5</span>
+                        </div>
+                        <div className="ceramic-progress-track">
+                          <div className="ceramic-progress-bar" style={{ width: `${(skill.rating / 5) * 100}%` }}></div>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </Nav>
+  );
+};
+
+export default Profile;
