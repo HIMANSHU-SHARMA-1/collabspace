@@ -1,10 +1,21 @@
 require('./setup')
 const request  = require('supertest')
 const app = require('../index')
+const joinRequest = require('../models/joinRequest')
 
 const {registerAndLogin} = require('./helpers')
 
 describe('PUT /api/joinRequest/reject/:id',()=>{
+
+     // leader Creates the project
+     const projectBody = {
+        "projectname": "Test project",
+  "requiredSkill": ["react"],
+  "teamsize": "4",
+  "githubLink": "https://test.com",
+  "description": "it's a test description",
+  "status": "open"
+    }
 
     test('a non-leader cannot reject a join request that is not theirs',async()=>{
 
@@ -30,15 +41,6 @@ describe('PUT /api/joinRequest/reject/:id',()=>{
       password: 'password123',
     })
 
-    // leader Creates the project
-    const projectBody = {
-        "projectname": "Test project",
-  "requiredSkill": ["react"],
-  "teamsize": "4",
-  "githubLink": "https://test.com",
-  "description": "it's a test description",
-  "status": "open"
-    }
     const projRes = await request(app).post('/api/project/create')
     .set('Authorization', `Bearer ${leader.token}`)
     .send(projectBody)
@@ -61,4 +63,38 @@ expect(res.body.message).toBe('not project leader, forbidden !')
 
 
     })
+
+    test('the actual leader can reject a pending request successfully', async () => {
+        // Arrange — same chain as before: leader, requester, project, join request
+        const leader = await registerAndLogin({ 
+            username: 'leaderuser',
+            email: 'leader@example.com',
+            password: 'password123', })
+        const requester = await registerAndLogin({
+            username: 'requestUser',
+      email: 'requester@example.com',
+      password: 'password123',
+          })
+      
+        const projRes = await request(app)
+          .post('/api/project/create')
+          .set('Authorization', `Bearer ${leader.token}`)
+          .send(projectBody)
+      
+        const joinReqRes = await request(app)
+          .post('/api/joinRequest/send')
+          .set('Authorization', `Bearer ${requester.token}`)
+          .send({ projectId: projRes.body.data.id })
+      
+        const reqId = joinReqRes.body.data.id
+      
+        // Act — this time the LEADER rejects, not an outsider
+        const res = await request(app)
+          .put(`/api/joinRequest/reject/${reqId}`)
+          .set('Authorization', `Bearer ${leader.token}`)
+      
+        // Assert
+        const updatedRequest = await joinRequest.findById(reqId)
+        expect(updatedRequest.status).toBe('rejected')
+      })
 })

@@ -124,7 +124,7 @@ const rejectRequest = async(req,res)=>{
             return res.status(400).json({message:'Request already processed'})
         }
         if(request.receiver.toString() !== req.user.id){
-            return res.status(403).json({statusCode:403,message:'not project leader, forbidden !'})
+            return res.status(403).json({message:'not project leader, forbidden !'})
         }
         
         const updatedRequest = await Request.findByIdAndUpdate(req.params.id,{
