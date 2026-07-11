@@ -1,21 +1,16 @@
-const {googleGenerativeAi, GoogleGenerativeAI} = require('@google/generative-ai')
+const { GoogleGenAI } = require("@google/genai");
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY)
+const genAI = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY,
+});
 
-const model =   genAI.getGenerativeModel({
-    model:'gemini-2.5-flash-lite'
-})
+async function callAi(prompt) {
+  const response = await genAI.models.generateContent({
+    model: "gemini-2.5-flash",
+    contents: prompt,
+  });
 
-const callAi = async(prompt)=>{
-    try{
-        // console.time('Gemini request')
-        const result = await model.generateContent(prompt);
-        // console.timeEnd('Gemini request')
-        return result.response.text()
-    }
-    catch(err){
-        console.error('Gemini Error:',err)
-        throw err;
-    }
+  return response.text;
 }
-module.exports = {callAi}
+
+module.exports = { callAi };
