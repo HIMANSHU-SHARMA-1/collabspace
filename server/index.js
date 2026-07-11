@@ -42,6 +42,7 @@ app.use('/api/message',messageRoutes)
 app.use('/api/notifications', notificationRoutes)
 app.use('/api/openAi',aiRoutes)
 
+//for test to trigger
 if(require.main === module){
     connectDB()
     server.listen(process.env.PORT, ()=>{
