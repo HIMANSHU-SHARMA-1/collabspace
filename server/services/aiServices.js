@@ -1,28 +1,6 @@
 //const openAi = require('openai');
 const {callAi} = require('./geminiService')
-// const client = new openAi({
-//     baseURL:'https://integrate.api.nvidia.com/v1',
-//     apiKey:process.env.NVIDIA_API_KEY
-// });
 
-// const callAi = async(prompt)=>{
-//     console.time("AI Request");
-//     console.log("Starting AI Call...");
-//     const completion = await client.chat.completions.create({
-//         model:'deepseek-ai/deepseek-v4-flash',
-//         messages:[
-//             {
-//                 role:"user",
-//                 content:prompt
-//             }
-//         ],
-//         temperature:0,
-//         max_tokens: 150
-//     });
-//     console.log("AI Response Received");
-//     console.timeEnd("AI Request");
-//     return completion.choices[0].message.content;
-// }
 
 const testAIConnection = async()=>{
     const prompt = 'Reply with only: AI connection working'
