@@ -1,14 +1,11 @@
-# whole automation
 name: Run Tests
 
-# Trigger (on:) — what causes the workflow to run: a push, a pull request, a schedule, manually
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
 
-# Job — one unit of work, run on its own fresh machine
 jobs:
   test:
     runs-on: ubuntu-latest
