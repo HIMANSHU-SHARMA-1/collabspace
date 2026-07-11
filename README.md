@@ -1,4 +1,4 @@
-# 🚀 CollabSpace
+# 🚀 CollabSpace   [![Run Tests](https://github.com/HIMANSHU-SHARMA-1/collabspace/actions/workflows/test.yml/badge.svg)](https://github.com/HIMANSHU-SHARMA-1/collabspace/actions/workflows/test.yml)
 
 ### AI-Powered College Project & Team Finder Platform
 
