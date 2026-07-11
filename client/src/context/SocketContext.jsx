@@ -13,7 +13,7 @@ const SocketProvider = ({children}) => {
     useEffect(()=>{
         if(!user) return
 
-        const newSocket = io('http://localhost:5000')
+        const newSocket = io(import.meta.env.VITE_API_URL)
         newSocket.on('connect',()=>{
             newSocket.emit('registerUser',user.id)
         })
