@@ -13,13 +13,13 @@ const aiRoutes = require('./routes/aiRoutes')
 const app = express()
 
 app.use(cors({
-    origin:'http://localhost:5173'
+    origin: process.env.CORS_ORIGIN
 }))
 
 const server = http.createServer(app)
 const io = new Server(server,{
     cors:{
-        origin:'*',
+        origin:process.env.CORS_ORIGIN,
     }
 })
 app.set('io', io)
