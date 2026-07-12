@@ -203,16 +203,8 @@ const MyProject = () => {
 
         {/* Chat modal overlay */}
         {openChat && (
-          <div
-            style={{
-              position: "fixed",
-              bottom: "20px",
-              right: "20px",
-              width: "400px",
-              zIndex: 2000,
-            }}
-          >
-            <div className="ceramic-card" style={{ padding: "0px", overflow: "hidden", display: "flex", flexDirection: "column", height: "500px" }}>
+          <div className="chat-modal-overlay">
+            <div className="ceramic-card chat-modal-card">
               <div
                 style={{
                   padding: "16px 20px",
