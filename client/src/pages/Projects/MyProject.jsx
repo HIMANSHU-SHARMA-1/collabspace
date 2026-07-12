@@ -89,7 +89,7 @@ const MyProject = () => {
           <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
             {projects.map((project, index) => (
               <div key={index} className="ceramic-card" style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "16px" }}>
                   <div>
                     <h3 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1.3rem", fontWeight: 700 }}>
                       {project.projectname}
@@ -98,7 +98,7 @@ const MyProject = () => {
                       Created by you • Status: <span style={{ fontWeight: 600, color: "var(--accent-primary)" }}>{project.status.toUpperCase()}</span>
                     </p>
                   </div>
-                  <div style={{ display: "flex", gap: "10px" }}>
+                  <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
                     <button onClick={() => setopenChat(project._id)} className="ceramic-btn">
                       <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>forum</span>
                       Chat Room
