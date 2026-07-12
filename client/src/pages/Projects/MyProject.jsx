@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import api from "../../api/axios";
 import Nav from "../../components/Navbar/Nav";
 import Chat from "../chat/Chat";
+import { Rnd } from "react-rnd";
 
 const MyProject = () => {
   const [openChat, setopenChat] = useState(null);
@@ -203,9 +204,22 @@ const MyProject = () => {
 
         {/* Chat modal overlay */}
         {openChat && (
-          <div className="chat-modal-overlay">
+          <Rnd
+            default={{
+              x: window.innerWidth > 900 ? window.innerWidth - 420 : 16,
+              y: window.innerHeight > 900 ? window.innerHeight - 520 : window.innerHeight - 520 - 90,
+              width: window.innerWidth > 900 ? 400 : window.innerWidth - 32,
+              height: 500,
+            }}
+            minWidth={300}
+            minHeight={400}
+            bounds="window"
+            dragHandleClassName="chat-header-handle"
+            style={{ zIndex: 2000, position: "fixed" }}
+          >
             <div className="ceramic-card chat-modal-card">
               <div
+                className="chat-header-handle"
                 style={{
                   padding: "16px 20px",
                   borderBottom: "1px solid var(--border-color)",
@@ -227,7 +241,7 @@ const MyProject = () => {
                 <Chat projectId={openChat} members={projects.find((p) => p._id === openChat)?.members} />
               </div>
             </div>
-          </div>
+          </Rnd>
         )}
       </div>
     </Nav>

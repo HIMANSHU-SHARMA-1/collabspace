@@ -346,32 +346,24 @@ input, button, textarea, select {
   .ceramic-card {
     padding: 24px !important;
   }
-  
-  .chat-modal-overlay {
-    bottom: 90px !important; /* Above bottom nav */
-    right: 16px !important;
-    left: 16px !important;
-    width: auto !important;
-  }
 }
 
 /* Chat Modal Classes */
-.chat-modal-overlay {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 400px;
-  max-width: calc(100% - 32px);
-  z-index: 2000;
-}
-
 .chat-modal-card {
   padding: 0px !important;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  height: 500px;
-  max-height: calc(100vh - 120px);
+  height: 100%;
+  width: 100%;
+}
+
+.chat-header-handle {
+  cursor: grab;
+}
+
+.chat-header-handle:active {
+  cursor: grabbing;
 }
 
 
