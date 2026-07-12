@@ -141,7 +141,7 @@ const CreateProject = () => {
               )}
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
+            <div className="responsive-grid-2-col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
               <div className="ceramic-input-group">
                 <label htmlFor="teamsize">Target Team Size</label>
                 <input

@@ -334,7 +334,7 @@ input, button, textarea, select {
 }
 
 @media (max-width: 900px) {
-  .login-responsive-grid, .register-responsive-grid {
+  .login-responsive-grid, .register-responsive-grid, .responsive-grid-2-col {
     grid-template-columns: 1fr !important;
     gap: 32px !important;
   }
