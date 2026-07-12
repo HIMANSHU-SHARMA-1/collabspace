@@ -1,5 +1,5 @@
 //const openAi = require('openai');
-const {callAi} = require('./geminiService')
+const {callAi} = require('./openRouterService')
 
 
 const testAIConnection = async()=>{
