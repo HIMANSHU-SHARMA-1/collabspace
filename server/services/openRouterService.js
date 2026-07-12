@@ -15,7 +15,7 @@ const callAi = async (prompt) => {
                     content: prompt
                 }
             ],
-            temperature: 0.1,
+            temperature: 0.3,
             max_tokens: 500
         });
         
