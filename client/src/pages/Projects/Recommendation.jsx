@@ -115,7 +115,7 @@ const Recommendation = () => {
                       Why this project matches:
                     </h4>
                     <p style={{ fontSize: "0.92rem", lineHeight: 1.5, color: "var(--text-primary)" }}>
-                      {proj.reason}
+                      {proj.reason || proj.Reason || "No specific reason provided."}
                     </p>
                   </div>
                 </div>
