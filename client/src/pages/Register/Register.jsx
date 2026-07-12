@@ -164,6 +164,7 @@ const Register = () => {
 
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
           <div
+            className="register-responsive-grid"
             style={{
               display: "grid",
               gridTemplateColumns: "1fr 1fr",
