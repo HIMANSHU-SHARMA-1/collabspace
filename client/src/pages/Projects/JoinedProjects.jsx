@@ -134,6 +134,18 @@ const JoinedProjects = () => {
             minHeight={400}
             dragHandleClassName="chat-header-handle"
             cancel="button"
+            resizeHandleStyles={{
+              bottomRight: { width: "40px", height: "40px", right: "0", bottom: "0" }
+            }}
+            resizeHandleComponent={{
+              bottomRight: (
+                <div style={{ position: "absolute", right: "4px", bottom: "4px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "20px", color: "var(--text-secondary)", transform: "rotate(45deg)" }}>
+                    unfold_more
+                  </span>
+                </div>
+              )
+            }}
             style={{ zIndex: 2000, position: "fixed" }}
           >
             <div className="ceramic-card chat-modal-card">
