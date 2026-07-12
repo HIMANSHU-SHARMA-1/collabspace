@@ -132,8 +132,8 @@ const JoinedProjects = () => {
             }}
             minWidth={300}
             minHeight={400}
-            bounds="window"
             dragHandleClassName="chat-header-handle"
+            cancel="button"
             style={{ zIndex: 2000, position: "fixed" }}
           >
             <div className="ceramic-card chat-modal-card">
@@ -150,8 +150,13 @@ const JoinedProjects = () => {
               >
                 <h4 style={{ fontWeight: 700, margin: 0 }}>Team Chat</h4>
                 <button
-                  onClick={() => setopenChat(null)}
-                  style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center" }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setopenChat(null);
+                  }}
+                  onMouseDown={(e) => e.stopPropagation()}
+                  onTouchStart={(e) => e.stopPropagation()}
+                  style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", zIndex: 10 }}
                 >
                   <span className="material-symbols-outlined">close</span>
                 </button>
