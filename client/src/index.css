@@ -14,6 +14,7 @@
   --accent-glow: rgba(208, 134, 92, 0.25);
   --tag-bg: #1d1d23;
   --danger: #f87171;
+  --nav-glass-bg: rgba(18, 18, 22, 0.75);
 }
 
 :root[data-theme="light"] {
@@ -30,6 +31,7 @@
   --accent-glow: rgba(180, 155, 133, 0.2);
   --tag-bg: #edeae6;
   --danger: #ef4444;
+  --nav-glass-bg: rgba(244, 243, 241, 0.75);
 }
 
 :root[data-theme="dark"] {
@@ -46,6 +48,7 @@
   --accent-glow: rgba(208, 134, 92, 0.25);
   --tag-bg: #1d1d23;
   --danger: #f87171;
+  --nav-glass-bg: rgba(18, 18, 22, 0.75);
 }
 
 /* Base Settings */
@@ -343,7 +346,34 @@ input, button, textarea, select {
   .ceramic-card {
     padding: 24px !important;
   }
+  
+  .chat-modal-overlay {
+    bottom: 90px !important; /* Above bottom nav */
+    right: 16px !important;
+    left: 16px !important;
+    width: auto !important;
+  }
 }
+
+/* Chat Modal Classes */
+.chat-modal-overlay {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 400px;
+  max-width: calc(100% - 32px);
+  z-index: 2000;
+}
+
+.chat-modal-card {
+  padding: 0px !important;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  max-height: calc(100vh - 120px);
+}
+
 
 @media (max-width: 900px) {
   .ceramic-shell-layout {
@@ -359,11 +389,11 @@ input, button, textarea, select {
     flex-direction: row;
     justify-content: space-around; /* Even spacing */
     align-items: center;
-    background: rgba(18, 18, 22, 0.65); /* More transparent for glassmorphism */
+    background: var(--nav-glass-bg); /* Use themed glass background */
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px); /* For iOS Safari */
-    border-top: 1px solid rgba(255, 255, 255, 0.08); /* Subtle glass edge */
-    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.4);
+    border-top: 1px solid var(--border-color); /* Themed glass edge */
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
     padding: 12px 12px 28px 12px; /* iOS safe area bottom */
     z-index: 1000;
     margin: 0;
