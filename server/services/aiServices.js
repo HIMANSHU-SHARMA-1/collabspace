@@ -37,7 +37,7 @@ const getProjectRecommendations = async(userskills, projects)=>{
 
     Rank projects from best match to worst match.
 
-    Reason must be less than 15 words.
+    Provide a clear, 1-2 sentence explanation for the 'reason' field detailing exactly why the user's skills match the project. Do not make it too brief.
 
     Return only raw JSON
     Do not use markdown:
