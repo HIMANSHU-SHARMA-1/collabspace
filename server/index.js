@@ -42,6 +42,10 @@ app.use('/api/message',messageRoutes)
 app.use('/api/notifications', notificationRoutes)
 app.use('/api/openAi',aiRoutes)
 
+app.get("/debug-sentry", function mainHandler(req, res) {
+    throw new Error("My first Sentry error!");
+  });
+
 //for test to trigger
 if(require.main === module){
     connectDB()
