@@ -144,16 +144,7 @@ const Nav = ({ children }) => {
 
           <button
             onClick={handleLogout}
-            className="ceramic-sidebar-link"
-            style={{
-              background: "none",
-              border: "none",
-              width: "100%",
-              textAlign: "left",
-              cursor: "pointer",
-              marginTop: "auto",
-              color: "var(--danger)",
-            }}
+            className="ceramic-sidebar-link logout-btn"
           >
             <span className="material-symbols-outlined">logout</span>
             Logout

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import api from "../../api/axios";
 import Chat from "../chat/Chat";
 import Nav from "../../components/Navbar/Nav";
+import { Rnd } from "react-rnd";
 
 const JoinedProjects = () => {
   const [openChat, setopenChat] = useState(null);
@@ -122,17 +123,34 @@ const JoinedProjects = () => {
 
         {/* Chat modal overlay */}
         {openChat && (
-          <div
-            style={{
-              position: "fixed",
-              bottom: "20px",
-              right: "20px",
-              width: "400px",
-              zIndex: 2000,
+          <Rnd
+            default={{
+              x: window.innerWidth > 900 ? window.innerWidth - 420 : 16,
+              y: window.innerHeight > 900 ? window.innerHeight - 520 : window.innerHeight - 520 - 90,
+              width: window.innerWidth > 900 ? 400 : window.innerWidth - 32,
+              height: 500,
             }}
+            minWidth={300}
+            minHeight={400}
+            dragHandleClassName="chat-header-handle"
+            cancel="button"
+            resizeHandleStyles={{
+              bottomRight: { width: "40px", height: "40px", right: "0", bottom: "0" }
+            }}
+            resizeHandleComponent={{
+              bottomRight: (
+                <div style={{ position: "absolute", right: "4px", bottom: "4px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "20px", color: "var(--text-secondary)", transform: "rotate(45deg)" }}>
+                    unfold_more
+                  </span>
+                </div>
+              )
+            }}
+            style={{ zIndex: 2000, position: "fixed" }}
           >
-            <div className="ceramic-card" style={{ padding: "0px", overflow: "hidden", display: "flex", flexDirection: "column", height: "500px" }}>
+            <div className="ceramic-card chat-modal-card">
               <div
+                className="chat-header-handle"
                 style={{
                   padding: "16px 20px",
                   borderBottom: "1px solid var(--border-color)",
@@ -144,8 +162,13 @@ const JoinedProjects = () => {
               >
                 <h4 style={{ fontWeight: 700, margin: 0 }}>Team Chat</h4>
                 <button
-                  onClick={() => setopenChat(null)}
-                  style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center" }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setopenChat(null);
+                  }}
+                  onMouseDown={(e) => e.stopPropagation()}
+                  onTouchStart={(e) => e.stopPropagation()}
+                  style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", zIndex: 10 }}
                 >
                   <span className="material-symbols-outlined">close</span>
                 </button>
@@ -154,7 +177,7 @@ const JoinedProjects = () => {
                 <Chat projectId={openChat} members={projects.find((p) => p._id === openChat)?.members} />
               </div>
             </div>
-          </div>
+          </Rnd>
         )}
       </div>
     </Nav>
