@@ -116,7 +116,7 @@ const Login = () => {
                 fontWeight: 500,
               }}
             >
-              The collegiate matchmaking hub where student creators connect, synchronize skills, and build high-impact projects.
+              Connect the brightest minds. Combine the sharpest skills. Launch high-impact projects.
             </p>
           </div>
 
@@ -141,7 +141,7 @@ const Login = () => {
               <div>
                 <h3 style={{ fontSize: "1.05rem", fontWeight: 700, marginBottom: "4px" }}>Our Aim</h3>
                 <p style={{ fontSize: "0.92rem", color: "var(--text-secondary)", lineHeight: 1.55 }}>
-                  Empower college students to form multidisciplinary project teams, helping ideas transition from raw concepts to working deployments.
+                  Turn campus concepts into working code. We empower students to build unstoppable, cross-functional teams in seconds.
                 </p>
               </div>
             </div>
@@ -166,7 +166,7 @@ const Login = () => {
               <div>
                 <h3 style={{ fontSize: "1.05rem", fontWeight: 700, marginBottom: "4px" }}>Our Objective</h3>
                 <p style={{ fontSize: "0.92rem", color: "var(--text-secondary)", lineHeight: 1.55 }}>
-                  Utilize AI-driven recommendation profiles to accurately match students based on complementary skills, targeted ratings, and project workloads.
+                  Powered by AI, driven by talent. We analyze your stack, gauge your workload, and match you with your missing puzzle pieces.
                 </p>
               </div>
             </div>
@@ -191,7 +191,7 @@ const Login = () => {
               <div>
                 <h3 style={{ fontSize: "1.05rem", fontWeight: 700, marginBottom: "4px" }}>Our Purpose</h3>
                 <p style={{ fontSize: "0.92rem", color: "var(--text-secondary)", lineHeight: 1.55 }}>
-                  Eliminate recruitment friction. Find matching developers, designers, or leaders instantly and collaborate in structured room chats.
+                  Frictionless team building. Find your leaders, lock in your developers, and jump straight into structured, real-time collaboration.
                 </p>
               </div>
             </div>
