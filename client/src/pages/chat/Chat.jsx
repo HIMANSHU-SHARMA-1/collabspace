@@ -65,7 +65,7 @@ const Chat = ({ projectId, members }) => {
           <p style={{ color: "var(--danger)", fontSize: "0.85rem", textAlign: "center" }}>{error}</p>
         ) : (
           messages.map((msg, index) => {
-            const isMe = msg.sender._id === user.id;
+            const isMe = msg.sender?._id === user?.id;
             return (
               <div
                 key={index}
@@ -77,7 +77,7 @@ const Chat = ({ projectId, members }) => {
               >
                 {!isMe && (
                   <span style={{ fontSize: "0.75rem", color: "var(--text-secondary)", marginBottom: "4px", paddingLeft: "6px" }}>
-                    {msg.sender.username}
+                    {msg.sender?.username || "Unknown"}
                   </span>
                 )}
                 <div
