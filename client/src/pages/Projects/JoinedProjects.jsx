@@ -125,9 +125,9 @@ const JoinedProjects = () => {
         {openChat && (
           <Rnd
             default={{
-              x: window.innerWidth > 900 ? window.innerWidth - 420 : 16,
-              y: window.innerHeight > 900 ? window.innerHeight - 520 : window.innerHeight - 520 - 90,
-              width: window.innerWidth > 900 ? 400 : window.innerWidth - 32,
+              x: window.innerWidth / 2 - 200,
+              y: window.innerHeight / 2 - 250,
+              width: 400,
               height: 500,
             }}
             minWidth={300}
