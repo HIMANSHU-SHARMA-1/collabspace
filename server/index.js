@@ -43,11 +43,6 @@ app.use('/api/message',messageRoutes)
 app.use('/api/notifications', notificationRoutes)
 app.use('/api/openAi',aiRoutes)
 
-
-app.get("/debug-sentry", function () {
-    throw new Error("My first Sentry error!");
-});
-
 const Sentry = require('@sentry/node')
 Sentry.setupExpressErrorHandler(app)
 
