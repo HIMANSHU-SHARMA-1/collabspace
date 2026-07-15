@@ -1,3 +1,4 @@
+require('./instrument')
 const cors = require('cors')
 const http = require('http')
 const {Server} = require('socket.io')
@@ -42,9 +43,13 @@ app.use('/api/message',messageRoutes)
 app.use('/api/notifications', notificationRoutes)
 app.use('/api/openAi',aiRoutes)
 
-app.get("/debug-sentry", function mainHandler(req, res) {
+
+app.get("/debug-sentry", function () {
     throw new Error("My first Sentry error!");
-  });
+});
+
+const Sentry = require('@sentry/node')
+Sentry.setupExpressErrorHandler(app)
 
 //for test to trigger
 if(require.main === module){
