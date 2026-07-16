@@ -1,5 +1,3 @@
-import * as Sentry from '@sentry/react'
-
 import React, { useEffect, useState } from "react";
 import api from "../../api/axios";
 import { useAuth } from "../../context/AuthContext";
@@ -123,9 +121,6 @@ const Dashboard = () => {
               </div>
             </div>
           ))}
-          <button onClick={() => { throw new Error('My first Sentry React error!') }}>
-  Break the world
-</button>
         </div>
       )}
     </Nav>
