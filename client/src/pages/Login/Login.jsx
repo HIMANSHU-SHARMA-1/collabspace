@@ -139,7 +139,7 @@ const Login = () => {
                 <span className="material-symbols-outlined" style={{ fontSize: "24px" }}>track_changes</span>
               </div>
               <div>
-                <h3 style={{ fontSize: "1.05rem", fontWeight: 700, marginBottom: "4px" }}>Our Aim (Ignite)</h3>
+                <h3 style={{ fontSize: "1.05rem", fontWeight: 700, marginBottom: "4px" }}>Ignite</h3>
                 <p style={{ fontSize: "0.92rem", color: "var(--text-secondary)", lineHeight: 1.55 }}>
                   Turn campus concepts into working code. We empower students to build unstoppable, cross-functional teams in seconds.
                 </p>
@@ -164,7 +164,7 @@ const Login = () => {
                 <span className="material-symbols-outlined" style={{ fontSize: "24px" }}>insights</span>
               </div>
               <div>
-                <h3 style={{ fontSize: "1.05rem", fontWeight: 700, marginBottom: "4px" }}>Our Objective (Align)</h3>
+                <h3 style={{ fontSize: "1.05rem", fontWeight: 700, marginBottom: "4px" }}>Align</h3>
                 <p style={{ fontSize: "0.92rem", color: "var(--text-secondary)", lineHeight: 1.55 }}>
                   Powered by AI, driven by talent. We analyze your stack, gauge your workload, and match you with your missing puzzle pieces.
                 </p>
@@ -189,7 +189,7 @@ const Login = () => {
                 <span className="material-symbols-outlined" style={{ fontSize: "24px" }}>groups</span>
               </div>
               <div>
-                <h3 style={{ fontSize: "1.05rem", fontWeight: 700, marginBottom: "4px" }}>Our Purpose (Execute)</h3>
+                <h3 style={{ fontSize: "1.05rem", fontWeight: 700, marginBottom: "4px" }}>Execute</h3>
                 <p style={{ fontSize: "0.92rem", color: "var(--text-secondary)", lineHeight: 1.55 }}>
                   Frictionless team building. Find your leaders, lock in your developers, and jump straight into structured, real-time collaboration.
                 </p>
@@ -313,6 +313,7 @@ const Login = () => {
           }
         }
       `}</style>
+      
     </div>
   );
 };

@@ -1,3 +1,5 @@
+import * as Sentry from '@sentry/react'
+
 import React, { useEffect, useState } from "react";
 import api from "../../api/axios";
 import { useAuth } from "../../context/AuthContext";
@@ -50,6 +52,7 @@ const Dashboard = () => {
 
   return (
     <Nav>
+      
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "32px", flexWrap: "wrap", gap: "16px" }}>
         <div>
           <h1 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "2rem", fontWeight: 700 }}>
@@ -120,6 +123,9 @@ const Dashboard = () => {
               </div>
             </div>
           ))}
+          <button onClick={() => { throw new Error('My first Sentry React error!') }}>
+  Break the world
+</button>
         </div>
       )}
     </Nav>
