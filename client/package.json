@@ -14,6 +14,7 @@
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^9.1.1",
     "@mui/material": "^9.1.1",
+    "@sentry/react": "^10.66.0",
     "axios": "^1.18.0",
     "jwt-decode": "^4.0.0",
     "react": "^19.2.6",
