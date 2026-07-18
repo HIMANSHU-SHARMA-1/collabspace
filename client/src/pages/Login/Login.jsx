@@ -3,6 +3,9 @@ import { login } from "../../services/authService";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { getTheme, setTheme } from "../../utils/theme";
+import TextType from "../../components/ReactBits/TextType";
+import PixelTransition from "../../components/ReactBits/PixelTransition";
+import ScrollFloat from "../../components/ReactBits/ScrollFloat";
 
 const Login = () => {
   const [formData, setformData] = useState({});
@@ -79,12 +82,30 @@ const Login = () => {
       {/* Hero Section */}
       <section className="landing-hero">
         <div>
-          <h1 className="hero-headline">
-            Connect the brightest minds.<br/>Combine the sharpest skills.<br/>Launch high-impact projects.
-          </h1>
-          <p className="hero-subheadline">
-            CollabSpace matches developers, designers, and project leads into high-signal rooms built around complementary skills, real workloads, and ambitious collegiate ideas.
-          </p>
+          <ScrollFloat
+            animationDuration={1.2}
+            ease="back.inOut(2)"
+            scrollStart="center bottom+=50%"
+            scrollEnd="bottom bottom-=40%"
+            stagger={0.03}
+            containerClassName="hero-headline-container"
+            textClassName="hero-headline"
+          >
+            Connect the brightest minds. Combine the sharpest skills. Launch high-impact projects.
+          </ScrollFloat>
+          <TextType
+            as="p"
+            className="hero-subheadline"
+            text={[
+              "CollabSpace matches developers, designers, and project leads...",
+              "Into high-signal rooms built around complementary skills...",
+              "With real workloads, and ambitious collegiate ideas."
+            ]}
+            typingSpeed={40}
+            deletingSpeed={20}
+            pauseDuration={2000}
+            showCursor={true}
+          />
           <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
             <button onClick={scrollToLogin} className="ceramic-btn primary" style={{ borderRadius: "30px", padding: "16px 32px" }}>
               Join the Workspace
@@ -107,29 +128,77 @@ const Login = () => {
         </p>
 
         <div className="features-grid">
-          <div className="feature-card">
-            <div className="feature-icon-wrapper" style={{ color: "var(--accent-primary)" }}>
-              <span className="material-symbols-outlined">local_fire_department</span>
-            </div>
-            <h3 className="feature-title">Ignite</h3>
-            <p className="feature-desc">Turn campus concepts into working code before momentum evaporates.</p>
-          </div>
+          <PixelTransition
+            gridSize={12}
+            pixelColor="var(--accent-primary)"
+            aspectRatio="100%"
+            firstContent={
+              <div className="feature-card" style={{ height: "100%", margin: 0 }}>
+                <div className="feature-icon-wrapper" style={{ color: "var(--accent-primary)" }}>
+                  <span className="material-symbols-outlined">local_fire_department</span>
+                </div>
+                <h3 className="feature-title">Ignite</h3>
+                <p className="feature-desc">Turn campus concepts into working code before momentum evaporates.</p>
+              </div>
+            }
+            secondContent={
+              <div className="feature-card" style={{ height: "100%", margin: 0, background: "var(--accent-primary)" }}>
+                <div className="feature-icon-wrapper" style={{ color: "#111", background: "rgba(0,0,0,0.1)", borderColor: "rgba(0,0,0,0.2)" }}>
+                  <span className="material-symbols-outlined">local_fire_department</span>
+                </div>
+                <h3 className="feature-title" style={{ color: "#111" }}>Ignite</h3>
+                <p className="feature-desc" style={{ color: "#222", fontWeight: 500 }}>Turn campus concepts into working code before momentum evaporates.</p>
+              </div>
+            }
+          />
           
-          <div className="feature-card">
-            <div className="feature-icon-wrapper" style={{ color: "var(--accent-secondary)" }}>
-              <span className="material-symbols-outlined">insights</span>
-            </div>
-            <h3 className="feature-title">Align</h3>
-            <p className="feature-desc">AI-driven talent matching based on tech stacks, creative range, and real workload capacity.</p>
-          </div>
+          <PixelTransition
+            gridSize={12}
+            pixelColor="var(--accent-secondary)"
+            aspectRatio="100%"
+            firstContent={
+              <div className="feature-card" style={{ height: "100%", margin: 0 }}>
+                <div className="feature-icon-wrapper" style={{ color: "var(--accent-secondary)" }}>
+                  <span className="material-symbols-outlined">insights</span>
+                </div>
+                <h3 className="feature-title">Align</h3>
+                <p className="feature-desc">AI-driven talent matching based on tech stacks, creative range, and real workload capacity.</p>
+              </div>
+            }
+            secondContent={
+              <div className="feature-card" style={{ height: "100%", margin: 0, background: "var(--accent-secondary)" }}>
+                <div className="feature-icon-wrapper" style={{ color: "#111", background: "rgba(0,0,0,0.1)", borderColor: "rgba(0,0,0,0.2)" }}>
+                  <span className="material-symbols-outlined">insights</span>
+                </div>
+                <h3 className="feature-title" style={{ color: "#111" }}>Align</h3>
+                <p className="feature-desc" style={{ color: "#222", fontWeight: 500 }}>AI-driven talent matching based on tech stacks, creative range, and real workload capacity.</p>
+              </div>
+            }
+          />
 
-          <div className="feature-card">
-            <div className="feature-icon-wrapper" style={{ color: "#a855f7" }}>
-              <span className="material-symbols-outlined">token</span>
-            </div>
-            <h3 className="feature-title">Execute</h3>
-            <p className="feature-desc">Frictionless team building with structured real-time room chats and founder-grade rituals.</p>
-          </div>
+          <PixelTransition
+            gridSize={12}
+            pixelColor="#a855f7"
+            aspectRatio="100%"
+            firstContent={
+              <div className="feature-card" style={{ height: "100%", margin: 0 }}>
+                <div className="feature-icon-wrapper" style={{ color: "#a855f7" }}>
+                  <span className="material-symbols-outlined">token</span>
+                </div>
+                <h3 className="feature-title">Execute</h3>
+                <p className="feature-desc">Frictionless team building with structured real-time room chats and founder-grade rituals.</p>
+              </div>
+            }
+            secondContent={
+              <div className="feature-card" style={{ height: "100%", margin: 0, background: "#a855f7" }}>
+                <div className="feature-icon-wrapper" style={{ color: "#111", background: "rgba(0,0,0,0.1)", borderColor: "rgba(0,0,0,0.2)" }}>
+                  <span className="material-symbols-outlined">token</span>
+                </div>
+                <h3 className="feature-title" style={{ color: "#111" }}>Execute</h3>
+                <p className="feature-desc" style={{ color: "#222", fontWeight: 500 }}>Frictionless team building with structured real-time room chats and founder-grade rituals.</p>
+              </div>
+            }
+          />
         </div>
       </section>
 
