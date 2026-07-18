@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { login } from "../../services/authService";
+import { login, register } from "../../services/authService";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { getTheme, setTheme } from "../../utils/theme";
@@ -11,6 +11,13 @@ const Login = () => {
   const [formData, setformData] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  
+  // Registration State
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [regFormData, setRegFormData] = useState({});
+  const [regLoading, setRegLoading] = useState(false);
+  const [regError, setRegError] = useState("");
+
   const [theme, setLocalTheme] = useState(getTheme());
   const navigate = useNavigate();
   const { setToken, setUser } = useAuth();
@@ -54,6 +61,26 @@ const Login = () => {
 
   const addData = (e) => {
     setformData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const addRegData = (e) => {
+    setRegFormData({ ...regFormData, [e.target.name]: e.target.value });
+  };
+
+  const handleRegisterSubmit = async (e) => {
+    e.preventDefault();
+    setRegLoading(true);
+    setRegError("");
+    try {
+      const data = await register(regFormData);
+      if (data.success === true) {
+        setIsFlipped(false);
+      }
+    } catch (err) {
+      setRegError(err.response?.data?.message || err.message || "Registration failed");
+    } finally {
+      setRegLoading(false);
+    }
   };
 
   const scrollToLogin = () => {
@@ -270,68 +297,136 @@ const Login = () => {
           Join the early campus cohort and get matched into rooms where skill, ambition, and availability already line up.
         </p>
         
-        <div style={{ maxWidth: "600px", margin: "40px auto 0 auto" }}>
-          <form onSubmit={handleSubmit} className="code-login-wrapper">
-            <div className="code-login-header">
-              <div className="mac-dot red"></div>
-              <div className="mac-dot yellow"></div>
-              <div className="mac-dot green"></div>
+        <div className="auth-container">
+          <div className={`auth-flip-card ${isFlipped ? "flipped" : ""}`}>
+            
+            {/* FRONT: LOGIN */}
+            <div className="auth-card-front">
+              <form onSubmit={handleSubmit} className="code-login-wrapper" style={{ marginTop: 0 }}>
+                <div className="code-login-header">
+                  <div className="mac-dot red"></div>
+                  <div className="mac-dot yellow"></div>
+                  <div className="mac-dot green"></div>
+                </div>
+
+                <div className="code-line"><span className="keyword">function</span>&nbsp;<span className="function">email</span>() {"{"}</div>
+                <div className="code-line indent">
+                  <span className="keyword">const</span>&nbsp;message =&nbsp;<span className="string">`</span><input
+                    id="email"
+                    type="email"
+                    name="email"
+                    onChange={addData}
+                    placeholder="enter your email here"
+                    required
+                    className="code-input"
+                  /><span className="string">`</span>
+                </div>
+                <div className="code-line indent"><span className="keyword">return</span>&nbsp;message;</div>
+                <div className="code-line">{"}"}</div>
+
+                <div className="code-line"><span className="keyword">function</span>&nbsp;<span className="function">password</span>() {"{"}</div>
+                <div className="code-line indent">
+                  <span className="keyword">const</span>&nbsp;password =&nbsp;<span className="string">'</span><input
+                    id="password"
+                    type="password"
+                    name="password"
+                    onChange={addData}
+                    placeholder="Enter your password here"
+                    required
+                    className="code-input"
+                  /><span className="string">'</span>
+                </div>
+                <div className="code-line indent"><span className="keyword">return</span>&nbsp;password;</div>
+                <div className="code-line">{"}"}</div>
+
+                <br />
+                <div className="code-line"><span className="function">email</span>();</div>
+                <div className="code-line"><span className="function">password</span>();</div>
+
+                {error && (
+                  <div className="code-line comment" style={{ marginTop: "16px", color: "#e06c75" }}>
+                    // Error: {error}
+                  </div>
+                )}
+
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginTop: "24px" }}>
+                  <button
+                    type="button"
+                    onClick={() => setIsFlipped(true)}
+                    style={{ background: "none", border: "none", color: "#5c6370", cursor: "pointer", textDecoration: "underline", fontSize: "0.85rem" }}
+                  >
+                    // Create account
+                  </button>
+                  <button type="submit" disabled={loading} className="run-button">
+                    <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>play_arrow</span>
+                    {loading ? "Executing..." : "Run"}
+                  </button>
+                </div>
+              </form>
             </div>
 
-            <div className="code-line"><span className="keyword">function</span>&nbsp;<span className="function">email</span>() {"{"}</div>
-            <div className="code-line indent">
-              <span className="keyword">const</span>&nbsp;message =&nbsp;<span className="string">`</span><input
-                id="email"
-                type="email"
-                name="email"
-                onChange={addData}
-                placeholder="enter your email here"
-                required
-                className="code-input"
-              /><span className="string">`</span>
+            {/* BACK: REGISTER */}
+            <div className="auth-card-back">
+              <form onSubmit={handleRegisterSubmit} className="code-login-wrapper" style={{ marginTop: 0, borderColor: "rgba(168, 85, 247, 0.3)" }}>
+                <div className="code-login-header">
+                  <div className="mac-dot red"></div>
+                  <div className="mac-dot yellow"></div>
+                  <div className="mac-dot green"></div>
+                </div>
+
+                <div className="code-line"><span className="comment">/**</span></div>
+                <div className="code-line"><span className="comment"> * Initialize a new creator profile</span></div>
+                <div className="code-line"><span className="comment"> */</span></div>
+                <div className="code-line"><span className="keyword">class</span>&nbsp;<span className="function">CollabSpaceUser</span>&nbsp;{"{"}</div>
+                <div className="code-line indent"><span className="keyword">constructor</span>() {"{"}</div>
+                
+                <div className="code-line indent" style={{ paddingLeft: "64px" }}>
+                  <span className="variable">this</span>.username =&nbsp;<span className="string">"</span><input
+                    type="text" name="username" onChange={addRegData} placeholder="your_handle" required className="code-input" style={{ width: "180px" }}
+                  /><span className="string">"</span>;
+                </div>
+                
+                <div className="code-line indent" style={{ paddingLeft: "64px" }}>
+                  <span className="variable">this</span>.email =&nbsp;<span className="string">"</span><input
+                    type="email" name="email" onChange={addRegData} placeholder="name@college.edu" required className="code-input" style={{ width: "180px" }}
+                  /><span className="string">"</span>;
+                </div>
+
+                <div className="code-line indent" style={{ paddingLeft: "64px" }}>
+                  <span className="variable">this</span>.password =&nbsp;<span className="string">"</span><input
+                    type="password" name="password" onChange={addRegData} placeholder="••••••••" required className="code-input" style={{ width: "180px" }}
+                  /><span className="string">"</span>;
+                </div>
+
+                <div className="code-line indent">{"}"}</div>
+                <div className="code-line">{"}"}</div>
+                <br/>
+                <div className="code-line"><span className="keyword">const</span>&nbsp;user =&nbsp;<span className="keyword">new</span>&nbsp;<span className="function">CollabSpaceUser</span>();</div>
+                <div className="code-line"><span className="keyword">await</span>&nbsp;user.<span className="function">register</span>();</div>
+
+                {regError && (
+                  <div className="code-line comment" style={{ marginTop: "16px", color: "#e06c75" }}>
+                    // Exception: {regError}
+                  </div>
+                )}
+
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginTop: "24px" }}>
+                  <button
+                    type="button"
+                    onClick={() => setIsFlipped(false)}
+                    style={{ background: "none", border: "none", color: "#5c6370", cursor: "pointer", textDecoration: "underline", fontSize: "0.85rem" }}
+                  >
+                    // Back to login
+                  </button>
+                  <button type="submit" disabled={regLoading} className="run-button" style={{ background: "#a855f7", color: "#fff" }}>
+                    <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>terminal</span>
+                    {regLoading ? "Compiling..." : "Initialize"}
+                  </button>
+                </div>
+              </form>
             </div>
-            <div className="code-line indent"><span className="keyword">return</span>&nbsp;message;</div>
-            <div className="code-line">{"}"}</div>
 
-            <div className="code-line"><span className="keyword">function</span>&nbsp;<span className="function">password</span>() {"{"}</div>
-            <div className="code-line indent">
-              <span className="keyword">const</span>&nbsp;password =&nbsp;<span className="string">'</span><input
-                id="password"
-                type="password"
-                name="password"
-                onChange={addData}
-                placeholder="Enter your password here"
-                required
-                className="code-input"
-              /><span className="string">'</span>
-            </div>
-            <div className="code-line indent"><span className="keyword">return</span>&nbsp;password;</div>
-            <div className="code-line">{"}"}</div>
-
-            <br />
-            <div className="code-line"><span className="function">email</span>();</div>
-            <div className="code-line"><span className="function">password</span>();</div>
-
-            {error && (
-              <div className="code-line comment" style={{ marginTop: "16px", color: "#e06c75" }}>
-                // Error: {error}
-              </div>
-            )}
-
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginTop: "24px" }}>
-              <button
-                type="button"
-                onClick={() => navigate("/register")}
-                style={{ background: "none", border: "none", color: "#5c6370", cursor: "pointer", textDecoration: "underline", fontSize: "0.85rem" }}
-              >
-                // Create account
-              </button>
-              <button type="submit" disabled={loading} className="run-button">
-                <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>play_arrow</span>
-                {loading ? "Executing..." : "Run"}
-              </button>
-            </div>
-          </form>
+          </div>
         </div>
       </section>
 

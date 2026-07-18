@@ -801,6 +801,37 @@ input, button, textarea, select {
   transform: none;
 }
 
+/* --- Flip Card Animations --- */
+.auth-container {
+  perspective: 1200px;
+  width: 100%;
+  max-width: 600px;
+  margin: 40px auto 0 auto;
+}
+
+.auth-flip-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style: preserve-3d;
+}
+
+.auth-flip-card.flipped {
+  transform: rotateY(180deg);
+}
+
+.auth-card-front, .auth-card-back {
+  grid-column: 1;
+  grid-row: 1;
+  backface-visibility: hidden;
+  width: 100%;
+}
+
+.auth-card-back {
+  transform: rotateY(180deg);
+}
+
 @media (max-width: 900px) {
   .landing-hero {
     grid-template-columns: 1fr;
