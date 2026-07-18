@@ -146,6 +146,7 @@ const Login = () => {
             scrollStart="center bottom+=50%"
             scrollEnd="bottom bottom-=40%"
             stagger={0.03}
+            scrub={false}
             containerClassName="hero-headline-container"
             textClassName="hero-headline"
           >
