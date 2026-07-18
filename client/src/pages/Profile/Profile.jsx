@@ -218,84 +218,116 @@ const Profile = () => {
                   <div className="mac-dot green"></div>
                 </div>
                 <div style={{ color: "#888", fontSize: "0.85rem", fontFamily: "'Fira Code', monospace", display: "flex", gap: "8px", alignItems: "center" }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "#f1fa8c" }}>data_object</span>
-                  <span>developer_profile.json</span>
+                  <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "#38bdf8" }}>terminal</span>
+                  <span>profile_view.sh</span>
                 </div>
               </div>
 
-              <div style={{ display: "flex", padding: "24px", fontFamily: "'Fira Code', monospace", fontSize: "0.95rem", lineHeight: 1.7, overflowX: "auto" }}>
-                {/* Fake Line Numbers */}
-                <div style={{ display: "flex", flexDirection: "column", color: "#444", paddingRight: "24px", userSelect: "none", textAlign: "right" }}>
-                  {Array.from({ length: 22 + (profile.skills?.length || 1) }).map((_, i) => <span key={i}>{i + 1}</span>)}
-                </div>
-
-                {/* JSON Content */}
-                <div style={{ color: "#c9d1d9", width: "100%", minWidth: "500px" }}>
-                  <span style={{ color: "#ff5f56" }}>{"{"}</span>
-                  <div style={{ paddingLeft: "24px", display: "flex", flexDirection: "column" }}>
-                    
-                    {/* Avatar Block */}
-                    <div>
-                      <span style={{ color: "#38bdf8" }}>"avatar"</span>: <span style={{ color: "#ff5f56" }}>{"{"}</span>
-                      <div style={{ paddingLeft: "24px", display: "flex", alignItems: "center", gap: "16px", margin: "8px 0" }}>
-                         <div style={{ width: "64px", height: "64px", borderRadius: "50%", background: "#111116", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.8rem", fontWeight: 800, color: "#38bdf8", border: "2px solid #2a2a35" }}>
-                            {profile.username ? profile.username[0].toUpperCase() : "U"}
-                         </div>
-                         <span style={{ color: "#6272a4" }}>// Auto-generated</span>
-                      </div>
-                      <span style={{ color: "#ff5f56" }}>{"}"}</span>,
-                    </div>
-                    
-                    <div>
-                      <span style={{ color: "#38bdf8" }}>"username"</span>: <span style={{ color: "#34d399" }}>"{profile.username}"</span>,
-                    </div>
-                    
-                    <div>
-                      <span style={{ color: "#38bdf8" }}>"email"</span>: <span style={{ color: "#34d399" }}>"{profile.email}"</span>,
-                    </div>
-
-                    <div>
-                      <span style={{ color: "#38bdf8" }}>"github"</span>: {profile.githubProfile ? (
-                        <a href={profile.githubProfile} target="_blank" rel="noopener noreferrer" style={{ color: "#f1fa8c", textDecoration: "underline" }}>
-                          "{profile.githubProfile}"
-                        </a>
-                      ) : (
-                        <span style={{ color: "#ff79c6" }}>null</span>
-                      )},
-                    </div>
-
-                    <div style={{ marginTop: "8px", maxWidth: "600px", whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
-                      <span style={{ color: "#38bdf8" }}>"bio"</span>: <span style={{ color: "#f1fa8c" }}>"{profile.bio || '404 - Biography not found'}"</span>,
-                    </div>
-
-                    <div style={{ marginTop: "8px" }}>
-                      <span style={{ color: "#38bdf8" }}>"skills"</span>: <span style={{ color: "#bd93f9" }}>[</span>
-                      <div style={{ paddingLeft: "24px" }}>
-                        {profile.skills?.length === 0 ? (
-                          <span style={{ color: "#6272a4" }}>// No skills added yet</span>
-                        ) : (
-                          profile.skills?.map((skill, index) => (
-                            <div key={index} style={{ margin: "4px 0", display: "flex", alignItems: "center" }}>
-                              <span style={{ color: "#ff5f56" }}>{"{"}</span>
-                              <span style={{ color: "#38bdf8", marginLeft: "12px" }}>"{skill.name}"</span>: 
-                              <span style={{ color: "#bd93f9", marginLeft: "12px", width: "16px", display: "inline-block", textAlign: "right" }}>{skill.rating}</span>
-                              <span style={{ color: "#6272a4", marginLeft: "24px", display: "flex", alignItems: "center" }}>
-                                 // 
-                                 <div style={{ display: "inline-block", width: "80px", height: "6px", background: "#111116", borderRadius: "3px", border: "1px solid #2a2a35", marginLeft: "12px", overflow: "hidden" }}>
-                                    <div style={{ width: `${(skill.rating / 5) * 100}%`, height: "100%", background: "#34d399" }}></div>
-                                 </div>
-                              </span>
-                              <span style={{ color: "#ff5f56", marginLeft: "24px" }}>{"}"}</span>{index < profile.skills.length - 1 ? "," : ""}
-                            </div>
-                          ))
-                        )}
-                      </div>
-                      <span style={{ color: "#bd93f9" }}>]</span>
-                    </div>
-
+              <div style={{ padding: "24px", fontFamily: "'Fira Code', monospace", fontSize: "0.95rem", lineHeight: 1.6, color: "#c9d1d9" }}>
+                
+                {/* Command 1: Fetch Profile */}
+                <div style={{ marginBottom: "32px" }}>
+                  <div style={{ display: "flex", gap: "8px", color: "#34d399", fontWeight: 700 }}>
+                    <span>guest@collabspace:~$</span>
+                    <span style={{ color: "#c9d1d9", fontWeight: 400 }}>fetch-profile --user {profile.username || "unknown"}</span>
                   </div>
-                  <span style={{ color: "#ff5f56" }}>{"}"}</span>
+                  
+                  {/* Neofetch style grid */}
+                  <div style={{ display: "flex", gap: "40px", marginTop: "20px", flexWrap: "wrap" }}>
+                    
+                    {/* Left: Avatar */}
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "16px", minWidth: "120px" }}>
+                      <div style={{ width: "120px", height: "120px", borderRadius: "8px", background: "#0B0B0F", border: "1px solid #38bdf8", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "3.5rem", fontWeight: 800, color: "#38bdf8", boxShadow: "0 0 20px rgba(56, 189, 248, 0.15)" }}>
+                        {profile.username ? profile.username[0].toUpperCase() : "U"}
+                      </div>
+                      <div style={{ color: "#888", fontSize: "0.85rem", textAlign: "center", display: "flex", alignItems: "center", gap: "6px" }}>
+                        <span style={{ color: "#34d399", fontSize: "12px" }}>●</span> SYSTEM ONLINE
+                      </div>
+                    </div>
+
+                    {/* Right: Info */}
+                    <div style={{ flexGrow: 1, display: "flex", flexDirection: "column", gap: "10px" }}>
+                       <div>
+                          <span style={{ color: "#38bdf8", fontWeight: 700, width: "100px", display: "inline-block" }}>OS:</span> 
+                          CollabSpace v2.0
+                       </div>
+                       <div>
+                          <span style={{ color: "#38bdf8", fontWeight: 700, width: "100px", display: "inline-block" }}>USER:</span> 
+                          {profile.username}
+                       </div>
+                       <div>
+                          <span style={{ color: "#38bdf8", fontWeight: 700, width: "100px", display: "inline-block" }}>EMAIL:</span> 
+                          {profile.email}
+                       </div>
+                       <div>
+                          <span style={{ color: "#38bdf8", fontWeight: 700, width: "100px", display: "inline-block" }}>GITHUB:</span> 
+                          {profile.githubProfile ? (
+                             <a href={profile.githubProfile} target="_blank" rel="noopener noreferrer" style={{ color: "#f1fa8c", textDecoration: "underline" }}>
+                                {profile.githubProfile}
+                             </a>
+                          ) : (
+                             <span style={{ color: "#888" }}>Not linked</span>
+                          )}
+                       </div>
+                       
+                       <div style={{ width: "100%", height: "1px", background: "#2a2a35", margin: "10px 0" }}></div>
+                       
+                       <div>
+                          <span style={{ color: "#38bdf8", fontWeight: 700, display: "block", marginBottom: "8px" }}>BIO:</span> 
+                          <div style={{ color: "#888", whiteSpace: "pre-wrap", lineHeight: 1.6 }}>
+                             {profile.bio || "No biography provided."}
+                          </div>
+                       </div>
+                    </div>
+                  </div>
                 </div>
+
+                {/* Command 2: System Specs (Skills) */}
+                <div>
+                  <div style={{ display: "flex", gap: "8px", color: "#34d399", fontWeight: 700 }}>
+                    <span>guest@collabspace:~$</span>
+                    <span style={{ color: "#c9d1d9", fontWeight: 400 }}>sys-specs --module skills</span>
+                  </div>
+                  
+                  <div style={{ marginTop: "20px", padding: "24px", background: "#0B0B0F", border: "1px solid #2a2a35", borderRadius: "8px" }}>
+                    {profile.skills?.length === 0 ? (
+                      <div style={{ color: "#888" }}>No skill modules loaded.</div>
+                    ) : (
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", gap: "24px" }}>
+                        {profile.skills?.map((skill, index) => (
+                          <div key={index} style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                            <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.85rem" }}>
+                              <span style={{ color: "#c9d1d9", fontWeight: 600 }}>{skill.name}</span>
+                              <span style={{ color: "#38bdf8" }}>LVL {skill.rating}</span>
+                            </div>
+                            <div style={{ display: "flex", gap: "6px" }}>
+                              {[1, 2, 3, 4, 5].map((level) => (
+                                <div 
+                                  key={level} 
+                                  style={{ 
+                                    height: "8px", 
+                                    flexGrow: 1, 
+                                    background: level <= skill.rating ? "#34d399" : "#111116",
+                                    border: "1px solid",
+                                    borderColor: level <= skill.rating ? "#34d399" : "#2a2a35",
+                                    borderRadius: "2px"
+                                  }}
+                                ></div>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+                
+                {/* Command Prompt Idle */}
+                <div style={{ marginTop: "32px", display: "flex", gap: "8px", color: "#34d399", fontWeight: 700, alignItems: "center" }}>
+                   <span>guest@collabspace:~$</span>
+                   <span style={{ width: "8px", height: "18px", background: "#c9d1d9", display: "inline-block" }}></span>
+                </div>
+
               </div>
             </div>
           </div>
