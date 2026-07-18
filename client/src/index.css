@@ -472,17 +472,19 @@ input, button, textarea, select {
 }
 
 .landing-navbar-links a {
+  color: #A0A0A0;
   text-decoration: none;
-  color: var(--text-secondary);
+  font-size: 0.95rem;
   font-weight: 500;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: color 0.3s ease;
+  transition: color 0.2s ease;
 }
 
 .landing-navbar-links a:hover {
-  color: var(--text-primary);
+  color: #fff;
+}
+
+.landing-navbar-links a.active {
+  color: var(--accent-primary);
 }
 
 .landing-hero {
@@ -507,10 +509,24 @@ input, button, textarea, select {
 
 .hero-subheadline {
   font-size: 1.1rem;
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.72);
   line-height: 1.6;
   margin-bottom: 40px;
   max-width: 90%;
+}
+
+.hero-cta-button {
+  border: 1px solid var(--accent-primary) !important;
+  background: transparent !important;
+  color: var(--accent-primary) !important;
+  box-shadow: 0 0 10px rgba(217, 119, 87, 0.1) !important;
+  transition: all 0.3s ease !important;
+}
+
+.hero-cta-button:hover {
+  background: var(--accent-primary) !important;
+  color: #111 !important;
+  box-shadow: 0 0 20px rgba(217, 119, 87, 0.4) !important;
 }
 
 .hero-graphic-container {

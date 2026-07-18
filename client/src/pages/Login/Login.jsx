@@ -128,7 +128,7 @@ const Login = () => {
           <span style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1.5rem", fontWeight: 800, letterSpacing: "-0.5px", color: "#fff" }}>
             collab<span style={{ color: "var(--accent-primary)" }}>.space</span>
           </span>
-          <span style={{ fontSize: "0.6rem", background: "rgba(16,185,129,0.1)", color: "var(--accent-secondary)", padding: "2px 8px", borderRadius: "10px", marginLeft: "8px", fontWeight: "bold" }}>PRIVATE BETA</span>
+          <span style={{ fontSize: "0.6rem", background: "rgba(217, 119, 87, 0.1)", color: "var(--accent-primary)", padding: "2px 8px", borderRadius: "10px", marginLeft: "8px", fontWeight: "bold", border: "1px solid rgba(217, 119, 87, 0.3)" }}>PRIVATE BETA</span>
         </div>
         <div className="landing-navbar-links">
           <a href="#features">Features</a>
@@ -165,16 +165,19 @@ const Login = () => {
             showCursor={true}
           />
           <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
-            <button onClick={scrollToLogin} className="ceramic-btn primary" style={{ borderRadius: "30px", padding: "16px 32px" }}>
+            <button onClick={scrollToLogin} className="ceramic-btn hero-cta-button" style={{ borderRadius: "30px", padding: "16px 32px" }}>
               Join the Workspace
             </button>
             <span style={{ fontSize: "0.85rem", color: "var(--text-secondary)", fontWeight: 600, letterSpacing: "1px", textTransform: "uppercase" }}>Creator-First Matching</span>
           </div>
         </div>
         <div className="hero-graphic-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', height: '100%', minHeight: '400px' }}>
-          <div style={{ position: 'absolute', transform: 'scale(0.8)', zIndex: 5, color: '#34d399' }}>
+          {/* Subtle radial gradient behind artwork */}
+          <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '1000px', height: '1000px', background: 'radial-gradient(circle, rgba(217, 119, 87, 0.08), transparent 60%)', pointerEvents: 'none', zIndex: 0 }}></div>
+
+          <div style={{ position: 'absolute', transform: 'scale(0.7)', zIndex: 5, color: '#34d399' }}>
             <CircularText
-              text="IDEAS*PROJECTS*TEAMS*"
+              text="IDEAS • PROJECTS • TEAMS • "
               spinDuration={10}
               onHover="pause"
               spinDirection={1}
@@ -182,31 +185,31 @@ const Login = () => {
           </div>
           <div style={{ position: 'absolute', transform: 'scale(1.3)', zIndex: 4, color: 'var(--accent-primary)' }}>
             <CircularText
-              text="INNOVATE*CREATE*BUILD*"
+              text="INNOVATE • CREATE • BUILD • "
               spinDuration={15}
               onHover="speedUp"
               spinDirection={-1}
             />
           </div>
-          <div style={{ position: 'absolute', transform: 'scale(1.8)', zIndex: 3, color: 'var(--accent-secondary)' }}>
+          <div style={{ position: 'absolute', transform: 'scale(1.9)', zIndex: 3, color: 'var(--accent-secondary)' }}>
             <CircularText
-              text="COLLABORATE*CONNECT*MATCH*"
+              text="COLLABORATE • CONNECT • MATCH • "
               spinDuration={25}
               onHover="slowDown"
               spinDirection={1}
             />
           </div>
-          <div style={{ position: 'absolute', transform: 'scale(2.3)', zIndex: 2, color: '#a855f7' }}>
+          <div style={{ position: 'absolute', transform: 'scale(2.5)', zIndex: 2, color: '#a855f7' }}>
             <CircularText
-              text="DEVELOPERS*DESIGNERS*FOUNDERS*"
+              text="DEVELOPERS • DESIGNERS • FOUNDERS • "
               spinDuration={35}
               onHover="goBonkers"
               spinDirection={-1}
             />
           </div>
-          <div style={{ position: 'absolute', transform: 'scale(2.8)', zIndex: 1, color: '#fbbf24' }}>
+          <div style={{ position: 'absolute', transform: 'scale(3.1)', zIndex: 1, color: '#e4b638' }}>
             <CircularText
-              text="FUTURE*OF*WORKSPACE*"
+              text="FUTURE • OF • WORKSPACE • "
               spinDuration={45}
               onHover="speedUp"
               spinDirection={1}
