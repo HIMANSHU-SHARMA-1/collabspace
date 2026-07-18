@@ -210,43 +210,47 @@ const Profile = () => {
           </div>
         ) : (
           <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
-            <div className="ceramic-card" style={{ display: "flex", gap: "32px", alignItems: "center" }}>
+            <div className="terminal-card" style={{ display: "flex", gap: "32px", alignItems: "center", padding: "24px" }}>
               <div
                 style={{
                   width: "90px",
                   height: "90px",
                   borderRadius: "50%",
-                  background: "var(--tag-bg)",
+                  background: "#111116",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   fontSize: "2rem",
                   fontWeight: 800,
-                  color: "var(--accent-primary)",
-                  boxShadow: "var(--shadow-outset)",
+                  color: "#38bdf8",
+                  border: "2px solid #2a2a35",
                 }}
               >
                 {profile.username ? profile.username[0].toUpperCase() : "U"}
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
                 <h2 style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700 }}>{profile.username}</h2>
-                <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem" }}>{profile.email}</p>
+                <p style={{ color: "#888", fontSize: "0.9rem" }}>{profile.email}</p>
                 {profile.githubProfile && (
                   <a
                     href={profile.githubProfile}
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="terminal-btn"
                     style={{
-                      color: "var(--accent-primary)",
+                      color: "#34d399",
+                      borderColor: "#34d399",
                       fontSize: "0.85rem",
                       fontWeight: 600,
                       textDecoration: "none",
                       display: "flex",
                       alignItems: "center",
                       gap: "4px",
+                      marginTop: "8px",
+                      width: "fit-content"
                     }}
                   >
-                    <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>code</span>
+                    <span className="material-symbols-outlined" style={{ fontSize: "16px" }}>code</span>
                     GitHub Portfolio
                   </a>
                 )}
@@ -255,34 +259,34 @@ const Profile = () => {
 
             <div className="responsive-grid-2-col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "32px" }}>
               {/* Bio card */}
-              <div className="ceramic-card" style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-                <h3 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1.1rem", fontWeight: 700, borderBottom: "1px solid var(--border-color)", paddingBottom: "12px" }}>
+              <div className="terminal-card" style={{ display: "flex", flexDirection: "column", gap: "16px", padding: "24px" }}>
+                <h3 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1.1rem", fontWeight: 700, borderBottom: "1px solid #2a2a35", paddingBottom: "12px", color: "#38bdf8" }}>
                   Developer Bio
                 </h3>
-                <p style={{ fontSize: "0.95rem", lineHeight: 1.6, color: "var(--text-primary)" }}>
+                <p style={{ fontSize: "0.95rem", lineHeight: 1.6, color: "#c9d1d9" }}>
                   {profile.bio || "No biography provided yet. Edit your profile to share details about your development interests!"}
                 </p>
               </div>
 
               {/* Skills rating card */}
-              <div className="ceramic-card" style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-                <h3 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1.1rem", fontWeight: 700, borderBottom: "1px solid var(--border-color)", paddingBottom: "12px" }}>
+              <div className="terminal-card" style={{ display: "flex", flexDirection: "column", gap: "16px", padding: "24px" }}>
+                <h3 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1.1rem", fontWeight: 700, borderBottom: "1px solid #2a2a35", paddingBottom: "12px", color: "#38bdf8" }}>
                   Technical Expertise
                 </h3>
                 <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
                   {profile.skills?.length === 0 ? (
-                    <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", fontStyle: "italic" }}>
+                    <p style={{ fontSize: "0.9rem", color: "#888", fontStyle: "italic" }}>
                       No skills added yet.
                     </p>
                   ) : (
                     profile.skills?.map((skill, index) => (
                       <div key={index}>
-                        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.85rem", fontWeight: 600, marginBottom: "6px" }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.85rem", fontWeight: 600, marginBottom: "6px", color: "#c9d1d9" }}>
                           <span>{skill.name}</span>
-                          <span>{skill.rating} / 5</span>
+                          <span style={{ color: "#34d399" }}>{skill.rating} / 5</span>
                         </div>
-                        <div className="ceramic-progress-track">
-                          <div className="ceramic-progress-bar" style={{ width: `${(skill.rating / 5) * 100}%` }}></div>
+                        <div style={{ width: "100%", height: "6px", background: "#111116", borderRadius: "3px", border: "1px solid #2a2a35", overflow: "hidden" }}>
+                          <div style={{ width: `${(skill.rating / 5) * 100}%`, height: "100%", background: "#34d399" }}></div>
                         </div>
                       </div>
                     ))
