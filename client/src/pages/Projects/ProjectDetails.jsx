@@ -3,6 +3,7 @@ import api from "../../api/axios";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate, useParams } from "react-router-dom";
 import Nav from "../../components/Navbar/Nav";
+import WorkspaceCanvas from "../../components/Workspace/WorkspaceCanvas";
 
 const ProjectDetails = () => {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ const ProjectDetails = () => {
   const [loading, setLoading] = useState(false);
   const [project, setProject] = useState({});
   const [error, setError] = useState("");
+  const [isWorkspaceOpen, setIsWorkspaceOpen] = useState(false);
 
   const [isEditing, setIsEditing] = useState(false);
   const [skillName, setSkillName] = useState("");
@@ -124,6 +126,10 @@ const ProjectDetails = () => {
           </div>
           {!isEditing && isLeader && (
             <div style={{ display: "flex", gap: "10px" }}>
+              <button onClick={() => setIsWorkspaceOpen(true)} className="ceramic-btn" style={{ borderColor: "var(--accent-secondary)", color: "var(--accent-secondary)" }}>
+                <span className="material-symbols-outlined">account_tree</span>
+                Visual Workspace
+              </button>
               <button onClick={startEditing} className="ceramic-btn">
                 <span className="material-symbols-outlined">edit</span>
                 Edit Specs
@@ -333,6 +339,7 @@ const ProjectDetails = () => {
           </div>
         )}
       </div>
+      {isWorkspaceOpen && <WorkspaceCanvas project={project} onClose={() => setIsWorkspaceOpen(false)} />}
     </Nav>
   );
 };
