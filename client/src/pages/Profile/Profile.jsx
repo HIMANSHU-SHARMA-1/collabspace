@@ -107,106 +107,153 @@ const Profile = () => {
             <p>{error}</p>
           </div>
         ) : isEditing ? (
-          <div className="terminal-card" style={{ padding: "40px" }}>
-            <form onSubmit={updateProfile} style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-              <div className="terminal-input-group">
-                <label htmlFor="username" className="terminal-label">"full_name":</label>
-                <input
-                  id="username"
-                  type="text"
-                  name="username"
-                  value={formData.username}
-                  onChange={addData}
-                  required
-                  className="terminal-input"
-                />
+          <div className="terminal-card" style={{ padding: 0, overflow: "hidden" }}>
+            <div className="chat-header-handle" style={{ background: "#0B0B0F", padding: "12px 20px", display: "flex", gap: "16px", borderBottom: "1px solid #2a2a35", alignItems: "center" }}>
+              <div style={{ display: "flex", gap: "8px" }}>
+                <div className="mac-dot red"></div>
+                <div className="mac-dot yellow"></div>
+                <div className="mac-dot green"></div>
+              </div>
+              <div style={{ color: "#888", fontSize: "0.85rem", fontFamily: "'Fira Code', monospace", display: "flex", gap: "8px", alignItems: "center" }}>
+                <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "#f1fa8c" }}>edit_square</span>
+                <span>configure_profile.sh (interactive)</span>
+              </div>
+            </div>
+
+            <div style={{ padding: "32px", fontFamily: "'Fira Code', monospace", background: "#0a0a0c" }}>
+              <div style={{ color: "#ff5f56", fontWeight: 700, marginBottom: "24px", display: "flex", alignItems: "center" }}>
+                <span>root@collabspace:~#</span>
+                <span style={{ color: "#c9d1d9", fontWeight: 400, marginLeft: "8px" }}>./configure_profile.sh --interactive</span>
+              </div>
+              
+              <div style={{ borderLeft: "2px solid #38bdf8", paddingLeft: "16px", marginBottom: "40px" }}>
+                <div style={{ color: "#38bdf8", fontWeight: 700, marginBottom: "8px" }}>&gt;&gt; INITIALIZING PROFILE CONFIGURATION WIZARD...</div>
+                <div style={{ color: "#888", fontSize: "0.85rem", lineHeight: 1.5 }}>
+                  Please input your updated developer details below.<br/>
+                  Press Save to compile and write changes to disk.
+                </div>
               </div>
 
-              <div className="terminal-input-group">
-                <label htmlFor="bio" className="terminal-label">"professional_bio":</label>
-                <textarea
-                  id="bio"
-                  name="bio"
-                  value={formData.bio}
-                  onChange={addData}
-                  className="terminal-input"
-                  style={{ minHeight: "100px", resize: "vertical" }}
-                />
-              </div>
+              <form onSubmit={updateProfile} style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
+                <div className="terminal-input-group">
+                  <label htmlFor="username" className="terminal-label" style={{ color: "#bd93f9", marginBottom: "4px", display: "block" }}>? Enter [USERNAME]:</label>
+                  <div style={{ display: "flex", alignItems: "center", background: "#111116", border: "1px solid #2a2a35", borderRadius: "4px", padding: "0 14px", transition: "border-color 0.2s ease" }} onFocus={(e) => e.currentTarget.style.borderColor = "#34d399"} onBlur={(e) => e.currentTarget.style.borderColor = "#2a2a35"}>
+                     <span style={{ color: "#34d399", marginRight: "8px", fontWeight: 700 }}>&gt;</span>
+                     <input
+                       id="username"
+                       type="text"
+                       name="username"
+                       value={formData.username}
+                       onChange={addData}
+                       required
+                       style={{ border: "none", background: "transparent", padding: "12px 0", flexGrow: 1, outline: "none", color: "#c9d1d9", fontFamily: "'Fira Code', monospace", fontSize: "0.9rem" }}
+                     />
+                  </div>
+                </div>
 
-              <div className="terminal-input-group">
-                <label htmlFor="githubProfile" className="terminal-label">"github_profile":</label>
-                <input
-                  id="githubProfile"
-                  type="text"
-                  name="githubProfile"
-                  value={formData.githubProfile}
-                  onChange={addData}
-                  className="terminal-input"
-                />
-              </div>
+                <div className="terminal-input-group">
+                  <label htmlFor="bio" className="terminal-label" style={{ color: "#bd93f9", marginBottom: "4px", display: "block" }}>? Enter [BIO_SUMMARY]:</label>
+                  <div style={{ display: "flex", alignItems: "flex-start", background: "#111116", border: "1px solid #2a2a35", borderRadius: "4px", padding: "12px 14px", transition: "border-color 0.2s ease" }} onFocus={(e) => e.currentTarget.style.borderColor = "#34d399"} onBlur={(e) => e.currentTarget.style.borderColor = "#2a2a35"}>
+                     <span style={{ color: "#34d399", marginRight: "8px", fontWeight: 700, marginTop: "2px" }}>&gt;</span>
+                     <textarea
+                       id="bio"
+                       name="bio"
+                       value={formData.bio}
+                       onChange={addData}
+                       style={{ border: "none", background: "transparent", padding: "0", flexGrow: 1, outline: "none", color: "#c9d1d9", fontFamily: "'Fira Code', monospace", fontSize: "0.9rem", minHeight: "100px", resize: "vertical" }}
+                     />
+                  </div>
+                </div>
 
-              <div className="terminal-card" style={{ padding: "20px", border: "1px solid #2a2a35", background: "#0B0B0F" }}>
-                <h3 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1rem", fontWeight: 700, marginBottom: "16px", color: "#38bdf8" }}>
-                  "manage_developer_skills"
-                </h3>
-                <div style={{ display: "flex", gap: "12px", marginBottom: "16px" }}>
-                  <input
-                    type="text"
-                    placeholder="Skill e.g. React"
-                    value={skillName}
-                    onChange={(e) => setSkillName(e.target.value)}
-                    className="terminal-input"
-                    style={{ flexGrow: 2 }}
-                  />
-                  <input
-                    type="number"
-                    min="1"
-                    max="5"
-                    placeholder="Rate 1-5"
-                    value={skillRating}
-                    onChange={(e) => setSkillRating(e.target.value)}
-                    className="terminal-input"
-                    style={{ flexGrow: 1 }}
-                  />
-                  <button type="button" onClick={handleAddSkill} className="terminal-btn" style={{ color: "#34d399", borderColor: "#34d399" }}>
-                    + Add
+                <div className="terminal-input-group">
+                  <label htmlFor="githubProfile" className="terminal-label" style={{ color: "#bd93f9", marginBottom: "4px", display: "block" }}>? Enter [GITHUB_URL] (Optional):</label>
+                  <div style={{ display: "flex", alignItems: "center", background: "#111116", border: "1px solid #2a2a35", borderRadius: "4px", padding: "0 14px", transition: "border-color 0.2s ease" }} onFocus={(e) => e.currentTarget.style.borderColor = "#34d399"} onBlur={(e) => e.currentTarget.style.borderColor = "#2a2a35"}>
+                     <span style={{ color: "#34d399", marginRight: "8px", fontWeight: 700 }}>&gt;</span>
+                     <input
+                       id="githubProfile"
+                       type="text"
+                       name="githubProfile"
+                       value={formData.githubProfile}
+                       onChange={addData}
+                       style={{ border: "none", background: "transparent", padding: "12px 0", flexGrow: 1, outline: "none", color: "#c9d1d9", fontFamily: "'Fira Code', monospace", fontSize: "0.9rem" }}
+                     />
+                  </div>
+                </div>
+
+                <div style={{ background: "#111116", border: "1px solid #2a2a35", borderRadius: "8px", padding: "24px" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "20px" }}>
+                    <span className="material-symbols-outlined" style={{ color: "#f1fa8c", fontSize: "20px" }}>memory</span>
+                    <h3 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1.1rem", fontWeight: 700, margin: 0, color: "#38bdf8" }}>
+                      Configure Skill Modules
+                    </h3>
+                  </div>
+                  
+                  <div style={{ display: "flex", gap: "12px", marginBottom: "24px", flexWrap: "wrap" }}>
+                    <div style={{ display: "flex", alignItems: "center", background: "#0a0a0c", border: "1px solid #2a2a35", borderRadius: "4px", padding: "0 14px", flexGrow: 2 }}>
+                       <span style={{ color: "#888", marginRight: "8px", fontSize: "0.85rem" }}>Name:</span>
+                       <input
+                         type="text"
+                         placeholder="e.g. React"
+                         value={skillName}
+                         onChange={(e) => setSkillName(e.target.value)}
+                         style={{ border: "none", background: "transparent", padding: "10px 0", flexGrow: 1, outline: "none", color: "#c9d1d9", fontFamily: "'Fira Code', monospace", fontSize: "0.9rem" }}
+                       />
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", background: "#0a0a0c", border: "1px solid #2a2a35", borderRadius: "4px", padding: "0 14px", flexGrow: 1 }}>
+                       <span style={{ color: "#888", marginRight: "8px", fontSize: "0.85rem" }}>LVL (1-5):</span>
+                       <input
+                         type="number"
+                         min="1"
+                         max="5"
+                         value={skillRating}
+                         onChange={(e) => setSkillRating(e.target.value)}
+                         style={{ border: "none", background: "transparent", padding: "10px 0", flexGrow: 1, outline: "none", color: "#c9d1d9", fontFamily: "'Fira Code', monospace", fontSize: "0.9rem" }}
+                       />
+                    </div>
+                    <button type="button" onClick={handleAddSkill} className="terminal-btn" style={{ color: "#0B0B0F", background: "#34d399", borderColor: "#34d399", fontWeight: 700 }}>
+                      [+] Install
+                    </button>
+                  </div>
+
+                  {formData.skills.length > 0 && (
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", background: "#0a0a0c", padding: "16px", borderRadius: "4px", border: "1px dashed #2a2a35" }}>
+                      {formData.skills.map((skill, index) => (
+                        <div key={index} style={{ display: "flex", alignItems: "center", background: "#111116", border: "1px solid #38bdf8", padding: "6px 12px", borderRadius: "4px", gap: "8px" }}>
+                          <span style={{ color: "#c9d1d9", fontSize: "0.85rem" }}>{skill.name}</span>
+                          <span style={{ color: "#34d399", fontSize: "0.85rem", fontWeight: 700 }}>v{skill.rating}.0</span>
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveSkill(index)}
+                            style={{
+                              background: "none",
+                              border: "none",
+                              cursor: "pointer",
+                              color: "#ff5f56",
+                              display: "flex",
+                              alignItems: "center",
+                              padding: 0,
+                              marginLeft: "4px"
+                            }}
+                            title="Uninstall module"
+                          >
+                            <span className="material-symbols-outlined" style={{ fontSize: "16px" }}>delete</span>
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <div style={{ display: "flex", justifyContent: "flex-end", gap: "16px", marginTop: "16px", borderTop: "1px solid #2a2a35", paddingTop: "24px" }}>
+                  <button type="button" onClick={() => setIsEditing(false)} className="terminal-btn" style={{ color: "#ff5f56", borderColor: "#ff5f56" }}>
+                    [x] Abort
+                  </button>
+                  <button type="submit" className="terminal-btn" style={{ color: "#0B0B0F", background: "#38bdf8", borderColor: "#38bdf8", fontWeight: 700 }}>
+                    [&gt;] Write &amp; Compile
                   </button>
                 </div>
-
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
-                  {formData.skills.map((skill, index) => (
-                    <span key={index} className="terminal-skill-tag" style={{ padding: "6px 12px", borderRadius: "4px" }}>
-                      {skill.name} ({skill.rating}/5)
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveSkill(index)}
-                        style={{
-                          background: "none",
-                          border: "none",
-                          cursor: "pointer",
-                          color: "#ff5f56",
-                          display: "flex",
-                          alignItems: "center",
-                          marginLeft: "6px",
-                        }}
-                      >
-                        <span className="material-symbols-outlined" style={{ fontSize: "14px" }}>close</span>
-                      </button>
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div style={{ display: "flex", justify: "flex-end", gap: "16px" }}>
-                <button type="button" onClick={() => setIsEditing(false)} className="terminal-btn" style={{ color: "#888", borderColor: "#333" }}>
-                  Cancel
-                </button>
-                <button type="submit" className="terminal-btn" style={{ color: "#34d399", borderColor: "#34d399" }}>
-                  Save Settings
-                </button>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         ) : (
           <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
