@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/react'
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
@@ -140,6 +141,11 @@ const Nav = ({ children }) => {
           >
             <span className="material-symbols-outlined">settings</span>
             Settings
+          </Link>
+          <Link>
+          <button onClick={() => { throw new Error('My first Sentry React error!') }}>
+  Break the world
+</button>
           </Link>
 
           <button

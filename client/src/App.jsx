@@ -15,6 +15,7 @@ import Profile from './pages/Profile/Profile'
 import { initTheme } from './utils/theme'
 import NetworkBackground from './components/NetworkBackground/NetworkBackground'
 import CustomCursor from './components/CustomCursor/CustomCursor'
+import IDEShell from './components/Layout/IDEShell'
 
 const App = () => {
   useEffect(() => {
@@ -26,18 +27,19 @@ const App = () => {
       <CustomCursor />
       <NetworkBackground />
       <Routes>
-  <Route path='/' element={<PublicRoute><Login/></PublicRoute>}/>
-  <Route path='/register' element={<PublicRoute><Register/></PublicRoute>}/>
-  <Route path='/dashboard' element={<ProtectedRoute><Dashboard/></ProtectedRoute>}/>
-  <Route path='/create-project' element={<ProtectedRoute><CreateProject/></ProtectedRoute>}/>
-  <Route path='/my-project' element={<ProtectedRoute><MyProject/></ProtectedRoute>}/>
-  <Route path='/notifications' element={<ProtectedRoute><Notification/></ProtectedRoute>}/>
-  <Route path='/recommend-projects' element={<ProtectedRoute><Recommendation/></ProtectedRoute>}/>
-  <Route path='/joined-projects' element={<ProtectedRoute><JoinedProjects/></ProtectedRoute>}/>
-  <Route path='/project-view/:projectId' element={<ProtectedRoute><ProjectDetails/></ProtectedRoute>}/>
-  <Route path='/profile' element={<ProtectedRoute><Profile/></ProtectedRoute>}/>
-
-</Routes>
+        <Route path='/' element={<PublicRoute><Login/></PublicRoute>}/>
+        <Route path='/register' element={<PublicRoute><Register/></PublicRoute>}/>
+        
+        {/* IDE Shell Wrapped Routes */}
+        <Route path='/dashboard' element={<ProtectedRoute><IDEShell><Dashboard/></IDEShell></ProtectedRoute>}/>
+        <Route path='/create-project' element={<ProtectedRoute><IDEShell><CreateProject/></IDEShell></ProtectedRoute>}/>
+        <Route path='/my-project' element={<ProtectedRoute><IDEShell><MyProject/></IDEShell></ProtectedRoute>}/>
+        <Route path='/notifications' element={<ProtectedRoute><IDEShell><Notification/></IDEShell></ProtectedRoute>}/>
+        <Route path='/recommend-projects' element={<ProtectedRoute><IDEShell><Recommendation/></IDEShell></ProtectedRoute>}/>
+        <Route path='/joined-projects' element={<ProtectedRoute><IDEShell><JoinedProjects/></IDEShell></ProtectedRoute>}/>
+        <Route path='/project-view/:projectId' element={<ProtectedRoute><IDEShell><ProjectDetails/></IDEShell></ProtectedRoute>}/>
+        <Route path='/profile' element={<ProtectedRoute><IDEShell><Profile/></IDEShell></ProtectedRoute>}/>
+      </Routes>
     </>
   )
 }

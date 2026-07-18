@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Nav from "../../components/Navbar/Nav";
 import api from "../../api/axios";
 import { useNavigate } from "react-router-dom";
 
@@ -51,7 +50,7 @@ const CreateProject = () => {
   };
 
   return (
-    <Nav>
+    <>
       <div style={{ maxWidth: "700px", margin: "0 auto" }}>
         <div style={{ marginBottom: "32px" }}>
           <h1 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "2rem", fontWeight: 700 }}>
@@ -194,7 +193,7 @@ const CreateProject = () => {
           </form>
         </div>
       </div>
-    </Nav>
+    </>
   );
 };
 

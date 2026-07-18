@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import api from "../../api/axios";
-import Nav from "../../components/Navbar/Nav";
 import { useNavigate } from "react-router-dom";
 
 const Recommendation = () => {
@@ -31,7 +30,7 @@ const Recommendation = () => {
   }, []);
 
   return (
-    <Nav>
+    <>
       <div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "32px", flexWrap: "wrap", gap: "16px" }}>
           <div>
@@ -131,7 +130,7 @@ const Recommendation = () => {
           </div>
         )}
       </div>
-    </Nav>
+    </>
   );
 };
 

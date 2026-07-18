@@ -1,5 +1,3 @@
-import React, { useEffect, useState } from "react";
-import Nav from "../../components/Navbar/Nav";
 import { useAuth } from "../../context/AuthContext";
 import api from "../../api/axios";
 import { useNavigate } from "react-router-dom";
@@ -80,7 +78,7 @@ const Profile = () => {
   };
 
   return (
-    <Nav>
+    <>
       <div style={{ maxWidth: "750px", margin: "0 auto" }}>
         <div style={{ marginBottom: "32px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div>
@@ -294,7 +292,7 @@ const Profile = () => {
           </div>
         )}
       </div>
-    </Nav>
+    </>
   );
 };
 

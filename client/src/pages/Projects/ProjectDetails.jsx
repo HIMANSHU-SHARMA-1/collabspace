@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import api from "../../api/axios";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate, useParams } from "react-router-dom";
-import Nav from "../../components/Navbar/Nav";
 import WorkspaceCanvas from "../../components/Workspace/WorkspaceCanvas";
 
 const ProjectDetails = () => {
@@ -113,7 +112,7 @@ const ProjectDetails = () => {
   const isLeader = project.leader?._id === user.id;
 
   return (
-    <Nav>
+    <>
       <div style={{ maxWidth: "800px", margin: "0 auto" }}>
         <div style={{ marginBottom: "32px", display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
           <div>
@@ -340,7 +339,7 @@ const ProjectDetails = () => {
         )}
       </div>
       {isWorkspaceOpen && <WorkspaceCanvas project={project} onClose={() => setIsWorkspaceOpen(false)} />}
-    </Nav>
+    </>
   );
 };
 

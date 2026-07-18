@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from "../../api/axios";
 import Chat from "../chat/Chat";
-import Nav from "../../components/Navbar/Nav";
 import { Rnd } from "react-rnd";
 
 const JoinedProjects = () => {
@@ -27,7 +26,7 @@ const JoinedProjects = () => {
   }, []);
 
   return (
-    <Nav>
+    <>
       <div>
         <div style={{ marginBottom: "32px" }}>
           <h1 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "2rem", fontWeight: 700 }}>
@@ -54,66 +53,47 @@ const JoinedProjects = () => {
             <p style={{ marginTop: "16px", color: "var(--text-secondary)" }}>You have not joined any projects yet.</p>
           </div>
         ) : (
-          <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+          <div className="ceramic-grid">
             {projects.map((project, index) => (
-              <div key={index} className="ceramic-card" style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-                <div style={{ display: "flex", justify: "space-between", align: "flex-start" }}>
-                  <div>
-                    <h3 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1.3rem", fontWeight: 700 }}>
-                      {project.projectname}
-                    </h3>
-                    <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem", marginTop: "2px" }}>
-                      Led by: <span style={{ fontWeight: 600 }}>{project.leader.username}</span> • Status: <span style={{ fontWeight: 600, color: "var(--accent-primary)" }}>{project.status.toUpperCase()}</span>
-                    </p>
-                  </div>
-                  <button onClick={() => setopenChat(project._id)} className="ceramic-btn primary">
-                    <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>forum</span>
-                    Open Chat
-                  </button>
+              <div key={index} className="terminal-card">
+                <div className="terminal-header">
+                  <div className="mac-dot red"></div>
+                  <div className="mac-dot yellow"></div>
+                  <div className="mac-dot green"></div>
                 </div>
 
-                <p style={{ color: "var(--text-primary)", fontSize: "0.92rem", lineHeight: 1.6 }}>
-                  {project.description}
-                </p>
+                <div className="terminal-title-row">
+                  <div className="terminal-title">{project.projectname}</div>
+                  <div className="terminal-meta">{project.status === 'open' ? 'Active' : project.status}</div>
+                </div>
 
-                {/* Skills tags */}
-                <div>
-                  <h4 style={{ fontSize: "0.8rem", fontWeight: 600, color: "var(--text-secondary)", marginBottom: "8px" }}>
-                    Stack
-                  </h4>
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-                    {project.requiredSkill.map((skill, index) => (
-                      <span key={index} className="skill-tag">
-                        {skill}
-                      </span>
-                    ))}
+                <div className="terminal-skills">
+                  {project.requiredSkill.map((skill, i) => (
+                    <span key={i} className="terminal-skill-tag">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Progress/Storage mock indicator */}
+                <div style={{ marginTop: '8px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#888', marginBottom: '6px' }}>
+                    <span>Team Fill Rate</span>
+                    <span>{project.members.length} / {project.teamsize}</span>
+                  </div>
+                  <div style={{ width: '100%', height: '4px', backgroundColor: '#2a2a35', borderRadius: '2px', overflow: 'hidden' }}>
+                    <div style={{ width: `${(project.members.length / project.teamsize) * 100}%`, height: '100%', backgroundColor: 'var(--accent-primary)' }}></div>
                   </div>
                 </div>
 
-                {/* Progress bar */}
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "24px",
-                    background: "var(--tag-bg)",
-                    padding: "16px 24px",
-                    borderRadius: "16px",
-                  }}
-                >
-                  <div style={{ flexGrow: 1 }}>
-                    <div style={{ display: "flex", justify: "space-between", fontSize: "0.85rem", fontWeight: 600, marginBottom: "8px" }}>
-                      <span>Team Size</span>
-                      <span>
-                        {project.members.length} / {project.teamsize} Joined
-                      </span>
-                    </div>
-                    <div className="ceramic-progress-track">
-                      <div
-                        className="ceramic-progress-bar"
-                        style={{ width: `${(project.members.length / project.teamsize) * 100}%` }}
-                      ></div>
-                    </div>
+                <div className="terminal-footer">
+                  <div className="terminal-members">
+                    Led by: {project.leader.username}
+                  </div>
+                  <div style={{ display: "flex", gap: "8px" }}>
+                    <button onClick={() => setopenChat(project._id)} className="terminal-btn">
+                      Open Chat
+                    </button>
                   </div>
                 </div>
               </div>
@@ -180,7 +160,7 @@ const JoinedProjects = () => {
           </Rnd>
         )}
       </div>
-    </Nav>
+    </>
   );
 };
 

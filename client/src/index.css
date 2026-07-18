@@ -532,10 +532,112 @@ input, button, textarea, select {
 .hero-graphic-container {
   position: relative;
   width: 100%;
-  height: 400px;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Terminal Style Project Cards */
+.terminal-card {
+  background-color: #1a1a24;
+  border: 1px solid #2a2a35;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #2a2a35;
+}
+
+.mac-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.mac-dot.red { background-color: #ff5f56; }
+.mac-dot.yellow { background-color: #ffbd2e; }
+.mac-dot.green { background-color: #27c93f; }
+
+.terminal-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.terminal-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.terminal-meta {
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.terminal-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.terminal-skill-tag {
+  font-size: 0.7rem;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+/* Hardcoded colored tags based on index to mimic mockup */
+.terminal-skill-tag:nth-child(4n+1) { background: rgba(56, 189, 248, 0.1); color: #38bdf8; }
+.terminal-skill-tag:nth-child(4n+2) { background: rgba(168, 85, 247, 0.1); color: #a855f7; }
+.terminal-skill-tag:nth-child(4n+3) { background: rgba(52, 211, 153, 0.1); color: #34d399; }
+.terminal-skill-tag:nth-child(4n+4) { background: rgba(250, 204, 21, 0.1); color: #facc15; }
+
+.terminal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #2a2a35;
+  padding-top: 12px;
+}
+
+.terminal-members {
+  font-size: 0.8rem;
+  color: #888;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.terminal-btn {
+  background: transparent;
+  color: var(--accent-primary);
+  border: 1px solid var(--accent-primary);
+  padding: 6px 16px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.terminal-btn:hover {
+  background: var(--accent-primary);
+  color: #111;
 }
 
 .hero-glowing-shape {
