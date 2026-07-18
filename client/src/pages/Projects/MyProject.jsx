@@ -147,33 +147,37 @@ const MyProject = () => {
                             display: "flex",
                             justifyContent: "space-between",
                             alignItems: "center",
-                            padding: "12px 18px",
-                            borderRadius: "12px",
-                            background: "var(--panel-bg)",
-                            border: "1px solid var(--border-color)",
+                            flexWrap: "wrap",
+                            gap: "12px",
+                            padding: "12px 16px",
+                            borderRadius: "4px",
+                            background: "#111116",
+                            border: "1px solid #2a2a35",
                             opacity: req.status === "pending" ? 1 : 0.6,
                           }}
                         >
-                          <div>
-                            <span style={{ fontWeight: 600 }}>{req.requestee.username}</span>
-                            <span style={{ fontSize: "0.8rem", color: "var(--text-secondary)", marginLeft: "12px" }}>
+                          <div style={{ display: "flex", flexDirection: "column", minWidth: 0, flex: "1 1 200px" }}>
+                            <span style={{ fontWeight: 700, fontSize: "0.95rem", color: "#38bdf8", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                              &gt; {req.requestee.username}
+                            </span>
+                            <span style={{ fontSize: "0.8rem", color: "#888", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                               {req.requestee.email}
                             </span>
                           </div>
 
                           {req.status === "pending" ? (
-                            <div style={{ display: "flex", gap: "8px" }}>
+                            <div style={{ display: "flex", gap: "8px", flexShrink: 0 }}>
                               <button
                                 onClick={() => handleApprove(req._id, project._id)}
-                                className="ceramic-btn"
-                                style={{ padding: "6px 12px", borderRadius: "12px", fontSize: "0.8rem", color: "var(--accent-secondary)" }}
+                                className="terminal-btn"
+                                style={{ color: "#34d399", borderColor: "#34d399" }}
                               >
                                 Approve
                               </button>
                               <button
                                 onClick={() => handleReject(req._id, project._id)}
-                                className="ceramic-btn"
-                                style={{ padding: "6px 12px", borderRadius: "12px", fontSize: "0.8rem", color: "var(--danger)" }}
+                                className="terminal-btn"
+                                style={{ color: "#ff5f56", borderColor: "#ff5f56" }}
                               >
                                 Reject
                               </button>

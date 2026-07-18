@@ -106,10 +106,10 @@ const Profile = () => {
             <p>{error}</p>
           </div>
         ) : isEditing ? (
-          <div className="ceramic-card" style={{ padding: "40px" }}>
+          <div className="terminal-card" style={{ padding: "40px" }}>
             <form onSubmit={updateProfile} style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-              <div className="ceramic-input-group">
-                <label htmlFor="username">Full Name</label>
+              <div className="terminal-input-group">
+                <label htmlFor="username" className="terminal-label">"full_name":</label>
                 <input
                   id="username"
                   type="text"
@@ -117,37 +117,37 @@ const Profile = () => {
                   value={formData.username}
                   onChange={addData}
                   required
-                  className="ceramic-input"
+                  className="terminal-input"
                 />
               </div>
 
-              <div className="ceramic-input-group">
-                <label htmlFor="bio">Professional Bio</label>
+              <div className="terminal-input-group">
+                <label htmlFor="bio" className="terminal-label">"professional_bio":</label>
                 <textarea
                   id="bio"
                   name="bio"
                   value={formData.bio}
                   onChange={addData}
-                  className="ceramic-input"
+                  className="terminal-input"
                   style={{ minHeight: "100px", resize: "vertical" }}
                 />
               </div>
 
-              <div className="ceramic-input-group">
-                <label htmlFor="githubProfile">Github Profile Link</label>
+              <div className="terminal-input-group">
+                <label htmlFor="githubProfile" className="terminal-label">"github_profile":</label>
                 <input
                   id="githubProfile"
                   type="text"
                   name="githubProfile"
                   value={formData.githubProfile}
                   onChange={addData}
-                  className="ceramic-input"
+                  className="terminal-input"
                 />
               </div>
 
-              <div className="ceramic-card" style={{ boxShadow: "var(--shadow-inset)", padding: "20px" }}>
-                <h3 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1rem", fontWeight: 700, marginBottom: "16px" }}>
-                  Manage Developer Skills
+              <div className="terminal-card" style={{ padding: "20px", border: "1px solid #2a2a35", background: "#0B0B0F" }}>
+                <h3 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1rem", fontWeight: 700, marginBottom: "16px", color: "#38bdf8" }}>
+                  "manage_developer_skills"
                 </h3>
                 <div style={{ display: "flex", gap: "12px", marginBottom: "16px" }}>
                   <input
@@ -155,7 +155,7 @@ const Profile = () => {
                     placeholder="Skill e.g. React"
                     value={skillName}
                     onChange={(e) => setSkillName(e.target.value)}
-                    className="ceramic-input"
+                    className="terminal-input"
                     style={{ flexGrow: 2 }}
                   />
                   <input
@@ -165,17 +165,17 @@ const Profile = () => {
                     placeholder="Rate 1-5"
                     value={skillRating}
                     onChange={(e) => setSkillRating(e.target.value)}
-                    className="ceramic-input"
+                    className="terminal-input"
                     style={{ flexGrow: 1 }}
                   />
-                  <button type="button" onClick={handleAddSkill} className="ceramic-btn">
-                    Add
+                  <button type="button" onClick={handleAddSkill} className="terminal-btn" style={{ color: "#34d399", borderColor: "#34d399" }}>
+                    + Add
                   </button>
                 </div>
 
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
                   {formData.skills.map((skill, index) => (
-                    <span key={index} className="skill-tag" style={{ padding: "8px 14px", borderRadius: "16px" }}>
+                    <span key={index} className="terminal-skill-tag" style={{ padding: "6px 12px", borderRadius: "4px" }}>
                       {skill.name} ({skill.rating}/5)
                       <button
                         type="button"
@@ -184,13 +184,13 @@ const Profile = () => {
                           background: "none",
                           border: "none",
                           cursor: "pointer",
-                          color: "var(--danger)",
+                          color: "#ff5f56",
                           display: "flex",
                           alignItems: "center",
                           marginLeft: "6px",
                         }}
                       >
-                        <span className="material-symbols-outlined" style={{ fontSize: "16px" }}>close</span>
+                        <span className="material-symbols-outlined" style={{ fontSize: "14px" }}>close</span>
                       </button>
                     </span>
                   ))}
@@ -198,10 +198,10 @@ const Profile = () => {
               </div>
 
               <div style={{ display: "flex", justify: "flex-end", gap: "16px" }}>
-                <button type="button" onClick={() => setIsEditing(false)} className="ceramic-btn">
+                <button type="button" onClick={() => setIsEditing(false)} className="terminal-btn" style={{ color: "#888", borderColor: "#333" }}>
                   Cancel
                 </button>
-                <button type="submit" className="ceramic-btn primary">
+                <button type="submit" className="terminal-btn" style={{ color: "#34d399", borderColor: "#34d399" }}>
                   Save Settings
                 </button>
               </div>

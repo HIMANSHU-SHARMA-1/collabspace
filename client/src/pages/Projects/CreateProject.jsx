@@ -61,10 +61,10 @@ const CreateProject = () => {
           </p>
         </div>
 
-        <div className="ceramic-card" style={{ padding: "40px" }}>
+        <div className="terminal-card" style={{ padding: "40px" }}>
           <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-            <div className="ceramic-input-group">
-              <label htmlFor="projectname">Project Name</label>
+            <div className="terminal-input-group">
+              <label htmlFor="projectname" className="terminal-label">"project_name":</label>
               <input
                 id="projectname"
                 type="text"
@@ -72,26 +72,26 @@ const CreateProject = () => {
                 onChange={addData}
                 placeholder="e.g. EcoTrack AI"
                 required
-                className="ceramic-input"
+                className="terminal-input"
               />
             </div>
 
-            <div className="ceramic-input-group">
-              <label htmlFor="description">Description</label>
+            <div className="terminal-input-group">
+              <label htmlFor="description" className="terminal-label">"description":</label>
               <textarea
                 id="description"
                 name="description"
                 onChange={addData}
                 placeholder="Describe your project, milestones, and what you are building..."
-                className="ceramic-input"
+                className="terminal-input"
                 style={{ minHeight: "100px", resize: "vertical" }}
                 required
               />
             </div>
 
-            <div className="ceramic-card" style={{ boxShadow: "var(--shadow-inset)", padding: "20px" }}>
-              <div className="ceramic-input-group" style={{ marginBottom: "12px" }}>
-                <label htmlFor="skillName">Required Skill / Tech Stack</label>
+            <div className="terminal-card" style={{ padding: "20px", border: "1px solid #2a2a35", background: "#0B0B0F" }}>
+              <div className="terminal-input-group" style={{ marginBottom: "12px" }}>
+                <label htmlFor="skillName" className="terminal-label">"required_skills":</label>
                 <div style={{ display: "flex", gap: "12px" }}>
                   <input
                     id="skillName"
@@ -99,12 +99,11 @@ const CreateProject = () => {
                     value={skillName}
                     onChange={handleSkill}
                     placeholder="e.g. React, Python"
-                    className="ceramic-input"
+                    className="terminal-input"
                     style={{ flexGrow: 1 }}
                   />
-                  <button type="button" onClick={handleAddSkill} className="ceramic-btn">
-                    <span className="material-symbols-outlined">add</span>
-                    Add
+                  <button type="button" onClick={handleAddSkill} className="terminal-btn">
+                    + Add Skill
                   </button>
                 </div>
               </div>
@@ -112,7 +111,7 @@ const CreateProject = () => {
               {formData.requiredSkill.length > 0 && (
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
                   {formData.requiredSkill.map((skill, index) => (
-                    <span key={index} className="skill-tag">
+                    <span key={index} className="terminal-skill-tag">
                       {skill}
                       <button
                         type="button"
@@ -127,12 +126,13 @@ const CreateProject = () => {
                           background: "none",
                           border: "none",
                           cursor: "pointer",
-                          color: "var(--danger)",
+                          color: "#ff5f56",
                           display: "flex",
                           alignItems: "center",
+                          marginLeft: "6px",
                         }}
                       >
-                        <span className="material-symbols-outlined" style={{ fontSize: "16px" }}>close</span>
+                        <span className="material-symbols-outlined" style={{ fontSize: "14px" }}>close</span>
                       </button>
                     </span>
                   ))}
@@ -141,8 +141,8 @@ const CreateProject = () => {
             </div>
 
             <div className="responsive-grid-2-col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
-              <div className="ceramic-input-group">
-                <label htmlFor="teamsize">Target Team Size</label>
+              <div className="terminal-input-group">
+                <label htmlFor="teamsize" className="terminal-label">"target_team_size":</label>
                 <input
                   id="teamsize"
                   type="number"
@@ -150,13 +150,13 @@ const CreateProject = () => {
                   onChange={addData}
                   placeholder="e.g. 5"
                   required
-                  className="ceramic-input"
+                  className="terminal-input"
                 />
               </div>
 
-              <div className="ceramic-input-group">
-                <label htmlFor="status">Project Status</label>
-                <select id="status" name="status" onChange={addData} className="ceramic-input" style={{ appearance: "none" }}>
+              <div className="terminal-input-group">
+                <label htmlFor="status" className="terminal-label">"project_status":</label>
+                <select id="status" name="status" onChange={addData} className="terminal-input" style={{ appearance: "none" }}>
                   <option value="open">Open (Recruiting)</option>
                   <option value="in-progress">In Progress</option>
                   <option value="done">Done</option>
@@ -164,15 +164,15 @@ const CreateProject = () => {
               </div>
             </div>
 
-            <div className="ceramic-input-group">
-              <label htmlFor="githubLink">Github Repository Link (Optional)</label>
+            <div className="terminal-input-group">
+              <label htmlFor="githubLink" className="terminal-label">"github_link":</label>
               <input
                 id="githubLink"
                 type="text"
                 name="githubLink"
                 onChange={addData}
                 placeholder="https://github.com/your-org/your-repo"
-                className="ceramic-input"
+                className="terminal-input"
               />
             </div>
 
@@ -183,10 +183,10 @@ const CreateProject = () => {
             )}
 
             <div style={{ display: "flex", justify: "flex-end", gap: "16px", marginTop: "12px" }}>
-              <button type="button" onClick={() => navigate("/dashboard")} className="ceramic-btn">
+              <button type="button" onClick={() => navigate("/dashboard")} className="terminal-btn" style={{ color: "#888", borderColor: "#333" }}>
                 Cancel
               </button>
-              <button type="submit" disabled={loading} className="ceramic-btn primary">
+              <button type="submit" disabled={loading} className="terminal-btn" style={{ color: "#34d399", borderColor: "#34d399" }}>
                 {loading ? "Creating..." : "Create Project"}
               </button>
             </div>

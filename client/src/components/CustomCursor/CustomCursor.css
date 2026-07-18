@@ -2,7 +2,7 @@
   cursor: none !important;
 }
 
-body.workspace-active * {
+body.workspace-active *, body.ide-mode * {
   cursor: auto !important;
 }
 
@@ -21,6 +21,6 @@ body.workspace-active * {
   mix-blend-mode: difference;
 }
 
-body.workspace-active .custom-cursor {
+body.workspace-active .custom-cursor, body.ide-mode .custom-cursor {
   display: none !important;
 }

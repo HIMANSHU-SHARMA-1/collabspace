@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import './IDEShell.css';
@@ -7,6 +7,13 @@ const IDEShell = ({ children }) => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    document.body.classList.add('ide-mode');
+    return () => {
+      document.body.classList.remove('ide-mode');
+    };
+  }, []);
 
   const handleLogout = () => {
     logout();
