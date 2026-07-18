@@ -210,87 +210,91 @@ const Profile = () => {
           </div>
         ) : (
           <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
-            <div className="terminal-card" style={{ display: "flex", gap: "32px", alignItems: "center", padding: "24px" }}>
-              <div
-                style={{
-                  width: "90px",
-                  height: "90px",
-                  borderRadius: "50%",
-                  background: "#111116",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "2rem",
-                  fontWeight: 800,
-                  color: "#38bdf8",
-                  border: "2px solid #2a2a35",
-                }}
-              >
-                {profile.username ? profile.username[0].toUpperCase() : "U"}
-              </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-                <h2 style={{ fontFamily: "Space Grotesk, sans-serif", fontWeight: 700 }}>{profile.username}</h2>
-                <p style={{ color: "#888", fontSize: "0.9rem" }}>{profile.email}</p>
-                {profile.githubProfile && (
-                  <a
-                    href={profile.githubProfile}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="terminal-btn"
-                    style={{
-                      color: "#34d399",
-                      borderColor: "#34d399",
-                      fontSize: "0.85rem",
-                      fontWeight: 600,
-                      textDecoration: "none",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "4px",
-                      marginTop: "8px",
-                      width: "fit-content"
-                    }}
-                  >
-                    <span className="material-symbols-outlined" style={{ fontSize: "16px" }}>code</span>
-                    GitHub Portfolio
-                  </a>
-                )}
-              </div>
-            </div>
-
-            <div className="responsive-grid-2-col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "32px" }}>
-              {/* Bio card */}
-              <div className="terminal-card" style={{ display: "flex", flexDirection: "column", gap: "16px", padding: "24px" }}>
-                <h3 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1.1rem", fontWeight: 700, borderBottom: "1px solid #2a2a35", paddingBottom: "12px", color: "#38bdf8" }}>
-                  Developer Bio
-                </h3>
-                <p style={{ fontSize: "0.95rem", lineHeight: 1.6, color: "#c9d1d9" }}>
-                  {profile.bio || "No biography provided yet. Edit your profile to share details about your development interests!"}
-                </p>
+            <div className="terminal-card" style={{ padding: 0, overflow: 'hidden' }}>
+              <div className="chat-header-handle" style={{ background: "#0B0B0F", padding: "12px 20px", display: "flex", gap: "16px", borderBottom: "1px solid #2a2a35", alignItems: "center" }}>
+                <div style={{ display: "flex", gap: "8px" }}>
+                  <div className="mac-dot red"></div>
+                  <div className="mac-dot yellow"></div>
+                  <div className="mac-dot green"></div>
+                </div>
+                <div style={{ color: "#888", fontSize: "0.85rem", fontFamily: "'Fira Code', monospace", display: "flex", gap: "8px", alignItems: "center" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "#f1fa8c" }}>data_object</span>
+                  <span>developer_profile.json</span>
+                </div>
               </div>
 
-              {/* Skills rating card */}
-              <div className="terminal-card" style={{ display: "flex", flexDirection: "column", gap: "16px", padding: "24px" }}>
-                <h3 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1.1rem", fontWeight: 700, borderBottom: "1px solid #2a2a35", paddingBottom: "12px", color: "#38bdf8" }}>
-                  Technical Expertise
-                </h3>
-                <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-                  {profile.skills?.length === 0 ? (
-                    <p style={{ fontSize: "0.9rem", color: "#888", fontStyle: "italic" }}>
-                      No skills added yet.
-                    </p>
-                  ) : (
-                    profile.skills?.map((skill, index) => (
-                      <div key={index}>
-                        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.85rem", fontWeight: 600, marginBottom: "6px", color: "#c9d1d9" }}>
-                          <span>{skill.name}</span>
-                          <span style={{ color: "#34d399" }}>{skill.rating} / 5</span>
-                        </div>
-                        <div style={{ width: "100%", height: "6px", background: "#111116", borderRadius: "3px", border: "1px solid #2a2a35", overflow: "hidden" }}>
-                          <div style={{ width: `${(skill.rating / 5) * 100}%`, height: "100%", background: "#34d399" }}></div>
-                        </div>
+              <div style={{ display: "flex", padding: "24px", fontFamily: "'Fira Code', monospace", fontSize: "0.95rem", lineHeight: 1.7, overflowX: "auto" }}>
+                {/* Fake Line Numbers */}
+                <div style={{ display: "flex", flexDirection: "column", color: "#444", paddingRight: "24px", userSelect: "none", textAlign: "right" }}>
+                  {Array.from({ length: 22 + (profile.skills?.length || 1) }).map((_, i) => <span key={i}>{i + 1}</span>)}
+                </div>
+
+                {/* JSON Content */}
+                <div style={{ color: "#c9d1d9", width: "100%", minWidth: "500px" }}>
+                  <span style={{ color: "#ff5f56" }}>{"{"}</span>
+                  <div style={{ paddingLeft: "24px", display: "flex", flexDirection: "column" }}>
+                    
+                    {/* Avatar Block */}
+                    <div>
+                      <span style={{ color: "#38bdf8" }}>"avatar"</span>: <span style={{ color: "#ff5f56" }}>{"{"}</span>
+                      <div style={{ paddingLeft: "24px", display: "flex", alignItems: "center", gap: "16px", margin: "8px 0" }}>
+                         <div style={{ width: "64px", height: "64px", borderRadius: "50%", background: "#111116", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.8rem", fontWeight: 800, color: "#38bdf8", border: "2px solid #2a2a35" }}>
+                            {profile.username ? profile.username[0].toUpperCase() : "U"}
+                         </div>
+                         <span style={{ color: "#6272a4" }}>// Auto-generated</span>
                       </div>
-                    ))
-                  )}
+                      <span style={{ color: "#ff5f56" }}>{"}"}</span>,
+                    </div>
+                    
+                    <div>
+                      <span style={{ color: "#38bdf8" }}>"username"</span>: <span style={{ color: "#34d399" }}>"{profile.username}"</span>,
+                    </div>
+                    
+                    <div>
+                      <span style={{ color: "#38bdf8" }}>"email"</span>: <span style={{ color: "#34d399" }}>"{profile.email}"</span>,
+                    </div>
+
+                    <div>
+                      <span style={{ color: "#38bdf8" }}>"github"</span>: {profile.githubProfile ? (
+                        <a href={profile.githubProfile} target="_blank" rel="noopener noreferrer" style={{ color: "#f1fa8c", textDecoration: "underline" }}>
+                          "{profile.githubProfile}"
+                        </a>
+                      ) : (
+                        <span style={{ color: "#ff79c6" }}>null</span>
+                      )},
+                    </div>
+
+                    <div style={{ marginTop: "8px", maxWidth: "600px", whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
+                      <span style={{ color: "#38bdf8" }}>"bio"</span>: <span style={{ color: "#f1fa8c" }}>"{profile.bio || '404 - Biography not found'}"</span>,
+                    </div>
+
+                    <div style={{ marginTop: "8px" }}>
+                      <span style={{ color: "#38bdf8" }}>"skills"</span>: <span style={{ color: "#bd93f9" }}>[</span>
+                      <div style={{ paddingLeft: "24px" }}>
+                        {profile.skills?.length === 0 ? (
+                          <span style={{ color: "#6272a4" }}>// No skills added yet</span>
+                        ) : (
+                          profile.skills?.map((skill, index) => (
+                            <div key={index} style={{ margin: "4px 0", display: "flex", alignItems: "center" }}>
+                              <span style={{ color: "#ff5f56" }}>{"{"}</span>
+                              <span style={{ color: "#38bdf8", marginLeft: "12px" }}>"{skill.name}"</span>: 
+                              <span style={{ color: "#bd93f9", marginLeft: "12px", width: "16px", display: "inline-block", textAlign: "right" }}>{skill.rating}</span>
+                              <span style={{ color: "#6272a4", marginLeft: "24px", display: "flex", alignItems: "center" }}>
+                                 // 
+                                 <div style={{ display: "inline-block", width: "80px", height: "6px", background: "#111116", borderRadius: "3px", border: "1px solid #2a2a35", marginLeft: "12px", overflow: "hidden" }}>
+                                    <div style={{ width: `${(skill.rating / 5) * 100}%`, height: "100%", background: "#34d399" }}></div>
+                                 </div>
+                              </span>
+                              <span style={{ color: "#ff5f56", marginLeft: "24px" }}>{"}"}</span>{index < profile.skills.length - 1 ? "," : ""}
+                            </div>
+                          ))
+                        )}
+                      </div>
+                      <span style={{ color: "#bd93f9" }}>]</span>
+                    </div>
+
+                  </div>
+                  <span style={{ color: "#ff5f56" }}>{"}"}</span>
                 </div>
               </div>
             </div>
