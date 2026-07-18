@@ -42,15 +42,15 @@ const JoinedProjects = () => {
             <span className="indicator-light" style={{ width: "20px", height: "20px" }}></span>
           </div>
         ) : error ? (
-          <div className="ceramic-card" style={{ textAlign: "center", color: "var(--danger)" }}>
+          <div className="terminal-card" style={{ textAlign: "center", color: "#ff5f56" }}>
             <p>{error}</p>
           </div>
         ) : projects.length === 0 ? (
-          <div className="ceramic-card" style={{ textAlign: "center", padding: "60px 0" }}>
-            <span className="material-symbols-outlined" style={{ fontSize: "48px", color: "var(--text-secondary)" }}>
+          <div className="terminal-card" style={{ textAlign: "center", padding: "60px 0" }}>
+            <span className="material-symbols-outlined" style={{ fontSize: "48px", color: "#888" }}>
               folder_open
             </span>
-            <p style={{ marginTop: "16px", color: "var(--text-secondary)" }}>You have not joined any projects yet.</p>
+            <p style={{ marginTop: "16px", color: "#888" }}>You have not joined any projects yet.</p>
           </div>
         ) : (
           <div className="ceramic-grid">
@@ -128,19 +128,21 @@ const JoinedProjects = () => {
             }}
             style={{ zIndex: 2000, position: "fixed" }}
           >
-            <div className="ceramic-card chat-modal-card">
+            <div className="terminal-card chat-modal-card">
               <div
                 className="chat-header-handle"
                 style={{
                   padding: "16px 20px",
-                  borderBottom: "1px solid var(--border-color)",
+                  borderBottom: "1px solid #2a2a35",
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
-                  background: "var(--tag-bg)",
+                  background: "#0B0B0F",
+                  borderTopLeftRadius: "8px",
+                  borderTopRightRadius: "8px",
                 }}
               >
-                <h4 style={{ fontWeight: 700, margin: 0 }}>Team Chat</h4>
+                <h4 style={{ fontFamily: "'Fira Code', monospace", color: "#38bdf8", fontWeight: 700, margin: 0 }}>&gt; Team Chat</h4>
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
@@ -148,7 +150,7 @@ const JoinedProjects = () => {
                   }}
                   onMouseDown={(e) => e.stopPropagation()}
                   onTouchStart={(e) => e.stopPropagation()}
-                  style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", zIndex: 10 }}
+                  style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", color: "#888", zIndex: 10 }}
                 >
                   <span className="material-symbols-outlined">close</span>
                 </button>
