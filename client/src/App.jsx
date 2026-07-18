@@ -14,6 +14,7 @@ import ProjectDetails from './pages/Projects/ProjectDetails'
 import Profile from './pages/Profile/Profile'
 import { initTheme } from './utils/theme'
 import NetworkBackground from './components/NetworkBackground/NetworkBackground'
+import CustomCursor from './components/CustomCursor/CustomCursor'
 
 const App = () => {
   useEffect(() => {
@@ -22,6 +23,7 @@ const App = () => {
 
   return (
     <>
+      <CustomCursor />
       <NetworkBackground />
       <Routes>
   <Route path='/' element={<PublicRoute><Login/></PublicRoute>}/>
