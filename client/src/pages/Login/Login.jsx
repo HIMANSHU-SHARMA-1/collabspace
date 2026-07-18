@@ -53,178 +53,156 @@ const Login = () => {
     setformData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  return (
-    <div className="landing-bg-wrapper">
-      {/* Floating Theme Switcher */}
-      <button
-        onClick={toggleTheme}
-        className="ceramic-theme-toggle"
-        style={{ position: "fixed", top: "30px", right: "30px", zIndex: 10 }}
-        title="Toggle theme"
-      >
-        <span className="material-symbols-outlined">
-          {theme === "light" ? "dark_mode" : "light_mode"}
-        </span>
-      </button>
+  const scrollToLogin = () => {
+    document.getElementById('login-section').scrollIntoView({ behavior: 'smooth' });
+  };
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1.2fr 1fr",
-          gap: "48px",
-          width: "100%",
-          maxWidth: "1150px",
-          zIndex: 1,
-        }}
-        className="login-responsive-grid"
-      >
-        {/* Left Side: Aim, Objective, Purpose Landing Section */}
-        <div
-          className="ceramic-card"
-          style={{
-            padding: "54px 48px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            gap: "36px",
-          }}
-        >
-          <div>
-            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
-              <span
-                className="material-symbols-outlined"
-                style={{ fontSize: "40px", color: "var(--accent-primary)" }}
-              >
-                bubble_chart
-              </span>
-              <h1
-                style={{
-                  fontFamily: "Space Grotesk, sans-serif",
-                  fontSize: "2.4rem",
-                  fontWeight: 800,
-                  letterSpacing: "-0.8px",
-                }}
-              >
-                collab<span style={{ color: "var(--accent-primary)" }}>.space</span>
-              </h1>
+  return (
+    <div style={{ backgroundColor: 'var(--bg-color)', minHeight: '100vh', position: 'relative', overflow: 'hidden' }}>
+      
+      {/* Navbar */}
+      <nav className="landing-navbar">
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <span className="material-symbols-outlined" style={{ fontSize: "28px", color: "var(--accent-primary)" }}>bubble_chart</span>
+          <span style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1.5rem", fontWeight: 800, letterSpacing: "-0.5px", color: "#fff" }}>
+            collab<span style={{ color: "var(--accent-primary)" }}>.space</span>
+          </span>
+          <span style={{ fontSize: "0.6rem", background: "rgba(16,185,129,0.1)", color: "var(--accent-secondary)", padding: "2px 8px", borderRadius: "10px", marginLeft: "8px", fontWeight: "bold" }}>PRIVATE BETA</span>
+        </div>
+        <div className="landing-navbar-links">
+          <a href="#features">Features</a>
+          <a href="#preview">Preview</a>
+          <a href="#login-section">Access</a>
+        </div>
+      </nav>
+
+      {/* Hero Section */}
+      <section className="landing-hero">
+        <div>
+          <h1 className="hero-headline">
+            Connect the brightest minds.<br/>Combine the sharpest skills.<br/>Launch high-impact projects.
+          </h1>
+          <p className="hero-subheadline">
+            CollabSpace matches developers, designers, and project leads into high-signal rooms built around complementary skills, real workloads, and ambitious collegiate ideas.
+          </p>
+          <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
+            <button onClick={scrollToLogin} className="ceramic-btn primary" style={{ borderRadius: "30px", padding: "16px 32px" }}>
+              Join the Workspace
+            </button>
+            <span style={{ fontSize: "0.85rem", color: "var(--text-secondary)", fontWeight: 600, letterSpacing: "1px", textTransform: "uppercase" }}>Creator-First Matching</span>
+          </div>
+        </div>
+        <div className="hero-graphic-container">
+          <div className="hero-glowing-shape"></div>
+          <div className="hero-solid-shape"></div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section id="features" className="landing-section">
+        <div className="section-pill">A sharper way to assemble campus teams</div>
+        <h2 className="section-title">Match by momentum, not mutuals.</h2>
+        <p className="section-subtitle">
+          CollabSpace turns scattered college talent into focused build squads with skill-fit, availability clarity, and project rooms that move ideas forward.
+        </p>
+
+        <div className="features-grid">
+          <div className="feature-card">
+            <div className="feature-icon-wrapper" style={{ color: "var(--accent-primary)" }}>
+              <span className="material-symbols-outlined">local_fire_department</span>
             </div>
-            <p
-              style={{
-                fontSize: "1.15rem",
-                color: "var(--text-secondary)",
-                lineHeight: 1.6,
-                fontWeight: 500,
-              }}
-            >
-              Connect the brightest minds. Combine the sharpest skills. Launch high-impact projects.
-            </p>
+            <h3 className="feature-title">Ignite</h3>
+            <p className="feature-desc">Turn campus concepts into working code before momentum evaporates.</p>
+          </div>
+          
+          <div className="feature-card">
+            <div className="feature-icon-wrapper" style={{ color: "var(--accent-secondary)" }}>
+              <span className="material-symbols-outlined">insights</span>
+            </div>
+            <h3 className="feature-title">Align</h3>
+            <p className="feature-desc">AI-driven talent matching based on tech stacks, creative range, and real workload capacity.</p>
           </div>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
-            {/* AIM */}
-            <div style={{ display: "flex", gap: "20px", alignItems: "flex-start" }}>
-              <div
-                style={{
-                  width: "48px",
-                  height: "48px",
-                  borderRadius: "16px",
-                  boxShadow: "var(--shadow-inset)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "var(--accent-primary)",
-                  flexShrink: 0,
-                }}
-              >
-                <span className="material-symbols-outlined" style={{ fontSize: "24px" }}>track_changes</span>
-              </div>
-              <div>
-                <h3 style={{ fontSize: "1.05rem", fontWeight: 700, marginBottom: "4px" }}>Ignite</h3>
-                <p style={{ fontSize: "0.92rem", color: "var(--text-secondary)", lineHeight: 1.55 }}>
-                  Turn campus concepts into working code. We empower students to build unstoppable, cross-functional teams in seconds.
-                </p>
+          <div className="feature-card">
+            <div className="feature-icon-wrapper" style={{ color: "#a855f7" }}>
+              <span className="material-symbols-outlined">token</span>
+            </div>
+            <h3 className="feature-title">Execute</h3>
+            <p className="feature-desc">Frictionless team building with structured real-time room chats and founder-grade rituals.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* App Preview Section */}
+      <section id="preview" className="landing-section">
+        <div className="section-pill">Workspace Intelligence</div>
+        <h2 className="section-title">A focused dashboard for<br/>serious student builders.</h2>
+        
+        <div className="mockup-container">
+          <div className="mockup-header">
+            <div className="mockup-dots">
+              <div className="mockup-dot" style={{ background: "#ef4444" }}></div>
+              <div className="mockup-dot" style={{ background: "#f59e0b" }}></div>
+              <div className="mockup-dot" style={{ background: "#10b981" }}></div>
+            </div>
+            <div className="mockup-title">CollabSpace OS / Matching Room</div>
+          </div>
+          
+          <div className="mockup-panel">
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "24px" }}>
+              <h4 style={{ color: "#fff" }}>High-fit projects</h4>
+              <span style={{ color: "var(--accent-secondary)", fontSize: "0.8rem", fontWeight: "bold" }}>12 ACTIVE</span>
+            </div>
+            
+            <div style={{ background: "var(--panel-bg)", padding: "16px", borderRadius: "12px", marginBottom: "16px", border: "1px solid rgba(255,255,255,0.05)" }}>
+              <h5 style={{ color: "#fff", marginBottom: "8px" }}>Campus carbon ledger</h5>
+              <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem", marginBottom: "12px" }}>Needs data viz designer + backend lead</p>
+              <div style={{ display: "flex", gap: "8px" }}>
+                <span className="skill-tag" style={{ fontSize: "0.7rem", padding: "4px 8px" }}>REACT</span>
+                <span className="skill-tag" style={{ fontSize: "0.7rem", padding: "4px 8px", color: "var(--accent-secondary)", background: "rgba(16,185,129,0.1)" }}>YES MATCH</span>
               </div>
             </div>
 
-            {/* OBJECTIVE */}
-            <div style={{ display: "flex", gap: "20px", alignItems: "flex-start" }}>
-              <div
-                style={{
-                  width: "48px",
-                  height: "48px",
-                  borderRadius: "16px",
-                  boxShadow: "var(--shadow-inset)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "var(--accent-primary)",
-                  flexShrink: 0,
-                }}
-              >
-                <span className="material-symbols-outlined" style={{ fontSize: "24px" }}>insights</span>
-              </div>
-              <div>
-                <h3 style={{ fontSize: "1.05rem", fontWeight: 700, marginBottom: "4px" }}>Align</h3>
-                <p style={{ fontSize: "0.92rem", color: "var(--text-secondary)", lineHeight: 1.55 }}>
-                  Powered by AI, driven by talent. We analyze your stack, gauge your workload, and match you with your missing puzzle pieces.
-                </p>
-              </div>
+            <div style={{ background: "var(--panel-bg)", padding: "16px", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.05)", opacity: 0.7 }}>
+              <h5 style={{ color: "#fff", marginBottom: "8px" }}>Peer tutoring agent</h5>
+              <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem", marginBottom: "12px" }}>LLM workflow, educator interviews, UX system</p>
+            </div>
+          </div>
+
+          <div className="mockup-panel">
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "24px" }}>
+              <h4 style={{ color: "#fff" }}>Room chat</h4>
+              <span style={{ color: "var(--accent-secondary)", fontSize: "0.8rem", fontWeight: "bold" }}>LIVE</span>
+            </div>
+            
+            <div style={{ background: "var(--panel-bg)", padding: "16px", borderRadius: "12px", marginBottom: "16px", border: "1px solid rgba(255,255,255,0.05)" }}>
+              <div style={{ fontSize: "0.7rem", color: "var(--accent-primary)", fontWeight: "bold", marginBottom: "8px", textTransform: "uppercase" }}>Maya - Product</div>
+              <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem" }}>I can scope the MVP and run interviews this week.</p>
             </div>
 
-            {/* PURPOSE */}
-            <div style={{ display: "flex", gap: "20px", alignItems: "flex-start" }}>
-              <div
-                style={{
-                  width: "48px",
-                  height: "48px",
-                  borderRadius: "16px",
-                  boxShadow: "var(--shadow-inset)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "var(--accent-primary)",
-                  flexShrink: 0,
-                }}
-              >
-                <span className="material-symbols-outlined" style={{ fontSize: "24px" }}>groups</span>
-              </div>
-              <div>
-                <h3 style={{ fontSize: "1.05rem", fontWeight: 700, marginBottom: "4px" }}>Execute</h3>
-                <p style={{ fontSize: "0.92rem", color: "var(--text-secondary)", lineHeight: 1.55 }}>
-                  Frictionless team building. Find your leaders, lock in your developers, and jump straight into structured, real-time collaboration.
-                </p>
-              </div>
+            <div style={{ background: "rgba(16,185,129,0.05)", padding: "16px", borderRadius: "12px", marginBottom: "24px", border: "1px solid rgba(16,185,129,0.2)" }}>
+              <div style={{ fontSize: "0.7rem", color: "var(--accent-secondary)", fontWeight: "bold", marginBottom: "8px", textTransform: "uppercase" }}>Arjun - Engineering</div>
+              <p style={{ color: "#fff", fontSize: "0.85rem" }}>I'll wire auth + vector search. Need a designer by Friday.</p>
+            </div>
+
+            <div style={{ display: "flex", alignItems: "center", background: "var(--panel-bg)", borderRadius: "20px", padding: "12px 16px", border: "1px solid rgba(255,255,255,0.05)" }}>
+              <span style={{ color: "var(--text-secondary)", fontSize: "0.85rem", flexGrow: 1 }}>Drop a build update...</span>
+              <div style={{ width: "24px", height: "24px", borderRadius: "50%", background: "var(--accent-primary)" }}></div>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* Right Side: Professional Sign In form card */}
-        <div
-          className="ceramic-card"
-          style={{
-            padding: "54px 44px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-          }}
-        >
-          <div style={{ textAlign: "center", marginBottom: "32px" }}>
-            <h2
-              style={{
-                fontFamily: "Space Grotesk, sans-serif",
-                fontSize: "1.75rem",
-                fontWeight: 700,
-                marginBottom: "8px",
-              }}
-            >
-              Sign In
-            </h2>
-            <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem" }}>
-              Access your personalized workspace
-            </p>
-          </div>
-
-          <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+      {/* Auth/CTA Footer Section */}
+      <section id="login-section" className="landing-section">
+        <div className="section-pill">Invite-only workspace</div>
+        <h2 className="section-title">Ready to eliminate recruitment friction?</h2>
+        <p className="section-subtitle" style={{ marginBottom: "40px" }}>
+          Join the early campus cohort and get matched into rooms where skill, ambition, and availability already line up.
+        </p>
+        
+        <div className="cta-footer" style={{ padding: "40px 32px", maxWidth: "600px", marginTop: "0" }}>
+          <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "20px", textAlign: "left" }}>
             <div className="ceramic-input-group">
               <label htmlFor="email">Email Address</label>
               <input
@@ -252,68 +230,38 @@ const Login = () => {
             </div>
 
             {error && (
-              <p
-                style={{
-                  color: "var(--danger)",
-                  fontSize: "0.85rem",
-                  textAlign: "center",
-                  fontWeight: 500,
-                }}
-              >
+              <p style={{ color: "var(--danger)", fontSize: "0.85rem", textAlign: "center", fontWeight: 500 }}>
                 {error}
               </p>
             )}
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="ceramic-btn primary"
-              style={{ marginTop: "10px" }}
-            >
-              {loading ? "Signing In..." : "Sign In"}
+            <button type="submit" disabled={loading} className="ceramic-btn primary" style={{ marginTop: "10px", width: "100%", padding: "16px" }}>
+              {loading ? "Signing In..." : "Request Access / Sign In"}
             </button>
           </form>
 
-          <div
-            style={{
-              textAlign: "center",
-              marginTop: "32px",
-              paddingTop: "20px",
-              borderTop: "1px solid var(--border-color)",
-            }}
-          >
-            <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", marginBottom: "16px" }}>
+          <div style={{ textAlign: "center", marginTop: "32px", paddingTop: "20px", borderTop: "1px solid var(--border-color)" }}>
+            <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)" }}>
               New to CollabSpace?{" "}
               <button
                 onClick={() => navigate("/register")}
-                style={{
-                  background: "none",
-                  border: "none",
-                  color: "var(--accent-primary)",
-                  fontWeight: 700,
-                  cursor: "pointer",
-                }}
+                style={{ background: "none", border: "none", color: "var(--accent-primary)", fontWeight: 700, cursor: "pointer" }}
               >
                 Create account
               </button>
             </p>
-
-            <p style={{ fontSize: "0.75rem", color: "var(--text-secondary)", opacity: 0.6 }}>
-              © 2026 CollabSpace. All rights reserved.
-            </p>
           </div>
         </div>
-      </div>
+      </section>
 
-      <style>{`
-        @media (max-width: 768px) {
-          .login-responsive-grid {
-            grid-template-columns: 1fr !important;
-            gap: 32px !important;
-          }
-        }
-      `}</style>
-      
+      <footer style={{ textAlign: "center", padding: "40px", borderTop: "1px solid rgba(255,255,255,0.05)", color: "var(--text-secondary)", fontSize: "0.85rem", display: "flex", justifyContent: "space-between", alignItems: "center", maxWidth: "1300px", margin: "0 auto" }}>
+        <span>© 2026 CollabSpace. Built for student creators.</span>
+        <div style={{ display: "flex", gap: "24px", textTransform: "uppercase", fontSize: "0.75rem", letterSpacing: "1px", fontWeight: "bold" }}>
+          <span>Community</span>
+          <span>Preview</span>
+          <span>Access</span>
+        </div>
+      </footer>
     </div>
   );
 };
