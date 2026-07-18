@@ -14,7 +14,14 @@ const Login = () => {
   
   // Registration State
   const [isFlipped, setIsFlipped] = useState(false);
-  const [regFormData, setRegFormData] = useState({});
+  const [regFormData, setRegFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    bio: "",
+    githubProfile: "",
+    skills: [{ name: "", rating: 5 }]
+  });
   const [regLoading, setRegLoading] = useState(false);
   const [regError, setRegError] = useState("");
 
@@ -65,6 +72,29 @@ const Login = () => {
 
   const addRegData = (e) => {
     setRegFormData({ ...regFormData, [e.target.name]: e.target.value });
+  };
+
+  const handleSkillChange = (index, field, value) => {
+    setRegFormData(prev => {
+      const newSkills = [...prev.skills];
+      newSkills[index] = { ...newSkills[index], [field]: value };
+      return { ...prev, skills: newSkills };
+    });
+  };
+
+  const addSkillField = () => {
+    setRegFormData(prev => ({
+      ...prev,
+      skills: [...(prev.skills || []), { name: "", rating: 5 }]
+    }));
+  };
+
+  const removeSkill = (index) => {
+    setRegFormData(prev => {
+      const newSkills = [...prev.skills];
+      newSkills.splice(index, 1);
+      return { ...prev, skills: newSkills };
+    });
   };
 
   const handleRegisterSubmit = async (e) => {
@@ -382,21 +412,59 @@ const Login = () => {
                 
                 <div className="code-line indent" style={{ paddingLeft: "64px" }}>
                   <span className="variable">this</span>.username =&nbsp;<span className="string">"</span><input
-                    type="text" name="username" onChange={addRegData} placeholder="your_handle" required className="code-input" style={{ width: "180px" }}
+                    type="text" name="username" onChange={addRegData} placeholder="your_handle" required className="code-input" style={{ width: "140px" }}
                   /><span className="string">"</span>;
                 </div>
                 
                 <div className="code-line indent" style={{ paddingLeft: "64px" }}>
                   <span className="variable">this</span>.email =&nbsp;<span className="string">"</span><input
-                    type="email" name="email" onChange={addRegData} placeholder="name@college.edu" required className="code-input" style={{ width: "180px" }}
+                    type="email" name="email" onChange={addRegData} placeholder="name@college.edu" required className="code-input" style={{ width: "160px" }}
                   /><span className="string">"</span>;
                 </div>
 
                 <div className="code-line indent" style={{ paddingLeft: "64px" }}>
                   <span className="variable">this</span>.password =&nbsp;<span className="string">"</span><input
-                    type="password" name="password" onChange={addRegData} placeholder="••••••••" required className="code-input" style={{ width: "180px" }}
+                    type="password" name="password" onChange={addRegData} placeholder="••••••••" required className="code-input" style={{ width: "140px" }}
                   /><span className="string">"</span>;
                 </div>
+
+                <div className="code-line indent" style={{ paddingLeft: "64px" }}>
+                  <span className="variable">this</span>.githubProfile =&nbsp;<span className="string">"</span><input
+                    type="text" name="githubProfile" onChange={addRegData} placeholder="https://github.com/..." className="code-input" style={{ width: "180px" }}
+                  /><span className="string">"</span>;
+                </div>
+
+                <div className="code-line indent" style={{ paddingLeft: "64px", alignItems: "flex-start" }}>
+                  <span className="variable">this</span>.bio =&nbsp;<span className="string">`</span>
+                  <textarea
+                    name="bio"
+                    onChange={addRegData}
+                    placeholder="Tell us about yourself..."
+                    className="code-input"
+                    style={{ width: "240px", height: "40px", resize: "none" }}
+                  />
+                  <span className="string">`</span>;
+                </div>
+
+                <div className="code-line indent" style={{ paddingLeft: "64px" }}>
+                  <span className="variable">this</span>.skills = [
+                </div>
+                {regFormData.skills?.map((skill, index) => (
+                  <div key={index} className="code-line indent" style={{ paddingLeft: "80px" }}>
+                    {"{ name: "}<span className="string">"</span><input
+                      type="text" value={skill.name} onChange={(e) => handleSkillChange(index, 'name', e.target.value)} placeholder="React" required className="code-input" style={{ width: "70px" }}
+                    /><span className="string">"</span>{", rating: "}<input
+                      type="number" min="1" max="5" value={skill.rating} onChange={(e) => handleSkillChange(index, 'rating', Number(e.target.value))} required className="code-input" style={{ width: "30px", color: "#b5cea8" }}
+                    />{" },"}
+                    {regFormData.skills.length > 1 && (
+                      <button type="button" onClick={() => removeSkill(index)} style={{ background:"none", border:"none", color:"#e06c75", cursor:"pointer", marginLeft:"8px" }}>// remove</button>
+                    )}
+                  </div>
+                ))}
+                <div className="code-line indent" style={{ paddingLeft: "80px" }}>
+                  <button type="button" onClick={addSkillField} style={{ background:"none", border:"none", color:"#5c6370", cursor:"pointer", padding:0 }}>// + add skill object</button>
+                </div>
+                <div className="code-line indent" style={{ paddingLeft: "64px" }}>];</div>
 
                 <div className="code-line indent">{"}"}</div>
                 <div className="code-line">{"}"}</div>
