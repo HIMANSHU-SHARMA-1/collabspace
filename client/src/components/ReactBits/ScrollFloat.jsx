@@ -21,9 +21,16 @@ const ScrollFloat = ({
 
   const splitText = useMemo(() => {
     const text = typeof children === 'string' ? children : '';
-    return text.split('').map((char, index) => (
-      <span className="char" key={index}>
-        {char === ' ' ? '\u00A0' : char}
+    return text.split(' ').map((word, wordIndex, array) => (
+      <span key={wordIndex} style={{ display: 'inline-block', whiteSpace: 'nowrap' }}>
+        {word.split('').map((char, charIndex) => (
+          <span className="char" key={charIndex}>
+            {char}
+          </span>
+        ))}
+        {wordIndex !== array.length - 1 && (
+          <span className="char" style={{ whiteSpace: 'pre' }}> </span>
+        )}
       </span>
     ));
   }, [children]);
