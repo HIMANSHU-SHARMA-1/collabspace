@@ -503,6 +503,12 @@ input, button, textarea, select {
   letter-spacing: -1px;
   margin-bottom: 24px;
   color: #fff;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.hero-headline:hover {
+  color: var(--accent-primary);
+  text-shadow: 0 0 30px var(--accent-glow);
 }
 
 .hero-subheadline {
@@ -608,6 +614,14 @@ input, button, textarea, select {
   box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
+.feature-card:hover .feature-title {
+  color: var(--accent-primary);
+}
+
+.feature-card:hover .feature-desc {
+  color: var(--text-primary);
+}
+
 .feature-icon-wrapper {
   width: 48px;
   height: 48px;
@@ -625,12 +639,14 @@ input, button, textarea, select {
   font-weight: 700;
   margin-bottom: 12px;
   color: #fff;
+  transition: color 0.3s ease;
 }
 
 .feature-desc {
   color: var(--text-secondary);
   font-size: 0.95rem;
   line-height: 1.6;
+  transition: color 0.3s ease;
 }
 
 .mockup-container {
