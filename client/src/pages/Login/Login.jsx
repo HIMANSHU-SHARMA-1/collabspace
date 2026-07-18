@@ -6,6 +6,7 @@ import { getTheme, setTheme } from "../../utils/theme";
 import TextType from "../../components/ReactBits/TextType";
 import PixelTransition from "../../components/ReactBits/PixelTransition";
 import ScrollFloat from "../../components/ReactBits/ScrollFloat";
+import CircularText from "../../components/ReactBits/CircularText";
 
 const Login = () => {
   const [formData, setformData] = useState({});
@@ -170,9 +171,31 @@ const Login = () => {
             <span style={{ fontSize: "0.85rem", color: "var(--text-secondary)", fontWeight: 600, letterSpacing: "1px", textTransform: "uppercase" }}>Creator-First Matching</span>
           </div>
         </div>
-        <div className="hero-graphic-container">
-          <div className="hero-glowing-shape"></div>
-          <div className="hero-solid-shape"></div>
+        <div className="hero-graphic-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', height: '100%', minHeight: '400px' }}>
+          <div style={{ position: 'absolute', zIndex: 3, color: 'var(--accent-primary)' }}>
+            <CircularText
+              text="INNOVATE*CREATE*BUILD*"
+              spinDuration={15}
+              onHover="speedUp"
+              spinDirection={1}
+            />
+          </div>
+          <div style={{ position: 'absolute', transform: 'scale(1.5)', zIndex: 2, color: 'var(--accent-secondary)' }}>
+            <CircularText
+              text="COLLABORATE*CONNECT*MATCH*"
+              spinDuration={25}
+              onHover="slowDown"
+              spinDirection={-1}
+            />
+          </div>
+          <div style={{ position: 'absolute', transform: 'scale(2.2)', zIndex: 1, color: '#a855f7' }}>
+            <CircularText
+              text="DEVELOPERS*DESIGNERS*FOUNDERS*"
+              spinDuration={35}
+              onHover="goBonkers"
+              spinDirection={1}
+            />
+          </div>
         </div>
       </section>
 
