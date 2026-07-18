@@ -270,56 +270,68 @@ const Login = () => {
           Join the early campus cohort and get matched into rooms where skill, ambition, and availability already line up.
         </p>
         
-        <div className="cta-footer" style={{ padding: "40px 32px", maxWidth: "600px", marginTop: "0" }}>
-          <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "20px", textAlign: "left" }}>
-            <div className="ceramic-input-group">
-              <label htmlFor="email">Email Address</label>
-              <input
+        <div style={{ maxWidth: "600px", margin: "40px auto 0 auto" }}>
+          <form onSubmit={handleSubmit} className="code-login-wrapper">
+            <div className="code-login-header">
+              <div className="mac-dot red"></div>
+              <div className="mac-dot yellow"></div>
+              <div className="mac-dot green"></div>
+            </div>
+
+            <div className="code-line"><span className="keyword">function</span>&nbsp;<span className="function">email</span>() {"{"}</div>
+            <div className="code-line indent">
+              <span className="keyword">const</span>&nbsp;message =&nbsp;<span className="string">`</span><input
                 id="email"
                 type="email"
                 name="email"
                 onChange={addData}
-                placeholder="name@college.edu"
+                placeholder="enter your email here"
                 required
-                className="ceramic-input"
-              />
+                className="code-input"
+              /><span className="string">`</span>
             </div>
+            <div className="code-line indent"><span className="keyword">return</span>&nbsp;message;</div>
+            <div className="code-line">{"}"}</div>
 
-            <div className="ceramic-input-group">
-              <label htmlFor="password">Password</label>
-              <input
+            <div className="code-line"><span className="keyword">function</span>&nbsp;<span className="function">password</span>() {"{"}</div>
+            <div className="code-line indent">
+              <span className="keyword">const</span>&nbsp;password =&nbsp;<span className="string">'</span><input
                 id="password"
                 type="password"
                 name="password"
                 onChange={addData}
-                placeholder="••••••••"
+                placeholder="Enter your password here"
                 required
-                className="ceramic-input"
-              />
+                className="code-input"
+              /><span className="string">'</span>
             </div>
+            <div className="code-line indent"><span className="keyword">return</span>&nbsp;password;</div>
+            <div className="code-line">{"}"}</div>
+
+            <br />
+            <div className="code-line"><span className="function">email</span>();</div>
+            <div className="code-line"><span className="function">password</span>();</div>
 
             {error && (
-              <p style={{ color: "var(--danger)", fontSize: "0.85rem", textAlign: "center", fontWeight: 500 }}>
-                {error}
-              </p>
+              <div className="code-line comment" style={{ marginTop: "16px", color: "#e06c75" }}>
+                // Error: {error}
+              </div>
             )}
 
-            <button type="submit" disabled={loading} className="ceramic-btn primary" style={{ marginTop: "10px", width: "100%", padding: "16px" }}>
-              {loading ? "Signing In..." : "Request Access / Sign In"}
-            </button>
-          </form>
-
-          <div style={{ textAlign: "center", marginTop: "32px", paddingTop: "20px", borderTop: "1px solid var(--border-color)" }}>
-            <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)" }}>
-              New to CollabSpace?{" "}
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginTop: "24px" }}>
               <button
+                type="button"
                 onClick={() => navigate("/register")}
-                style={{ background: "none", border: "none", color: "var(--accent-primary)", fontWeight: 700, cursor: "pointer" }}
+                style={{ background: "none", border: "none", color: "#5c6370", cursor: "pointer", textDecoration: "underline", fontSize: "0.85rem" }}
               >
-                Create account
+                // Create account
               </button>
-            </p>
-          </div>
+              <button type="submit" disabled={loading} className="run-button">
+                <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>play_arrow</span>
+                {loading ? "Executing..." : "Run"}
+              </button>
+            </div>
+          </form>
         </div>
       </section>
 

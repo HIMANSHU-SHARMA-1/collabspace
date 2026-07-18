@@ -707,6 +707,100 @@ input, button, textarea, select {
   margin: 80px auto;
 }
 
+/* --- Code Editor Login Styles --- */
+.code-login-wrapper {
+  background: #1e1e1e;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 24px 32px;
+  font-family: 'Consolas', 'Courier New', Courier, monospace;
+  color: #d4d4d4;
+  text-align: left;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  margin-top: 32px;
+  position: relative;
+}
+
+.code-login-header {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.mac-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.mac-dot.red { background: #ff5f56; }
+.mac-dot.yellow { background: #ffbd2e; }
+.mac-dot.green { background: #27c93f; }
+
+.code-line {
+  line-height: 1.7;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  white-space: pre;
+}
+
+.code-line.indent {
+  padding-left: 32px;
+}
+
+.keyword { color: #569cd6; } /* VSCode Blue */
+.function { color: #dcdcaa; } /* VSCode Yellow */
+.string { color: #ce9178; } /* VSCode Orange/String */
+.variable { color: #9cdcfe; } /* VSCode Light Blue */
+.comment { color: #6a9955; font-style: italic; } /* VSCode Green */
+
+.code-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ce9178; /* Match string color */
+  font-family: inherit;
+  font-size: inherit;
+  width: 260px;
+  padding: 0 4px;
+  margin: 0;
+}
+
+.code-input::placeholder {
+  color: rgba(206, 145, 120, 0.5);
+}
+
+.code-input:focus {
+  background: rgba(255,255,255,0.05);
+  border-radius: 4px;
+}
+
+.run-button {
+  background: #27c93f;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 24px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.run-button:hover {
+  transform: scale(1.05);
+  background: #2ee649;
+}
+
+.run-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
 @media (max-width: 900px) {
   .landing-hero {
     grid-template-columns: 1fr;
@@ -718,4 +812,5 @@ input, button, textarea, select {
   .mockup-container { grid-template-columns: 1fr; }
   .landing-navbar { padding: 24px; }
   .landing-navbar-links { display: none; }
+  .code-login-wrapper { padding: 20px 16px; overflow-x: auto; }
 }
