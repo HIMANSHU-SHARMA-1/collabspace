@@ -91,8 +91,8 @@ const Profile = () => {
             </p>
           </div>
           {!isEditing && (
-            <button onClick={startEditing} className="ceramic-btn">
-              <span className="material-symbols-outlined">edit</span>
+            <button onClick={startEditing} className="terminal-btn" style={{ color: "#38bdf8", borderColor: "#38bdf8" }}>
+              <span className="material-symbols-outlined" style={{ fontSize: "16px", marginRight: "6px" }}>edit</span>
               Edit Profile
             </button>
           )}
