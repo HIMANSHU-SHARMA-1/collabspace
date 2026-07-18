@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import api from "../../api/axios";
 import Chat from "../chat/Chat";
-import { Rnd } from "react-rnd";
+
 
 const MyProject = () => {
   const [openChat, setopenChat] = useState(null);
