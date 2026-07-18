@@ -503,12 +503,6 @@ input, button, textarea, select {
   letter-spacing: -1px;
   margin-bottom: 24px;
   color: #fff;
-  transition: color 0.3s ease, text-shadow 0.3s ease;
-}
-
-.hero-headline:hover {
-  color: var(--accent-primary);
-  text-shadow: 0 0 30px var(--accent-glow);
 }
 
 .hero-subheadline {
