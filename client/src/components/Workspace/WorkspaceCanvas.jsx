@@ -126,6 +126,14 @@ const WorkspaceCanvas = ({ project, onClose }) => {
     }
   }, [nodes, edges, isLoaded, project]);
 
+  // Disable custom cursor
+  useEffect(() => {
+    document.body.classList.add('workspace-active');
+    return () => {
+      document.body.classList.remove('workspace-active');
+    };
+  }, []);
+
   const onConnect = useCallback((params) => setEdges((eds) => addEdge({ ...params, animated: true, style: { stroke: '#a855f7', strokeWidth: 2 } }, eds)), [setEdges]);
 
   return (

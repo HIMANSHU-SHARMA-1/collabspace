@@ -2,6 +2,10 @@
   cursor: none !important;
 }
 
+body.workspace-active * {
+  cursor: auto !important;
+}
+
 .custom-cursor {
   position: fixed;
   top: 0;
@@ -15,4 +19,8 @@
   z-index: 9999999;
   transform: translate(-50%, -50%);
   mix-blend-mode: difference;
+}
+
+body.workspace-active .custom-cursor {
+  display: none !important;
 }
