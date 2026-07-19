@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 const Recommendation = () => {
   const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
+  const [allProjects, setAllProjects] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -21,12 +22,22 @@ const Recommendation = () => {
     }
   };
 
-  const viewHandle = () => {
-    navigate("/dashboard");
+  const fetchAllProjects = async () => {
+    try {
+      const response = await api.get("/api/project/getAll");
+      setAllProjects(response.data.data);
+    } catch (err) {
+      console.error("Failed to fetch all projects for linking", err);
+    }
+  };
+
+  const viewProjectDetails = (projectId) => {
+    navigate(`/project-view/${projectId}`);
   };
 
   useEffect(() => {
     recommendProjects();
+    fetchAllProjects();
   }, []);
 
   return (
@@ -80,6 +91,7 @@ const Recommendation = () => {
                   {projects.map((proj, index) => {
                     const score = parseInt(proj.score) || 0;
                     const scoreColor = score >= 80 ? "#34d399" : score >= 50 ? "#f1fa8c" : "#ff5f56";
+                    const actualProject = allProjects.find(p => p.projectname === proj.projectName);
                     return (
                       <div key={index} style={{ background: "#111116", border: `1px solid ${scoreColor}40`, borderRadius: "4px", padding: "20px", position: "relative", overflow: "hidden", boxShadow: `0 4px 20px ${scoreColor}10` }}>
                         {/* Match bar background effect */}
@@ -120,7 +132,15 @@ const Recommendation = () => {
                         </div>
 
                         <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "24px" }}>
-                          <button onClick={() => navigate(`/project-view/${proj.projectId}`)} className="terminal-btn" style={{ color: scoreColor, borderColor: scoreColor, fontWeight: 700 }}>
+                          <button 
+                            onClick={() => {
+                              if(actualProject) viewProjectDetails(actualProject._id);
+                            }} 
+                            className="terminal-btn" 
+                            style={{ color: scoreColor, borderColor: scoreColor, fontWeight: 700 }}
+                            disabled={!actualProject}
+                            title={!actualProject ? "Project ID not found" : ""}
+                          >
                             [&gt;] VIEW PROJECT
                           </button>
                         </div>

@@ -16,7 +16,6 @@ const getProjectRecommendations = async(userskills, projects)=>{
 
     const projectText = projects.map(
         project =>`Project Name: ${project.projectname}
-        Project ID: ${project._id}
         Required Skill: ${project.requiredSkill.join(',')}
         Description: ${project.description}
         Team Size: ${project.teamsize}
@@ -46,7 +45,6 @@ const getProjectRecommendations = async(userskills, projects)=>{
     [
         {
             "projectName":"Project Name",
-            "projectId":"Project ID",
             "score":95,
             "Team Size":5,
             "Current Members":2,
