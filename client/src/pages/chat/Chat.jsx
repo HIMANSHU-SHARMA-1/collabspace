@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../context/AuthContext";
 import api from "../../api/axios";
 import { useSocket } from "../../context/SocketContext";
 
-const Chat = ({ projectId, members }) => {
+const Chat = ({ projectId }) => {
   const { socket } = useSocket();
   const { user } = useAuth();
   const [messages, setMessages] = useState([]);
