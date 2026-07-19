@@ -197,34 +197,25 @@ const MyProject = () => {
           </div>
         )}
 
-        {/* Chat modal overlay */}
         {openChat && (
-          <Rnd
-            default={{
-              x: window.innerWidth / 2 - 200,
-              y: window.innerHeight / 2 - 250,
-              width: 400,
-              height: 500,
+          <div
+            style={{
+              position: "fixed",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "400px",
+              height: "500px",
+              zIndex: 2000,
+              display: "flex",
+              flexDirection: "column",
+              background: "var(--bg-secondary, #0B0B0F)",
+              borderRadius: "8px",
+              border: "1px solid var(--border-color, #2a2a35)",
+              boxShadow: "0 10px 30px rgba(0,0,0,0.8)"
             }}
-            minWidth={300}
-            minHeight={400}
-            dragHandleClassName="chat-header-handle"
-            cancel="button"
-            resizeHandleStyles={{
-              bottomRight: { width: "40px", height: "40px", right: "0", bottom: "0" }
-            }}
-            resizeHandleComponent={{
-              bottomRight: (
-                <div style={{ position: "absolute", right: "4px", bottom: "4px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: "20px", color: "var(--text-secondary)", transform: "rotate(45deg)" }}>
-                    unfold_more
-                  </span>
-                </div>
-              )
-            }}
-            style={{ zIndex: 2000, position: "fixed" }}
           >
-            <div className="ceramic-card chat-modal-card">
+            <div className="ceramic-card chat-modal-card" style={{ display: 'flex', flexDirection: 'column', height: '100%', margin: 0 }}>
               <div
                 className="chat-header-handle"
                 style={{
@@ -242,8 +233,6 @@ const MyProject = () => {
                     e.stopPropagation();
                     setopenChat(null);
                   }}
-                  onMouseDown={(e) => e.stopPropagation()}
-                  onTouchStart={(e) => e.stopPropagation()}
                   style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", zIndex: 10 }}
                 >
                   <span className="material-symbols-outlined">close</span>
@@ -253,7 +242,7 @@ const MyProject = () => {
                 <Chat projectId={openChat} members={projects.find((p) => p._id === openChat)?.members} />
               </div>
             </div>
-          </Rnd>
+          </div>
         )}
       </div>
     </>

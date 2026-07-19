@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import api from "../../api/axios";
 import Chat from "../chat/Chat";
-
+import WorkspaceCanvas from "../../components/Workspace/WorkspaceCanvas";
 
 const JoinedProjects = () => {
   const [openChat, setopenChat] = useState(null);
+  const [isWorkspaceOpen, setIsWorkspaceOpen] = useState(null);
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -91,6 +92,9 @@ const JoinedProjects = () => {
                     Led by: {project.leader.username}
                   </div>
                   <div style={{ display: "flex", gap: "8px" }}>
+                    <button onClick={() => setIsWorkspaceOpen(project)} className="terminal-btn" style={{ borderColor: "#a855f7", color: "#a855f7" }}>
+                      Workspace
+                    </button>
                     <button onClick={() => setopenChat(project._id)} className="terminal-btn">
                       Open Chat
                     </button>
@@ -103,64 +107,54 @@ const JoinedProjects = () => {
 
         {/* Chat modal overlay */}
         {openChat && (
-          <Rnd
-            default={{
-              x: window.innerWidth / 2 - 200,
-              y: window.innerHeight / 2 - 250,
-              width: 400,
-              height: 500,
+          <div
+            style={{
+              position: "fixed",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "400px",
+              height: "500px",
+              zIndex: 2000,
+              display: "flex",
+              flexDirection: "column",
+              background: "#0B0B0F",
+              borderRadius: "8px",
+              border: "1px solid #2a2a35",
+              boxShadow: "0 10px 30px rgba(0,0,0,0.8)"
             }}
-            minWidth={300}
-            minHeight={400}
-            dragHandleClassName="chat-header-handle"
-            cancel="button"
-            resizeHandleStyles={{
-              bottomRight: { width: "40px", height: "40px", right: "0", bottom: "0" }
-            }}
-            resizeHandleComponent={{
-              bottomRight: (
-                <div style={{ position: "absolute", right: "4px", bottom: "4px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: "20px", color: "var(--text-secondary)", transform: "rotate(45deg)" }}>
-                    unfold_more
-                  </span>
-                </div>
-              )
-            }}
-            style={{ zIndex: 2000, position: "fixed" }}
           >
-            <div className="terminal-card chat-modal-card">
-              <div
-                className="chat-header-handle"
-                style={{
-                  padding: "16px 20px",
-                  borderBottom: "1px solid #2a2a35",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  background: "#0B0B0F",
-                  borderTopLeftRadius: "8px",
-                  borderTopRightRadius: "8px",
+            <div
+              className="chat-header-handle"
+              style={{
+                padding: "16px 20px",
+                borderBottom: "1px solid #2a2a35",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                background: "#0B0B0F",
+                borderTopLeftRadius: "8px",
+                borderTopRightRadius: "8px",
+              }}
+            >
+              <h4 style={{ fontFamily: "'Fira Code', monospace", color: "#38bdf8", fontWeight: 700, margin: 0 }}>&gt; Team Chat</h4>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setopenChat(null);
                 }}
+                style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", color: "#888", zIndex: 10 }}
               >
-                <h4 style={{ fontFamily: "'Fira Code', monospace", color: "#38bdf8", fontWeight: 700, margin: 0 }}>&gt; Team Chat</h4>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setopenChat(null);
-                  }}
-                  onMouseDown={(e) => e.stopPropagation()}
-                  onTouchStart={(e) => e.stopPropagation()}
-                  style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", color: "#888", zIndex: 10 }}
-                >
-                  <span className="material-symbols-outlined">close</span>
-                </button>
-              </div>
-              <div style={{ flexGrow: 1, overflowY: "auto", padding: "16px" }}>
-                <Chat projectId={openChat} members={projects.find((p) => p._id === openChat)?.members} />
-              </div>
+                <span className="material-symbols-outlined">close</span>
+              </button>
             </div>
-          </Rnd>
+            <div style={{ flexGrow: 1, overflowY: "auto", padding: "16px" }}>
+              <Chat projectId={openChat} members={projects.find((p) => p._id === openChat)?.members} />
+            </div>
+          </div>
         )}
+
+        {isWorkspaceOpen && <WorkspaceCanvas project={isWorkspaceOpen} onClose={() => setIsWorkspaceOpen(null)} />}
       </div>
     </>
   );
