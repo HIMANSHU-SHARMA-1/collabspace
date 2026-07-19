@@ -15,7 +15,6 @@ const Register = () => {
     skills: [],
   });
 
-  const [success, setSuccess] = useState();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [skillName, setSkillName] = useState("");
@@ -114,7 +113,6 @@ const Register = () => {
           name: loginData.data.username,
           email: loginData.data.email,
         });
-        setSuccess(true);
         navigate("/dashboard");
       } else {
         throw new Error("Login Failed after registration");

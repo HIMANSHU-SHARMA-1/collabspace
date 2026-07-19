@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from "../../api/axios";
 import { useAuth } from "../../context/AuthContext";
-import Nav from "../../components/Navbar/Nav";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
@@ -49,8 +48,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <Nav>
-      
+    <>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "32px", flexWrap: "wrap", gap: "16px" }}>
         <div>
           <h1 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "2rem", fontWeight: 700 }}>
@@ -84,46 +82,55 @@ const Dashboard = () => {
       ) : (
         <div className="ceramic-grid">
           {projects.map((p) => (
-            <div key={p._id} className="ceramic-card" style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                <h3 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1.25rem", fontWeight: 700 }}>
-                  {p.projectname}
-                </h3>
-                <span className="indicator-light"></span>
+            <div key={p._id} className="terminal-card">
+              <div className="terminal-header">
+                <div className="mac-dot red"></div>
+                <div className="mac-dot yellow"></div>
+                <div className="mac-dot green"></div>
               </div>
 
-              <p style={{ color: "var(--text-secondary)", fontSize: "0.92rem", lineHeight: 1.6, flexGrow: 1 }}>
-                {p.description}
-              </p>
+              <div className="terminal-title-row">
+                <div className="terminal-title">{p.projectname}</div>
+                <div className="terminal-meta">{p.status === 'open' ? 'Active' : p.status}</div>
+              </div>
 
-              <div>
-                <h4 style={{ fontSize: "0.8rem", fontWeight: 600, color: "var(--text-secondary)", marginBottom: "10px" }}>
-                  Required Stack
-                </h4>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-                  {p.requiredSkill.map((skill, index) => (
-                    <span key={index} className="skill-tag">
-                      {skill}
-                    </span>
-                  ))}
+              <div className="terminal-skills">
+                {p.requiredSkill.map((skill, index) => (
+                  <span key={index} className="terminal-skill-tag">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+
+              {/* Progress/Storage mock indicator */}
+              <div style={{ marginTop: '8px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#888', marginBottom: '6px' }}>
+                  <span>Team Size</span>
+                  <span>{p.members.length} / {p.teamsize}</span>
+                </div>
+                <div style={{ width: '100%', height: '4px', backgroundColor: '#2a2a35', borderRadius: '2px', overflow: 'hidden' }}>
+                  <div style={{ width: `${(p.members.length / p.teamsize) * 100}%`, height: '100%', backgroundColor: 'var(--accent-primary)' }}></div>
                 </div>
               </div>
 
-              <div style={{ display: "flex", gap: "12px", marginTop: "8px", borderTop: "1px solid var(--border-color)", paddingTop: "16px" }}>
-                <button onClick={() => joinRequest(p)} className="ceramic-btn" style={{ flexGrow: 1 }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>group_add</span>
-                  Join Team
-                </button>
-                <button onClick={() => viewProjectDetails(p._id)} className="ceramic-btn primary">
-                  <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>visibility</span>
-                  View
-                </button>
+              <div className="terminal-footer">
+                <div className="terminal-members">
+                  Team Members: {p.members.length}
+                </div>
+                <div style={{ display: "flex", gap: "8px" }}>
+                  <button onClick={() => viewProjectDetails(p._id)} className="terminal-btn" style={{ borderColor: '#888', color: '#888' }}>
+                    View
+                  </button>
+                  <button onClick={() => joinRequest(p)} className="terminal-btn">
+                    Join
+                  </button>
+                </div>
               </div>
             </div>
           ))}
         </div>
       )}
-    </Nav>
+    </>
   );
 };
 
