@@ -64,14 +64,6 @@ const IDEShell = ({ children }) => {
         
         <div className="ide-activity-bottom">
           <NavLink 
-            to="/node-workspace" 
-            className={({ isActive }) => `ide-activity-icon ${isActive ? 'active' : ''}`}
-            title="Advanced Node Workspace"
-            style={({ isActive }) => ({ color: isActive ? '#38bdf8' : 'inherit' })}
-          >
-            <span className="material-symbols-outlined">account_tree</span>
-          </NavLink>
-          <NavLink 
             to="/notifications" 
             className={({ isActive }) => `ide-activity-icon ${isActive ? 'active' : ''}`}
             title="Notifications"

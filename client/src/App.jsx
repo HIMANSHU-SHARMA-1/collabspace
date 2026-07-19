@@ -16,7 +16,6 @@ import { initTheme } from './utils/theme'
 import NetworkBackground from './components/NetworkBackground/NetworkBackground'
 import CustomCursor from './components/CustomCursor/CustomCursor'
 import IDEShell from './components/Layout/IDEShell'
-import NodeWorkspace from './pages/NodeWorkspace/NodeWorkspace'
 
 const App = () => {
   useEffect(() => {
@@ -40,7 +39,6 @@ const App = () => {
         <Route path='/joined-projects' element={<ProtectedRoute><IDEShell><JoinedProjects/></IDEShell></ProtectedRoute>}/>
         <Route path='/project-view/:projectId' element={<ProtectedRoute><IDEShell><ProjectDetails/></IDEShell></ProtectedRoute>}/>
         <Route path='/profile' element={<ProtectedRoute><IDEShell><Profile/></IDEShell></ProtectedRoute>}/>
-        <Route path='/node-workspace' element={<ProtectedRoute><IDEShell><NodeWorkspace/></IDEShell></ProtectedRoute>}/>
       </Routes>
     </>
   )

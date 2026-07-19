@@ -10,6 +10,13 @@ import {
   BackgroundVariant
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
+import { NoteNode, FeatureNode, ToolNode } from './CustomNodes';
+
+const nodeTypes = {
+  noteNode: NoteNode,
+  featureNode: FeatureNode,
+  toolNode: ToolNode
+};
 
 // We define initial node generation based on project details
 const generateInitialElements = (project) => {
@@ -93,6 +100,8 @@ const WorkspaceCanvas = ({ project, onClose }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [menu, setMenu] = useState(null);
+  const reactFlowWrapper = React.useRef(null);
 
   useEffect(() => {
     if (project) {
@@ -136,8 +145,38 @@ const WorkspaceCanvas = ({ project, onClose }) => {
 
   const onConnect = useCallback((params) => setEdges((eds) => addEdge({ ...params, animated: true, style: { stroke: '#a855f7', strokeWidth: 2 } }, eds)), [setEdges]);
 
+  const onPaneContextMenu = useCallback(
+    (event) => {
+      event.preventDefault();
+      const bounds = reactFlowWrapper.current.getBoundingClientRect();
+      setMenu({
+        top: event.clientY - bounds.top,
+        left: event.clientX - bounds.left,
+      });
+    },
+    [setMenu]
+  );
+
+  const onPaneClick = useCallback(() => setMenu(null), [setMenu]);
+
+  const addNode = (type) => {
+    if (!menu) return;
+
+    const newNode = {
+      id: `custom-${Date.now()}`,
+      type,
+      position: { x: menu.left, y: menu.top },
+      data: type === 'noteNode' 
+        ? { text: '' }
+        : { label: prompt(`Enter ${type === 'featureNode' ? 'Feature' : 'Tool'} Name:`) || 'New Block' }
+    };
+
+    setNodes((nds) => [...nds, newNode]);
+    setMenu(null);
+  };
+
   return (
-    <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999, background: '#0B0B0F' }}>
+    <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999, background: '#0B0B0F' }} ref={reactFlowWrapper}>
       <div style={{ position: 'absolute', top: '24px', right: '32px', zIndex: 10000, display: 'flex', alignItems: 'center', gap: '16px' }}>
         <span style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>Changes saved locally</span>
         <button onClick={onClose} className="ceramic-btn" style={{ borderColor: 'var(--danger)', color: 'var(--danger)', padding: '12px 24px' }}>
@@ -147,9 +186,12 @@ const WorkspaceCanvas = ({ project, onClose }) => {
       <ReactFlow
         nodes={nodes}
         edges={edges}
+        nodeTypes={nodeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        onPaneContextMenu={onPaneContextMenu}
+        onPaneClick={onPaneClick}
         colorMode="dark"
         fitView
       >
@@ -159,12 +201,48 @@ const WorkspaceCanvas = ({ project, onClose }) => {
           nodeColor={(node) => {
             if (node.id === 'project-core') return 'var(--accent-primary)';
             if (node.id.startsWith('member')) return 'var(--accent-secondary)';
+            if (node.type === 'noteNode') return '#facc15';
+            if (node.type === 'featureNode') return '#a855f7';
+            if (node.type === 'toolNode') return '#f97316';
             return '#333';
           }}
           style={{ backgroundColor: '#141419' }}
           maskColor="rgba(0,0,0,0.7)"
         />
       </ReactFlow>
+
+      {menu && (
+        <div
+          style={{
+            position: 'absolute',
+            top: menu.top,
+            left: menu.left,
+            background: '#111116',
+            border: '1px solid #38bdf8',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.8)',
+            borderRadius: '4px',
+            zIndex: 1000,
+            padding: '8px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '8px',
+            width: '180px'
+          }}
+        >
+          <div style={{ color: '#888', fontSize: '0.75rem', paddingBottom: '4px', borderBottom: '1px solid #2a2a35' }}>
+            [ SPAWN NODE ]
+          </div>
+          <button className="terminal-btn" style={{ borderColor: '#facc15', color: '#facc15', fontSize: '0.8rem' }} onClick={() => addNode('noteNode')}>
+            + Developer Note
+          </button>
+          <button className="terminal-btn" style={{ borderColor: '#a855f7', color: '#a855f7', fontSize: '0.8rem' }} onClick={() => addNode('featureNode')}>
+            + Feature Node
+          </button>
+          <button className="terminal-btn" style={{ borderColor: '#f97316', color: '#f97316', fontSize: '0.8rem' }} onClick={() => addNode('toolNode')}>
+            + Tool Node
+          </button>
+        </div>
+      )}
     </div>
   );
 };
