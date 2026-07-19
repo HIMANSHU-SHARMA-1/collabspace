@@ -120,8 +120,8 @@ const Recommendation = () => {
                         </div>
 
                         <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "24px" }}>
-                          <button onClick={viewHandle} className="terminal-btn" style={{ color: scoreColor, borderColor: scoreColor, fontWeight: 700 }}>
-                            [&gt;] INITIATE HANDSHAKE (DASHBOARD)
+                          <button onClick={() => navigate(`/project-view/${proj.projectId}`)} className="terminal-btn" style={{ color: scoreColor, borderColor: scoreColor, fontWeight: 700 }}>
+                            [&gt;] VIEW PROJECT
                           </button>
                         </div>
                       </div>
