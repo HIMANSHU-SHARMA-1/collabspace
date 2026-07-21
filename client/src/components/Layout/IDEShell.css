@@ -196,3 +196,55 @@
 .terminal-input:focus {
   border-color: #34d399;
 }
+
+@media (max-width: 900px) {
+  .ide-explorer-pane {
+    display: none;
+  }
+
+  .ide-activity-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 12px 16px 28px 16px;
+    border-right: none;
+    border-top: 1px solid #1a1a24;
+    background: rgba(11, 11, 15, 0.9);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 1000;
+  }
+
+  .ide-activity-top, .ide-activity-bottom {
+    flex-direction: row;
+    width: auto;
+    gap: 4px;
+  }
+
+  .ide-brand-icon {
+    display: none;
+  }
+
+  .ide-activity-icon {
+    padding: 8px 12px;
+    border-left: none;
+    border-bottom: 2px solid transparent;
+  }
+
+  .ide-activity-icon.active {
+    border-left: none;
+    border-bottom: 2px solid var(--accent-primary);
+  }
+
+  .ide-activity-icon span {
+    font-size: 22px;
+  }
+
+  .ide-main-window {
+    margin-bottom: 80px; /* Leave space for bottom nav */
+  }
+}
