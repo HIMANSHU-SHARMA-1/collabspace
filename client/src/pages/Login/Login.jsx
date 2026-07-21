@@ -165,7 +165,7 @@ const Login = () => {
             pauseDuration={2000}
             showCursor={true}
           />
-          <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
+          <div className="hero-cta-wrapper" style={{ display: "flex", gap: "16px", alignItems: "center" }}>
             <button onClick={scrollToLogin} className="ceramic-btn hero-cta-button" style={{ borderRadius: "30px", padding: "16px 32px" }}>
               Join the Workspace
             </button>
