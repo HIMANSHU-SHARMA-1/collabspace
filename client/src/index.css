@@ -832,6 +832,8 @@ input, button, textarea, select {
   box-shadow: 0 20px 40px rgba(0,0,0,0.5);
   margin-top: 32px;
   position: relative;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .code-login-header {
@@ -924,7 +926,7 @@ input, button, textarea, select {
 
 .auth-flip-card {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: 1fr;
   transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   transform-style: preserve-3d;
@@ -939,6 +941,8 @@ input, button, textarea, select {
   grid-row: 1;
   backface-visibility: hidden;
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .auth-card-back {
