@@ -73,6 +73,7 @@ html, body {
   min-height: 100vh;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
 }
 
 input, button, textarea, select {
@@ -947,13 +948,26 @@ input, button, textarea, select {
 @media (max-width: 900px) {
   .landing-hero {
     grid-template-columns: 1fr;
-    padding-top: 120px;
+    padding: 120px 20px 60px 20px;
     text-align: center;
   }
-  .hero-headline { font-size: 3rem; }
+  .hero-headline { font-size: 2.5rem; margin-bottom: 16px; }
+  .hero-subheadline { font-size: 1rem; max-width: 100%; margin: 0 auto 32px auto; }
+  .hero-cta-wrapper {
+    justify-content: center;
+  }
+  .hero-graphic-container {
+    transform: scale(0.6);
+    margin-top: -60px;
+  }
+  .landing-section {
+    padding: 60px 20px;
+  }
+  .section-title { font-size: 1.8rem; }
   .features-grid { grid-template-columns: 1fr; }
   .mockup-container { grid-template-columns: 1fr; }
-  .landing-navbar { padding: 24px; }
+  .landing-navbar { padding: 24px 20px; }
   .landing-navbar-links { display: none; }
   .code-login-wrapper { padding: 20px 16px; overflow-x: auto; }
+  .auth-container { margin: 20px auto 0 auto; }
 }
