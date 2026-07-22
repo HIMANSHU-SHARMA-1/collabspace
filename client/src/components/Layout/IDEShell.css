@@ -247,4 +247,10 @@
   .ide-main-window {
     margin-bottom: 80px; /* Leave space for bottom nav */
   }
+
+  .ide-editor-tabs {
+    padding-top: max(env(safe-area-inset-top), 44px);
+    height: auto;
+    min-height: 40px;
+  }
 }

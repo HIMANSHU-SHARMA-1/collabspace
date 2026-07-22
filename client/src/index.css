@@ -981,8 +981,31 @@ input, button, textarea, select {
   .mockup-container { grid-template-columns: 1fr; }
   .landing-navbar { padding: 24px 20px; }
   .landing-navbar-links { display: none; }
-  .code-login-wrapper { padding: 20px 16px; overflow-x: auto; }
-  .auth-container { margin: 20px auto 0 auto; }
+  .code-login-wrapper { padding: 16px 12px; overflow-x: auto; }
+  .code-line { font-size: 0.75rem !important; line-height: 1.5; }
+  .code-input { font-size: 0.75rem !important; max-width: 130px; }
+  .auth-container { margin: 20px auto 0 auto; width: 100%; padding: 0 10px; }
+  
+  .responsive-header {
+    flex-direction: column !important;
+    gap: 16px;
+    align-items: flex-start !important;
+  }
+  .responsive-btn-group {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+}
+
+.responsive-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.responsive-btn-group {
+  display: flex;
+  gap: 10px;
 }
 
 /* IDE Components (Cards, Buttons, Inputs) */
