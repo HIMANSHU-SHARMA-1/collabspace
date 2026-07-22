@@ -166,10 +166,10 @@ const Login = () => {
             showCursor={true}
           />
           <div className="hero-cta-wrapper" style={{ display: "flex", gap: "16px", alignItems: "center" }}>
-            <button onClick={scrollToLogin} className="ceramic-btn hero-cta-button" style={{ borderRadius: "30px", padding: "16px 32px" }}>
+            <button onClick={scrollToLogin} className="ide-btn hero-cta-button" style={{ borderRadius: "30px", padding: "16px 32px" }}>
               Join the Workspace
             </button>
-            <span style={{ fontSize: "0.85rem", color: "var(--text-secondary)", fontWeight: 600, letterSpacing: "1px", textTransform: "uppercase" }}>Creator-First Matching</span>
+            <span style={{ fontSize: "0.85rem", color: "#888", fontWeight: 600, letterSpacing: "1px", textTransform: "uppercase" }}>Creator-First Matching</span>
           </div>
         </div>
         <div className="hero-graphic-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', height: '100%', minHeight: '400px' }}>
@@ -325,7 +325,7 @@ const Login = () => {
             
             <div style={{ background: "var(--panel-bg)", padding: "16px", borderRadius: "12px", marginBottom: "16px", border: "1px solid rgba(255,255,255,0.05)" }}>
               <h5 style={{ color: "#fff", marginBottom: "8px" }}>Campus carbon ledger</h5>
-              <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem", marginBottom: "12px" }}>Needs data viz designer + backend lead</p>
+              <p style={{ color: "#888", fontSize: "0.85rem", marginBottom: "12px" }}>Needs data viz designer + backend lead</p>
               <div style={{ display: "flex", gap: "8px" }}>
                 <span className="skill-tag" style={{ fontSize: "0.7rem", padding: "4px 8px" }}>REACT</span>
                 <span className="skill-tag" style={{ fontSize: "0.7rem", padding: "4px 8px", color: "var(--accent-secondary)", background: "rgba(16,185,129,0.1)" }}>YES MATCH</span>
@@ -334,7 +334,7 @@ const Login = () => {
 
             <div style={{ background: "var(--panel-bg)", padding: "16px", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.05)", opacity: 0.7 }}>
               <h5 style={{ color: "#fff", marginBottom: "8px" }}>Peer tutoring agent</h5>
-              <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem", marginBottom: "12px" }}>LLM workflow, educator interviews, UX system</p>
+              <p style={{ color: "#888", fontSize: "0.85rem", marginBottom: "12px" }}>LLM workflow, educator interviews, UX system</p>
             </div>
           </div>
 
@@ -346,7 +346,7 @@ const Login = () => {
             
             <div style={{ background: "var(--panel-bg)", padding: "16px", borderRadius: "12px", marginBottom: "16px", border: "1px solid rgba(255,255,255,0.05)" }}>
               <div style={{ fontSize: "0.7rem", color: "var(--accent-primary)", fontWeight: "bold", marginBottom: "8px", textTransform: "uppercase" }}>Maya - Product</div>
-              <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem" }}>I can scope the MVP and run interviews this week.</p>
+              <p style={{ color: "#888", fontSize: "0.85rem" }}>I can scope the MVP and run interviews this week.</p>
             </div>
 
             <div style={{ background: "rgba(16,185,129,0.05)", padding: "16px", borderRadius: "12px", marginBottom: "24px", border: "1px solid rgba(16,185,129,0.2)" }}>
@@ -355,7 +355,7 @@ const Login = () => {
             </div>
 
             <div style={{ display: "flex", alignItems: "center", background: "var(--panel-bg)", borderRadius: "20px", padding: "12px 16px", border: "1px solid rgba(255,255,255,0.05)" }}>
-              <span style={{ color: "var(--text-secondary)", fontSize: "0.85rem", flexGrow: 1 }}>Drop a build update...</span>
+              <span style={{ color: "#888", fontSize: "0.85rem", flexGrow: 1 }}>Drop a build update...</span>
               <div style={{ width: "24px", height: "24px", borderRadius: "50%", background: "var(--accent-primary)" }}></div>
             </div>
           </div>
@@ -541,7 +541,7 @@ const Login = () => {
         </div>
       </section>
 
-      <footer style={{ textAlign: "center", padding: "40px", borderTop: "1px solid rgba(255,255,255,0.05)", color: "var(--text-secondary)", fontSize: "0.85rem", display: "flex", justifyContent: "space-between", alignItems: "center", maxWidth: "1300px", margin: "0 auto" }}>
+      <footer style={{ textAlign: "center", padding: "40px", borderTop: "1px solid rgba(255,255,255,0.05)", color: "#888", fontSize: "0.85rem", display: "flex", justifyContent: "space-between", alignItems: "center", maxWidth: "1300px", margin: "0 auto" }}>
         <span>© 2026 CollabSpace. Built for student creators.</span>
         <div style={{ display: "flex", gap: "24px", textTransform: "uppercase", fontSize: "0.75rem", letterSpacing: "1px", fontWeight: "bold" }}>
           <span>Community</span>

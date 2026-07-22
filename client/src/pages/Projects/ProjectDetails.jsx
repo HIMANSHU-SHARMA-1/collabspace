@@ -119,7 +119,7 @@ const ProjectDetails = () => {
             <h1 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "2rem", fontWeight: 700 }}>
               {isEditing ? "Edit Project" : project.projectname}
             </h1>
-            <p style={{ color: "var(--text-secondary)", marginTop: "4px" }}>
+            <p style={{ color: "#888", marginTop: "4px" }}>
               {isEditing ? "Update your project configurations" : `Project ID: ${projectId}`}
             </p>
           </div>
@@ -146,7 +146,7 @@ const ProjectDetails = () => {
             <span className="indicator-light"></span>
           </div>
         ) : error ? (
-          <div className="ceramic-card" style={{ textAlign: "center", color: "var(--danger)" }}>
+          <div className="ide-card" style={{ textAlign: "center", color: "#f87171" }}>
             <p>{error}</p>
           </div>
         ) : isEditing ? (
@@ -271,16 +271,16 @@ const ProjectDetails = () => {
               </div>
 
               <div>
-                <h3 style={{ fontSize: "1.1rem", fontWeight: 600, color: "var(--text-secondary)", marginBottom: "8px" }}>
+                <h3 style={{ fontSize: "1.1rem", fontWeight: 600, color: "#888", marginBottom: "8px" }}>
                   Project Description
                 </h3>
-                <p style={{ fontSize: "1rem", lineHeight: 1.6, color: "var(--text-primary)" }}>
+                <p style={{ fontSize: "1rem", lineHeight: 1.6, color: "#fff" }}>
                   {project.description}
                 </p>
               </div>
 
               <div>
-                <h3 style={{ fontSize: "1.1rem", fontWeight: 600, color: "var(--text-secondary)", marginBottom: "12px" }}>
+                <h3 style={{ fontSize: "1.1rem", fontWeight: 600, color: "#888", marginBottom: "12px" }}>
                   Required Stack
                 </h3>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
@@ -295,8 +295,8 @@ const ProjectDetails = () => {
 
             <div className="responsive-grid-2-col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "32px" }}>
               {/* Leader info */}
-              <div className="ceramic-card" style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-                <h3 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1.15rem", fontWeight: 700, borderBottom: "1px solid var(--border-color)", paddingBottom: "12px" }}>
+              <div className="ide-card" style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                <h3 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1.15rem", fontWeight: 700, borderBottom: "1px solid #1a1a24", paddingBottom: "12px" }}>
                   Project Leader
                 </h3>
                 <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
@@ -305,19 +305,19 @@ const ProjectDetails = () => {
                   </div>
                   <div>
                     <h4 style={{ fontWeight: 600 }}>{project.leader?.username}</h4>
-                    <p style={{ fontSize: "0.8rem", color: "var(--text-secondary)" }}>{project.leader?.email}</p>
+                    <p style={{ fontSize: "0.8rem", color: "#888" }}>{project.leader?.email}</p>
                   </div>
                 </div>
               </div>
 
               {/* Members management */}
-              <div className="ceramic-card" style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-                <h3 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1.15rem", fontWeight: 700, borderBottom: "1px solid var(--border-color)", paddingBottom: "12px" }}>
+              <div className="ide-card" style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                <h3 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1.15rem", fontWeight: 700, borderBottom: "1px solid #1a1a24", paddingBottom: "12px" }}>
                   Team Members ({project.members?.length} / {project.teamsize})
                 </h3>
                 <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
                   {project.members?.length === 0 ? (
-                    <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", fontStyle: "italic" }}>
+                    <p style={{ fontSize: "0.9rem", color: "#888", fontStyle: "italic" }}>
                       No members have joined yet.
                     </p>
                   ) : (
@@ -325,7 +325,7 @@ const ProjectDetails = () => {
                       <div key={m._id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 12px", background: "var(--tag-bg)", borderRadius: "12px" }}>
                         <span style={{ fontSize: "0.9rem", fontWeight: 600 }}>{m.username}</span>
                         {isLeader && (
-                          <button onClick={() => removeMember(m._id)} className="ceramic-btn" style={{ padding: "4px 8px", borderRadius: "8px", fontSize: "0.75rem", color: "var(--danger)", borderColor: "var(--danger)" }}>
+                          <button onClick={() => removeMember(m._id)} className="ide-btn" style={{ padding: "4px 8px", borderRadius: "8px", fontSize: "0.75rem", color: "#f87171", borderColor: "#f87171" }}>
                             Remove
                           </button>
                         )}

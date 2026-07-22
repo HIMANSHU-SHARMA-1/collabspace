@@ -56,7 +56,7 @@ const CreateProject = () => {
           <h1 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "2rem", fontWeight: 700 }}>
             Create New Project
           </h1>
-          <p style={{ color: "var(--text-secondary)", marginTop: "4px" }}>
+          <p style={{ color: "#888", marginTop: "4px" }}>
             Design your project and recruit teammates
           </p>
         </div>
@@ -177,7 +177,7 @@ const CreateProject = () => {
             </div>
 
             {error && (
-              <p style={{ color: "var(--danger)", fontSize: "0.85rem", textAlign: "center", fontWeight: 500 }}>
+              <p style={{ color: "#f87171", fontSize: "0.85rem", textAlign: "center", fontWeight: 500 }}>
                 {error}
               </p>
             )}

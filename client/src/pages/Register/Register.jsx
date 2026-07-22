@@ -150,12 +150,12 @@ const Register = () => {
         </span>
       </button>
 
-      <div className="ceramic-card" style={{ width: "100%", maxWidth: "800px", padding: "40px 32px" }}>
+      <div className="ide-card" style={{ width: "100%", maxWidth: "800px", padding: "40px 32px" }}>
         <div style={{ textAlign: "center", marginBottom: "32px" }}>
           <h2 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1.8rem", fontWeight: 700, marginBottom: "8px" }}>
             Create Account
           </h2>
-          <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem" }}>
+          <p style={{ color: "#888", fontSize: "0.9rem" }}>
             Join the collab.space student community
           </p>
         </div>
@@ -171,7 +171,7 @@ const Register = () => {
           >
             {/* Left Column: Account details */}
             <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-              <div className="ceramic-input-group">
+              <div className="ide-input-group">
                 <label htmlFor="username">User Name</label>
                 <input
                   id="username"
@@ -181,11 +181,11 @@ const Register = () => {
                   onChange={addData}
                   placeholder="e.g. janesmith"
                   required
-                  className="ceramic-input"
+                  className="ide-input"
                 />
               </div>
 
-              <div className="ceramic-input-group">
+              <div className="ide-input-group">
                 <label htmlFor="email">Email</label>
                 <input
                   id="email"
@@ -195,11 +195,11 @@ const Register = () => {
                   onChange={addData}
                   placeholder="jane.smith@college.edu"
                   required
-                  className="ceramic-input"
+                  className="ide-input"
                 />
               </div>
 
-              <div className="ceramic-input-group">
+              <div className="ide-input-group">
                 <label htmlFor="password">Password</label>
                 <input
                   id="password"
@@ -210,11 +210,11 @@ const Register = () => {
                   placeholder="Minimum 6 characters"
                   required
                   minLength={6}
-                  className="ceramic-input"
+                  className="ide-input"
                 />
               </div>
 
-              <div className="ceramic-input-group">
+              <div className="ide-input-group">
                 <label htmlFor="bio">Brief Bio</label>
                 <textarea
                   id="bio"
@@ -222,12 +222,12 @@ const Register = () => {
                   value={formData.bio}
                   onChange={addData}
                   placeholder="Tell us about yourself..."
-                  className="ceramic-input"
+                  className="ide-input"
                   style={{ minHeight: "80px", resize: "vertical" }}
                 />
               </div>
 
-              <div className="ceramic-input-group">
+              <div className="ide-input-group">
                 <label htmlFor="githubProfile">Github Profile URL</label>
                 <input
                   id="githubProfile"
@@ -236,19 +236,19 @@ const Register = () => {
                   value={formData.githubProfile}
                   onChange={addData}
                   placeholder="https://github.com/username"
-                  className="ceramic-input"
+                  className="ide-input"
                 />
               </div>
             </div>
 
             {/* Right Column: Skills management */}
             <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-              <div className="ceramic-card" style={{ boxShadow: "var(--shadow-inset)", padding: "24px" }}>
+              <div className="ide-card" style={{ boxShadow: "var(--shadow-inset)", padding: "24px" }}>
                 <h3 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1.1rem", fontWeight: 700, marginBottom: "16px", color: "var(--accent-primary)" }}>
                   Skills & Ratings
                 </h3>
 
-                <div className="ceramic-input-group">
+                <div className="ide-input-group">
                   <label htmlFor="skillName">Skill Name</label>
                   <input
                     id="skillName"
@@ -256,11 +256,11 @@ const Register = () => {
                     value={skillName}
                     onChange={handleSkill}
                     placeholder="e.g. React, Node, AI"
-                    className="ceramic-input"
+                    className="ide-input"
                   />
                 </div>
 
-                <div className="ceramic-input-group">
+                <div className="ide-input-group">
                   <label htmlFor="skillRating">Rating (1-5)</label>
                   <input
                     id="skillRating"
@@ -270,11 +270,11 @@ const Register = () => {
                     value={skillRating}
                     onChange={handleRating}
                     placeholder="Rate your skill level"
-                    className="ceramic-input"
+                    className="ide-input"
                   />
                 </div>
 
-                <button type="button" onClick={handleAddSkill} className="ceramic-btn" style={{ width: "100%", marginTop: "8px" }}>
+                <button type="button" onClick={handleAddSkill} className="ide-btn" style={{ width: "100%", marginTop: "8px" }}>
                   <span className="material-symbols-outlined">add</span>
                   Add Skill
                 </button>
@@ -282,7 +282,7 @@ const Register = () => {
 
               {formData.skills.length > 0 && (
                 <div>
-                  <h4 style={{ fontSize: "0.85rem", fontWeight: 600, color: "var(--text-secondary)", marginBottom: "10px", paddingLeft: "8px" }}>
+                  <h4 style={{ fontSize: "0.85rem", fontWeight: 600, color: "#888", marginBottom: "10px", paddingLeft: "8px" }}>
                     Your Added Skills:
                   </h4>
                   <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
@@ -302,7 +302,7 @@ const Register = () => {
                             background: "none",
                             border: "none",
                             cursor: "pointer",
-                            color: "var(--danger)",
+                            color: "#f87171",
                             display: "flex",
                             alignItems: "center",
                             marginLeft: "4px",
@@ -317,11 +317,11 @@ const Register = () => {
               )}
 
               {/* Submit block moved inside the right column */}
-              <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginTop: "16px", paddingTop: "16px", borderTop: "1px solid var(--border-color)" }}>
-                <button type="submit" disabled={loading} className="ceramic-btn primary" style={{ width: "100%" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginTop: "16px", paddingTop: "16px", borderTop: "1px solid #1a1a24" }}>
+                <button type="submit" disabled={loading} className="ide-btn primary" style={{ width: "100%" }}>
                   {loading ? "Registering..." : "Submit Registration"}
                 </button>
-                <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", textAlign: "center", marginBottom: "8px" }}>
+                <p style={{ fontSize: "0.85rem", color: "#888", textAlign: "center", marginBottom: "8px" }}>
                   Already have an account?{" "}
                   <button
                     onClick={() => navigate("/")}
@@ -337,7 +337,7 @@ const Register = () => {
                     Sign In
                   </button>
                 </p>
-                <p style={{ fontSize: "0.72rem", color: "var(--text-secondary)", textAlign: "center", opacity: 0.6 }}>
+                <p style={{ fontSize: "0.72rem", color: "#888", textAlign: "center", opacity: 0.6 }}>
                   © 2026 CollabSpace. All rights reserved.
                 </p>
               </div>
@@ -345,7 +345,7 @@ const Register = () => {
           </div>
 
           {error && (
-            <p style={{ color: "var(--danger)", fontSize: "0.85rem", textAlign: "center", fontWeight: 500, marginTop: "16px" }}>
+            <p style={{ color: "#f87171", fontSize: "0.85rem", textAlign: "center", fontWeight: 500, marginTop: "16px" }}>
               {error}
             </p>
           )}

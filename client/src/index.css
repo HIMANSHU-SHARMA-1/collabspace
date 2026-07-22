@@ -975,3 +975,89 @@ input, button, textarea, select {
   .code-login-wrapper { padding: 20px 16px; overflow-x: auto; }
   .auth-container { margin: 20px auto 0 auto; }
 }
+
+/* IDE Components (Cards, Buttons, Inputs) */
+.ide-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.ide-card {
+  background-color: #111116;
+  border: 1px solid #1a1a24;
+  border-radius: 6px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.ide-btn {
+  background-color: #1a1a24;
+  border: 1px solid #2a2a35;
+  color: #c9d1d9;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-family: 'Fira Code', 'Courier New', monospace;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.ide-btn:hover {
+  background-color: #2a2a35;
+  color: #fff;
+}
+
+.ide-btn.primary {
+  background-color: transparent;
+  border: 1px solid #38bdf8;
+  color: #38bdf8;
+}
+
+.ide-btn.primary:hover {
+  background-color: rgba(56, 189, 248, 0.1);
+}
+
+.ide-btn.danger {
+  border: 1px solid #f87171;
+  color: #f87171;
+  background: transparent;
+}
+
+.ide-btn.danger:hover {
+  background-color: rgba(248, 113, 113, 0.1);
+}
+
+.ide-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.ide-input-group label {
+  font-size: 0.85rem;
+  color: #888;
+  font-family: 'Fira Code', 'Courier New', monospace;
+}
+
+.ide-input {
+  background-color: #0b0b0f;
+  border: 1px solid #1a1a24;
+  color: #c9d1d9;
+  border-radius: 4px;
+  padding: 10px 14px;
+  font-size: 0.85rem;
+  font-family: 'Fira Code', 'Courier New', monospace;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.ide-input:focus {
+  border-color: #38bdf8;
+}

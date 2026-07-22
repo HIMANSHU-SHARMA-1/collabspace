@@ -52,14 +52,14 @@ const Dashboard = () => {
       
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "32px", flexWrap: "wrap", gap: "16px" }}>
         <div>
-          <h1 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "2rem", fontWeight: 700 }}>
+          <h1 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "2rem", fontWeight: 700, color: "#fff" }}>
             Discover Projects
           </h1>
-          <p style={{ color: "var(--text-secondary)", marginTop: "4px" }}>
+          <p style={{ color: "#888", marginTop: "4px" }}>
             Explore and join active student teams
           </p>
         </div>
-        <button onClick={() => navigate("/create-project")} className="ceramic-btn primary">
+        <button onClick={() => navigate("/create-project")} className="ide-btn primary">
           <span className="material-symbols-outlined">add_circle</span>
           New Project
         </button>
@@ -70,50 +70,50 @@ const Dashboard = () => {
           <span className="indicator-light" style={{ width: "20px", height: "20px" }}></span>
         </div>
       ) : error ? (
-        <div className="ceramic-card" style={{ textAlign: "center", color: "var(--danger)" }}>
+        <div className="ide-card" style={{ textAlign: "center", color: "#f87171" }}>
           <p>{error}</p>
         </div>
       ) : projects.length === 0 ? (
-        <div className="ceramic-card" style={{ textAlign: "center", padding: "60px 0" }}>
-          <span className="material-symbols-outlined" style={{ fontSize: "48px", color: "var(--text-secondary)" }}>
+        <div className="ide-card" style={{ textAlign: "center", padding: "60px 0" }}>
+          <span className="material-symbols-outlined" style={{ fontSize: "48px", color: "#888" }}>
             folder_open
           </span>
-          <p style={{ marginTop: "16px", color: "var(--text-secondary)" }}>No projects available yet.</p>
+          <p style={{ marginTop: "16px", color: "#888" }}>No projects available yet.</p>
         </div>
       ) : (
-        <div className="ceramic-grid">
+        <div className="ide-grid">
           {projects.map((p) => (
-            <div key={p._id} className="ceramic-card" style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+            <div key={p._id} className="ide-card" style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                <h3 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1.25rem", fontWeight: 700 }}>
+                <h3 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1.25rem", fontWeight: 700, color: "#fff" }}>
                   {p.projectname}
                 </h3>
                 <span className="indicator-light"></span>
               </div>
 
-              <p style={{ color: "var(--text-secondary)", fontSize: "0.92rem", lineHeight: 1.6, flexGrow: 1 }}>
+              <p style={{ color: "#ccc", fontSize: "0.92rem", lineHeight: 1.6, flexGrow: 1 }}>
                 {p.description}
               </p>
 
               <div>
-                <h4 style={{ fontSize: "0.8rem", fontWeight: 600, color: "var(--text-secondary)", marginBottom: "10px" }}>
+                <h4 style={{ fontSize: "0.8rem", fontWeight: 600, color: "#888", marginBottom: "10px" }}>
                   Required Stack
                 </h4>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
                   {p.requiredSkill.map((skill, index) => (
-                    <span key={index} className="skill-tag">
+                    <span key={index} className="skill-tag" style={{ background: '#1a1a24', color: '#ccc', border: '1px solid #2a2a35' }}>
                       {skill}
                     </span>
                   ))}
                 </div>
               </div>
 
-              <div style={{ display: "flex", gap: "12px", marginTop: "8px", borderTop: "1px solid var(--border-color)", paddingTop: "16px" }}>
-                <button onClick={() => joinRequest(p)} className="ceramic-btn" style={{ flexGrow: 1 }}>
+              <div style={{ display: "flex", gap: "12px", marginTop: "8px", borderTop: "1px solid #1a1a24", paddingTop: "16px" }}>
+                <button onClick={() => joinRequest(p)} className="ide-btn" style={{ flexGrow: 1 }}>
                   <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>group_add</span>
                   Join Team
                 </button>
-                <button onClick={() => viewProjectDetails(p._id)} className="ceramic-btn primary">
+                <button onClick={() => viewProjectDetails(p._id)} className="ide-btn primary">
                   <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>visibility</span>
                   View
                 </button>

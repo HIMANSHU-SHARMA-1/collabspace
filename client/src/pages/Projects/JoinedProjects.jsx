@@ -33,7 +33,7 @@ const JoinedProjects = () => {
           <h1 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "2rem", fontWeight: 700 }}>
             Joined Projects
           </h1>
-          <p style={{ color: "var(--text-secondary)", marginTop: "4px" }}>
+          <p style={{ color: "#888", marginTop: "4px" }}>
             View teams you are currently collaborating with
           </p>
         </div>
@@ -54,7 +54,7 @@ const JoinedProjects = () => {
             <p style={{ marginTop: "16px", color: "#888" }}>You have not joined any projects yet.</p>
           </div>
         ) : (
-          <div className="ceramic-grid">
+          <div className="ide-grid">
             {projects.map((project, index) => (
               <div key={index} className="terminal-card">
                 <div className="terminal-header">
