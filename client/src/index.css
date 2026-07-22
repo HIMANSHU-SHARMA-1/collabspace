@@ -1008,6 +1008,24 @@ input, button, textarea, select {
   gap: 10px;
 }
 
+.responsive-input-row {
+  display: flex;
+  gap: 12px;
+}
+
+@media (max-width: 900px) {
+  .responsive-input-row {
+    flex-wrap: wrap;
+  }
+  .responsive-input-row > .terminal-input {
+    width: 100%;
+  }
+  .responsive-input-row > .terminal-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 /* IDE Components (Cards, Buttons, Inputs) */
 .ide-grid {
   display: grid;
