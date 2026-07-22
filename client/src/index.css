@@ -256,11 +256,11 @@ input, button, textarea, select {
 
 /* Pulsing soft indicator */
 .indicator-light {
-  width: 10px;
-  height: 10px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
-  background-color: var(--accent-primary);
-  box-shadow: 0 0 8px var(--accent-primary);
+  background-color: #bd93f9;
+  box-shadow: 0 0 10px #bd93f9;
   display: inline-block;
   animation: pulse-glow 2s infinite;
 }

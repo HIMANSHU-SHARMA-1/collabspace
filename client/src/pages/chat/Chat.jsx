@@ -58,8 +58,9 @@ const Chat = ({ projectId }) => {
       {/* Messages List Area */}
       <div style={{ flexGrow: 1, overflowY: "auto", display: "flex", flexDirection: "column", gap: "6px", paddingRight: "4px", fontFamily: "'Fira Code', 'Courier New', monospace" }}>
         {loading ? (
-          <div style={{ display: "flex", justifyContent: "center", padding: "20px 0" }}>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "16px", padding: "20px 0" }}>
             <span className="indicator-light"></span>
+            <div style={{ color: "#bd93f9", fontWeight: 700, fontFamily: "'Fira Code', monospace" }}>Fetching data...</div>
           </div>
         ) : error ? (
           <p style={{ color: "#f87171", fontSize: "0.85rem", textAlign: "center" }}>{error}</p>
