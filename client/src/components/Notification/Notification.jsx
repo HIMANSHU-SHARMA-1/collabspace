@@ -49,37 +49,34 @@ const Notification = () => {
 
   return (
     <>
-      <div style={{ maxWidth: "750px", margin: "0 auto" }}>
-        <div style={{ marginBottom: "32px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
+        <div style={{ marginBottom: "16px", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0 16px" }}>
           <div>
-            <h1 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "2rem", fontWeight: 700 }}>
-              Notifications
-            </h1>
-            <p style={{ color: "#888", marginTop: "4px" }}>
-              Alerts and team join requests
-            </p>
+            <h2 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1rem", fontWeight: 700, margin: 0 }}>
+              NOTIFICATIONS
+            </h2>
           </div>
           {unreadCount > 0 && (
-            <span className="terminal-skill-tag" style={{ background: "rgba(56, 189, 248, 0.1)", color: "#38bdf8" }}>
-              {unreadCount} New
+            <span className="terminal-skill-tag" style={{ background: "rgba(56, 189, 248, 0.1)", color: "#38bdf8", padding: "2px 6px", fontSize: "0.7rem" }}>
+              {unreadCount}
             </span>
           )}
         </div>
 
         {loading ? (
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "16px", padding: "80px 0" }}>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "16px", padding: "40px 0" }}>
             <span className="indicator-light"></span>
-            <div style={{ color: "#bd93f9", fontWeight: 700, fontFamily: "'Fira Code', monospace" }}>Fetching data...</div>
+            <div style={{ color: "#bd93f9", fontWeight: 700, fontFamily: "'Fira Code', monospace", fontSize: "0.8rem" }}>Fetching...</div>
           </div>
         ) : error ? (
-          <div className="terminal-card" style={{ textAlign: "center", color: "#ff5f56" }}>
+          <div style={{ padding: "16px", color: "#ff5f56", fontSize: "0.85rem", textAlign: "center" }}>
             <p>{error}</p>
           </div>
         ) : (
-          <div className="terminal-card" style={{ padding: "24px" }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+          <div style={{ flexGrow: 1, overflowY: "auto", padding: "0 16px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
               {notifications.length === 0 ? (
-                <p style={{ fontSize: "0.9rem", color: "#888", textAlign: "center", padding: "32px 0" }}>
+                <p style={{ fontSize: "0.85rem", color: "#888", textAlign: "center", padding: "20px 0" }}>
                   No notifications yet.
                 </p>
               ) : (
@@ -88,29 +85,30 @@ const Notification = () => {
                     key={notification._id}
                     onClick={() => !notification.isRead && isRead(notification._id)}
                     style={{
-                      padding: "16px",
+                      padding: "10px",
                       borderRadius: "4px",
                       background: notification.isRead ? "transparent" : "#111116",
                       border: "1px solid #2a2a35",
-                      borderLeft: notification.isRead ? "1px solid #2a2a35" : "3px solid #38bdf8",
+                      borderLeft: notification.isRead ? "1px solid #2a2a35" : "2px solid #38bdf8",
                       cursor: notification.isRead ? "default" : "pointer",
-                      fontSize: "0.9rem",
-                      lineHeight: 1.5,
+                      fontSize: "0.8rem",
+                      lineHeight: 1.4,
                       color: notification.isRead ? "#888" : "#c9d1d9",
                       display: "flex",
-                      alignItems: "center",
-                      gap: "12px",
+                      alignItems: "flex-start",
+                      gap: "8px",
                       transition: "all 0.2s ease"
                     }}
                   >
                     {!notification.isRead && (
                       <span
                         style={{
-                          width: "8px",
-                          height: "8px",
+                          width: "6px",
+                          height: "6px",
                           borderRadius: "50%",
                           background: "#38bdf8",
                           flexShrink: 0,
+                          marginTop: "4px"
                         }}
                       ></span>
                     )}

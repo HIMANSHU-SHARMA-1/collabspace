@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import Notification from '../Notification/Notification';
 import './IDEShell.css';
 
 const IDEShell = ({ children }) => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const [activeSidePanel, setActiveSidePanel] = useState('explorer');
 
   useEffect(() => {
     document.body.classList.add('ide-mode');
@@ -42,6 +44,14 @@ const IDEShell = ({ children }) => {
     return 'EXPLORER';
   };
 
+  const togglePanel = (panelName) => {
+    if (activeSidePanel === panelName) {
+      setActiveSidePanel('none');
+    } else {
+      setActiveSidePanel(panelName);
+    }
+  };
+
   return (
     <div className="ide-shell">
       {/* 1. Activity Bar (Far Left) */}
@@ -56,6 +66,7 @@ const IDEShell = ({ children }) => {
               to={item.path}
               className={({ isActive }) => `ide-activity-icon ${isActive ? 'active' : ''}`}
               title={item.label}
+              onClick={() => setActiveSidePanel('explorer')}
             >
               <span className="material-symbols-outlined">{item.icon}</span>
             </NavLink>
@@ -63,17 +74,18 @@ const IDEShell = ({ children }) => {
         </div>
         
         <div className="ide-activity-bottom">
-          <NavLink 
-            to="/notifications" 
-            className={({ isActive }) => `ide-activity-icon ${isActive ? 'active' : ''}`}
+          <button 
+            className={`ide-activity-icon ${activeSidePanel === 'notifications' ? 'active' : ''}`}
+            onClick={() => togglePanel('notifications')}
             title="Notifications"
           >
             <span className="material-symbols-outlined">notifications</span>
-          </NavLink>
+          </button>
           <NavLink 
             to="/profile" 
             className={({ isActive }) => `ide-activity-icon ${isActive ? 'active' : ''}`}
             title="Profile"
+            onClick={() => setActiveSidePanel('explorer')}
           >
             <span className="material-symbols-outlined">account_circle</span>
           </NavLink>
@@ -84,38 +96,48 @@ const IDEShell = ({ children }) => {
       </div>
 
       {/* 2. Explorer Pane (Inner Left) */}
-      <div className="ide-explorer-pane">
-        <div className="ide-explorer-header">
-          {getExplorerTitle()}
-          <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>more_horiz</span>
+      {activeSidePanel !== 'none' && (
+        <div className="ide-explorer-pane">
+          {activeSidePanel === 'explorer' ? (
+            <>
+              <div className="ide-explorer-header">
+                {getExplorerTitle()}
+                <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>more_horiz</span>
+              </div>
+              <div className="ide-explorer-content">
+                <div className="ide-tree-item root">
+                  <span className="material-symbols-outlined">keyboard_arrow_down</span>
+                  workspace
+                </div>
+                <div className="ide-tree-item child">
+                  <span className="material-symbols-outlined" style={{ color: '#4ade80' }}>description</span>
+                  README.md
+                </div>
+                <div className="ide-tree-item child">
+                  <span className="material-symbols-outlined" style={{ color: '#60a5fa' }}>data_object</span>
+                  package.json
+                </div>
+                <div className="ide-tree-item child">
+                  <span className="material-symbols-outlined" style={{ color: '#facc15' }}>folder</span>
+                  src
+                </div>
+                <div className="ide-tree-item child" style={{ marginLeft: '24px' }}>
+                  <span className="material-symbols-outlined" style={{ color: '#38bdf8' }}>code</span>
+                  App.jsx
+                </div>
+                <div className="ide-tree-item child" style={{ marginLeft: '24px' }}>
+                  <span className="material-symbols-outlined" style={{ color: '#38bdf8' }}>code</span>
+                  index.css
+                </div>
+              </div>
+            </>
+          ) : activeSidePanel === 'notifications' ? (
+            <div className="ide-explorer-content" style={{ padding: '16px 0', overflow: 'hidden' }}>
+              <Notification />
+            </div>
+          ) : null}
         </div>
-        <div className="ide-explorer-content">
-          <div className="ide-tree-item root">
-            <span className="material-symbols-outlined">keyboard_arrow_down</span>
-            workspace
-          </div>
-          <div className="ide-tree-item child">
-            <span className="material-symbols-outlined" style={{ color: '#4ade80' }}>description</span>
-            README.md
-          </div>
-          <div className="ide-tree-item child">
-            <span className="material-symbols-outlined" style={{ color: '#60a5fa' }}>data_object</span>
-            package.json
-          </div>
-          <div className="ide-tree-item child">
-            <span className="material-symbols-outlined" style={{ color: '#facc15' }}>folder</span>
-            src
-          </div>
-          <div className="ide-tree-item child" style={{ marginLeft: '24px' }}>
-            <span className="material-symbols-outlined" style={{ color: '#38bdf8' }}>code</span>
-            App.jsx
-          </div>
-          <div className="ide-tree-item child" style={{ marginLeft: '24px' }}>
-            <span className="material-symbols-outlined" style={{ color: '#38bdf8' }}>code</span>
-            index.css
-          </div>
-        </div>
-      </div>
+      )}
 
       {/* 3. Main Editor Window */}
       <div className="ide-main-window">

@@ -48,11 +48,31 @@ const JoinedProjects = () => {
             <p>{error}</p>
           </div>
         ) : projects.length === 0 ? (
-          <div className="terminal-card" style={{ textAlign: "center", padding: "60px 0" }}>
-            <span className="material-symbols-outlined" style={{ fontSize: "48px", color: "#888" }}>
-              folder_open
-            </span>
-            <p style={{ marginTop: "16px", color: "#888" }}>You have not joined any projects yet.</p>
+          <div className="terminal-card" style={{ padding: 0, overflow: 'hidden' }}>
+            <div className="chat-header-handle" style={{ background: "#0B0B0F", padding: "12px 20px", display: "flex", gap: "16px", borderBottom: "1px solid #2a2a35", alignItems: "center" }}>
+              <div style={{ display: "flex", gap: "8px" }}>
+                <div className="mac-dot red"></div>
+                <div className="mac-dot yellow"></div>
+                <div className="mac-dot green"></div>
+              </div>
+              <div style={{ color: "#888", fontSize: "0.85rem", fontFamily: "'Fira Code', monospace", display: "flex", gap: "8px", alignItems: "center" }}>
+                <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "#38bdf8" }}>terminal</span>
+                <span>workspace_status.exe</span>
+              </div>
+            </div>
+            <div style={{ padding: "40px", fontFamily: "'Fira Code', monospace", background: "#0a0a0c" }}>
+              <div style={{ color: "#f87171", fontWeight: 700, fontSize: "0.95rem", marginBottom: "12px" }}>
+                &gt; ERROR 404: NO_JOINED_PROJECTS_FOUND
+              </div>
+              <div style={{ color: "#888", fontSize: "0.85rem", lineHeight: 1.6 }}>
+                You are currently not collaborating on any active projects.<br />
+                Run <span style={{ color: "#38bdf8" }}>Discover Projects</span> in the Dashboard to find active teams, or execute <span style={{ color: "#34d399" }}>Create Project</span> to initiate your own workspace.
+              </div>
+              <div style={{ marginTop: "32px", display: "flex", gap: "12px" }}>
+                <span style={{ color: "#38bdf8", fontWeight: 700 }}>$</span>
+                <span className="cursor-blink" style={{ width: "8px", height: "16px", background: "#c9d1d9", display: "inline-block" }}></span>
+              </div>
+            </div>
           </div>
         ) : (
           <div className="ide-grid">
