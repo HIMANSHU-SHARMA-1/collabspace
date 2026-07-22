@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../../api/axios";
 import Chat from "../chat/Chat";
+import { Rnd } from "react-rnd";
 
 
 const MyProject = () => {
@@ -199,24 +200,20 @@ const MyProject = () => {
         )}
 
         {openChat && (
-          <div
-            style={{
-              position: "fixed",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "400px",
-              height: "500px",
-              zIndex: 2000,
-              display: "flex",
-              flexDirection: "column",
-              background: "var(--bg-secondary, #0B0B0F)",
-              borderRadius: "8px",
-              border: "1px solid var(--border-color, #2a2a35)",
-              boxShadow: "0 10px 30px rgba(0,0,0,0.8)"
+          <Rnd
+            default={{
+              x: (window.innerWidth - Math.min(400, window.innerWidth - 20)) / 2,
+              y: (window.innerHeight - Math.min(500, window.innerHeight - 20)) / 2,
+              width: Math.min(400, window.innerWidth - 20),
+              height: Math.min(500, window.innerHeight - 20)
             }}
+            minWidth={280}
+            minHeight={300}
+            bounds="window"
+            dragHandleClassName="chat-header-handle"
+            style={{ zIndex: 2000 }}
           >
-            <div className="ide-card chat-modal-card" style={{ display: 'flex', flexDirection: 'column', height: '100%', margin: 0 }}>
+            <div className="ide-card chat-modal-card" style={{ display: 'flex', flexDirection: 'column', height: '100%', margin: 0, padding: 0, overflow: 'hidden' }}>
               <div
                 className="chat-header-handle"
                 style={{
@@ -226,6 +223,7 @@ const MyProject = () => {
                   justifyContent: "space-between",
                   alignItems: "center",
                   background: "var(--tag-bg)",
+                  cursor: "grab"
                 }}
               >
                 <h4 style={{ fontWeight: 700, margin: 0 }}>Team Chat</h4>
@@ -234,7 +232,7 @@ const MyProject = () => {
                     e.stopPropagation();
                     setopenChat(null);
                   }}
-                  style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", zIndex: 10 }}
+                  style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", color: "#888", zIndex: 10 }}
                 >
                   <span className="material-symbols-outlined">close</span>
                 </button>
@@ -243,7 +241,7 @@ const MyProject = () => {
                 <Chat projectId={openChat} members={projects.find((p) => p._id === openChat)?.members} />
               </div>
             </div>
-          </div>
+          </Rnd>
         )}
       </div>
     </>

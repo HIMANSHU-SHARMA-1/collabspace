@@ -275,7 +275,7 @@ const Profile = () => {
                 
                 {/* Command 1: Fetch Profile */}
                 <div style={{ marginBottom: "32px" }}>
-                  <div style={{ display: "flex", gap: "8px", color: "#34d399", fontWeight: 700 }}>
+                  <div className="mobile-terminal-wrap" style={{ display: "flex", gap: "8px", color: "#34d399", fontWeight: 700 }}>
                     <span>guest@collabspace:~$</span>
                     <span style={{ color: "#c9d1d9", fontWeight: 400 }}>fetch-profile --user {profile.username || "unknown"}</span>
                   </div>
@@ -294,23 +294,23 @@ const Profile = () => {
                     </div>
 
                     {/* Right: Info */}
-                    <div style={{ flexGrow: 1, display: "flex", flexDirection: "column", gap: "10px" }}>
+                    <div className="mobile-profile-info" style={{ flexGrow: 1, display: "flex", flexDirection: "column", gap: "10px" }}>
                        <div>
-                          <span style={{ color: "#38bdf8", fontWeight: 700, width: "100px", display: "inline-block" }}>OS:</span> 
+                          <span className="profile-label" style={{ color: "#38bdf8", fontWeight: 700, width: "100px", display: "inline-block" }}>OS:</span> 
                           CollabSpace v2.0
                        </div>
                        <div>
-                          <span style={{ color: "#38bdf8", fontWeight: 700, width: "100px", display: "inline-block" }}>USER:</span> 
+                          <span className="profile-label" style={{ color: "#38bdf8", fontWeight: 700, width: "100px", display: "inline-block" }}>USER:</span> 
                           {profile.username}
                        </div>
                        <div>
-                          <span style={{ color: "#38bdf8", fontWeight: 700, width: "100px", display: "inline-block" }}>EMAIL:</span> 
-                          {profile.email}
+                          <span className="profile-label" style={{ color: "#38bdf8", fontWeight: 700, width: "100px", display: "inline-block" }}>EMAIL:</span> 
+                          <span style={{ wordBreak: "break-all" }}>{profile.email}</span>
                        </div>
                        <div>
-                          <span style={{ color: "#38bdf8", fontWeight: 700, width: "100px", display: "inline-block" }}>GITHUB:</span> 
+                          <span className="profile-label" style={{ color: "#38bdf8", fontWeight: 700, width: "100px", display: "inline-block" }}>GITHUB:</span> 
                           {profile.githubProfile ? (
-                             <a href={profile.githubProfile} target="_blank" rel="noopener noreferrer" style={{ color: "#f1fa8c", textDecoration: "underline" }}>
+                             <a href={profile.githubProfile} target="_blank" rel="noopener noreferrer" style={{ color: "#f1fa8c", textDecoration: "underline", wordBreak: "break-all" }}>
                                 {profile.githubProfile}
                              </a>
                           ) : (
@@ -321,7 +321,7 @@ const Profile = () => {
                        <div style={{ width: "100%", height: "1px", background: "#2a2a35", margin: "10px 0" }}></div>
                        
                        <div>
-                          <span style={{ color: "#38bdf8", fontWeight: 700, display: "block", marginBottom: "8px" }}>BIO:</span> 
+                          <span className="profile-label" style={{ color: "#38bdf8", fontWeight: 700, display: "block", marginBottom: "8px" }}>BIO:</span> 
                           <div style={{ color: "#888", whiteSpace: "pre-wrap", lineHeight: 1.6 }}>
                              {profile.bio || "No biography provided."}
                           </div>

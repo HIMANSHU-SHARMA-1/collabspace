@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../../api/axios";
 import Chat from "../chat/Chat";
+import { Rnd } from "react-rnd";
 import WorkspaceCanvas from "../../components/Workspace/WorkspaceCanvas";
 
 const JoinedProjects = () => {
@@ -128,51 +129,62 @@ const JoinedProjects = () => {
 
         {/* Chat modal overlay */}
         {openChat && (
-          <div
-            style={{
-              position: "fixed",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: "400px",
-              height: "500px",
-              zIndex: 2000,
-              display: "flex",
-              flexDirection: "column",
-              background: "#0B0B0F",
-              borderRadius: "8px",
-              border: "1px solid #2a2a35",
-              boxShadow: "0 10px 30px rgba(0,0,0,0.8)"
+          <Rnd
+            default={{
+              x: (window.innerWidth - Math.min(400, window.innerWidth - 20)) / 2,
+              y: (window.innerHeight - Math.min(500, window.innerHeight - 20)) / 2,
+              width: Math.min(400, window.innerWidth - 20),
+              height: Math.min(500, window.innerHeight - 20)
             }}
+            minWidth={280}
+            minHeight={300}
+            bounds="window"
+            dragHandleClassName="chat-header-handle"
+            style={{ zIndex: 2000 }}
           >
             <div
-              className="chat-header-handle"
               style={{
-                padding: "16px 20px",
-                borderBottom: "1px solid #2a2a35",
+                width: "100%",
+                height: "100%",
                 display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
+                flexDirection: "column",
                 background: "#0B0B0F",
-                borderTopLeftRadius: "8px",
-                borderTopRightRadius: "8px",
+                borderRadius: "8px",
+                border: "1px solid #2a2a35",
+                boxShadow: "0 10px 30px rgba(0,0,0,0.8)",
+                overflow: "hidden"
               }}
             >
-              <h4 style={{ fontFamily: "'Fira Code', monospace", color: "#38bdf8", fontWeight: 700, margin: 0 }}>&gt; Team Chat</h4>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setopenChat(null);
+              <div
+                className="chat-header-handle"
+                style={{
+                  padding: "16px 20px",
+                  borderBottom: "1px solid #2a2a35",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  background: "#0B0B0F",
+                  cursor: "grab",
+                  borderTopLeftRadius: "8px",
+                  borderTopRightRadius: "8px",
                 }}
-                style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", color: "#888", zIndex: 10 }}
               >
-                <span className="material-symbols-outlined">close</span>
-              </button>
+                <h4 style={{ fontFamily: "'Fira Code', monospace", color: "#38bdf8", fontWeight: 700, margin: 0 }}>&gt; Team Chat</h4>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setopenChat(null);
+                  }}
+                  style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", color: "#888", zIndex: 10 }}
+                >
+                  <span className="material-symbols-outlined">close</span>
+                </button>
+              </div>
+              <div style={{ flexGrow: 1, overflowY: "auto", padding: "16px" }}>
+                <Chat projectId={openChat} members={projects.find((p) => p._id === openChat)?.members} />
+              </div>
             </div>
-            <div style={{ flexGrow: 1, overflowY: "auto", padding: "16px" }}>
-              <Chat projectId={openChat} members={projects.find((p) => p._id === openChat)?.members} />
-            </div>
-          </div>
+          </Rnd>
         )}
 
         {isWorkspaceOpen && <WorkspaceCanvas project={isWorkspaceOpen} onClose={() => setIsWorkspaceOpen(null)} />}
