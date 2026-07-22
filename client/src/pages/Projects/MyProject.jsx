@@ -71,8 +71,9 @@ const MyProject = () => {
         </div>
 
         {loading ? (
-          <div style={{ display: "flex", justifyContent: "center", padding: "80px 0" }}>
-            <span className="indicator-light" style={{ width: "20px", height: "20px" }}></span>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "16px", padding: "80px 0" }}>
+            <span className="indicator-light" style={{ width: "20px", height: "20px", background: "#bd93f9", boxShadow: "0 0 10px #bd93f9" }}></span>
+            <div style={{ color: "#bd93f9", fontWeight: 700, fontFamily: "'Fira Code', monospace" }}>Fetching data...</div>
           </div>
         ) : error ? (
           <div className="ide-card" style={{ textAlign: "center", color: "#f87171" }}>
