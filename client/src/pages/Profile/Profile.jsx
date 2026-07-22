@@ -86,7 +86,7 @@ const Profile = () => {
             <h1 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "2rem", fontWeight: 700 }}>
               My Profile
             </h1>
-            <p style={{ color: "var(--text-secondary)", marginTop: "4px" }}>
+            <p style={{ color: "#888", marginTop: "4px" }}>
               Configure your developer details and portfolio links
             </p>
           </div>
@@ -103,7 +103,7 @@ const Profile = () => {
             <span className="indicator-light"></span>
           </div>
         ) : error ? (
-          <div className="ceramic-card" style={{ textAlign: "center", color: "var(--danger)" }}>
+          <div className="ide-card" style={{ textAlign: "center", color: "#f87171" }}>
             <p>{error}</p>
           </div>
         ) : isEditing ? (

@@ -65,7 +65,7 @@ const MyProject = () => {
           <h1 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "2rem", fontWeight: 700 }}>
             My Projects
           </h1>
-          <p style={{ color: "var(--text-secondary)", marginTop: "4px" }}>
+          <p style={{ color: "#888", marginTop: "4px" }}>
             Manage projects you created and review applications
           </p>
         </div>
@@ -75,18 +75,18 @@ const MyProject = () => {
             <span className="indicator-light" style={{ width: "20px", height: "20px" }}></span>
           </div>
         ) : error ? (
-          <div className="ceramic-card" style={{ textAlign: "center", color: "var(--danger)" }}>
+          <div className="ide-card" style={{ textAlign: "center", color: "#f87171" }}>
             <p>{error}</p>
           </div>
         ) : projects.length === 0 ? (
-          <div className="ceramic-card" style={{ textAlign: "center", padding: "60px 0" }}>
-            <span className="material-symbols-outlined" style={{ fontSize: "48px", color: "var(--text-secondary)" }}>
+          <div className="ide-card" style={{ textAlign: "center", padding: "60px 0" }}>
+            <span className="material-symbols-outlined" style={{ fontSize: "48px", color: "#888" }}>
               folder_open
             </span>
-            <p style={{ marginTop: "16px", color: "var(--text-secondary)" }}>You have not created any projects yet.</p>
+            <p style={{ marginTop: "16px", color: "#888" }}>You have not created any projects yet.</p>
           </div>
         ) : (
-          <div className="ceramic-grid">
+          <div className="ide-grid">
             {projects.map((project, index) => (
               <div key={index} className="terminal-card">
                 <div className="terminal-header">
@@ -135,7 +135,7 @@ const MyProject = () => {
 
                 {/* Applications list */}
                 {requests[project._id] && (
-                  <div className="ceramic-card" style={{ boxShadow: "var(--shadow-inset)", padding: "20px", marginTop: "12px" }}>
+                  <div className="ide-card" style={{ boxShadow: "var(--shadow-inset)", padding: "20px", marginTop: "12px" }}>
                     <h4 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1rem", fontWeight: 700, marginBottom: "16px" }}>
                       Incoming Join Requests
                     </h4>
@@ -183,7 +183,7 @@ const MyProject = () => {
                               </button>
                             </div>
                           ) : (
-                            <span style={{ fontSize: "0.85rem", fontWeight: 600, color: "var(--text-secondary)" }}>
+                            <span style={{ fontSize: "0.85rem", fontWeight: 600, color: "#888" }}>
                               {req.status.toUpperCase()}
                             </span>
                           )}
@@ -215,12 +215,12 @@ const MyProject = () => {
               boxShadow: "0 10px 30px rgba(0,0,0,0.8)"
             }}
           >
-            <div className="ceramic-card chat-modal-card" style={{ display: 'flex', flexDirection: 'column', height: '100%', margin: 0 }}>
+            <div className="ide-card chat-modal-card" style={{ display: 'flex', flexDirection: 'column', height: '100%', margin: 0 }}>
               <div
                 className="chat-header-handle"
                 style={{
                   padding: "16px 20px",
-                  borderBottom: "1px solid var(--border-color)",
+                  borderBottom: "1px solid #1a1a24",
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
