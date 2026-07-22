@@ -92,7 +92,7 @@ const CreateProject = () => {
             <div className="terminal-card" style={{ padding: "20px", border: "1px solid #2a2a35", background: "#0B0B0F" }}>
               <div className="terminal-input-group" style={{ marginBottom: "12px" }}>
                 <label htmlFor="skillName" className="terminal-label">"required_skills":</label>
-                <div style={{ display: "flex", gap: "12px" }}>
+                <div className="responsive-input-row">
                   <input
                     id="skillName"
                     type="text"
