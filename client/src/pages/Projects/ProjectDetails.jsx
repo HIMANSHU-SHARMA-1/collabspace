@@ -114,7 +114,7 @@ const ProjectDetails = () => {
   return (
     <>
       <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-        <div style={{ marginBottom: "32px", display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+        <div className="responsive-header" style={{ marginBottom: "32px" }}>
           <div>
             <h1 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "2rem", fontWeight: 700 }}>
               {isEditing ? "Edit Project" : project.projectname}
@@ -124,7 +124,7 @@ const ProjectDetails = () => {
             </p>
           </div>
           {!isEditing && isLeader && (
-            <div style={{ display: "flex", gap: "10px" }}>
+            <div className="responsive-btn-group">
               <button onClick={() => setIsWorkspaceOpen(true)} className="terminal-btn" style={{ borderColor: "#38bdf8", color: "#38bdf8" }}>
                 <span className="material-symbols-outlined" style={{ fontSize: "16px", marginRight: "4px" }}>account_tree</span>
                 Visual Workspace
