@@ -83,40 +83,52 @@ const Dashboard = () => {
       ) : (
         <div className="ide-grid">
           {projects.map((p) => (
-            <div key={p._id} className="ide-card" style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                <h3 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1.25rem", fontWeight: 700, color: "#fff" }}>
-                  {p.projectname}
-                </h3>
-                <span className="indicator-light"></span>
+            <div key={p._id} className="terminal-card">
+              <div className="terminal-header">
+                <div className="mac-dot red"></div>
+                <div className="mac-dot yellow"></div>
+                <div className="mac-dot green"></div>
               </div>
 
-              <p style={{ color: "#ccc", fontSize: "0.92rem", lineHeight: 1.6, flexGrow: 1 }}>
+              <div className="terminal-title-row">
+                <div className="terminal-title">{p.projectname}</div>
+                <div className="terminal-meta">{p.status === 'open' ? 'Active' : p.status}</div>
+              </div>
+
+              <p style={{ color: "#ccc", fontSize: "0.85rem", lineHeight: 1.5, marginBottom: "16px", flexGrow: 1 }}>
                 {p.description}
               </p>
 
-              <div>
-                <h4 style={{ fontSize: "0.8rem", fontWeight: 600, color: "#888", marginBottom: "10px" }}>
-                  Required Stack
-                </h4>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-                  {p.requiredSkill.map((skill, index) => (
-                    <span key={index} className="skill-tag" style={{ background: '#1a1a24', color: '#ccc', border: '1px solid #2a2a35' }}>
-                      {skill}
-                    </span>
-                  ))}
+              <div className="terminal-skills">
+                {p.requiredSkill.map((skill, index) => (
+                  <span key={index} className="terminal-skill-tag">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+
+              <div style={{ marginTop: '8px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#888', marginBottom: '6px' }}>
+                  <span>Team Fill Rate</span>
+                  <span>{p.members.length} / {p.teamsize}</span>
+                </div>
+                <div style={{ width: '100%', height: '4px', backgroundColor: '#2a2a35', borderRadius: '2px', overflow: 'hidden' }}>
+                  <div style={{ width: `${(p.members.length / p.teamsize) * 100}%`, height: '100%', backgroundColor: 'var(--accent-primary)' }}></div>
                 </div>
               </div>
 
-              <div style={{ display: "flex", gap: "12px", marginTop: "8px", borderTop: "1px solid #1a1a24", paddingTop: "16px" }}>
-                <button onClick={() => joinRequest(p)} className="ide-btn" style={{ flexGrow: 1 }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>group_add</span>
-                  Join Team
-                </button>
-                <button onClick={() => viewProjectDetails(p._id)} className="ide-btn primary">
-                  <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>visibility</span>
-                  View
-                </button>
+              <div className="terminal-footer" style={{ marginTop: '20px' }}>
+                <div className="terminal-members">
+                  <button onClick={() => joinRequest(p)} className="terminal-btn" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <span className="material-symbols-outlined" style={{ fontSize: "16px" }}>group_add</span>
+                    Join Team
+                  </button>
+                </div>
+                <div style={{ display: "flex", gap: "8px" }}>
+                  <button onClick={() => viewProjectDetails(p._id)} className="terminal-btn" style={{ borderColor: 'var(--accent-primary)', color: 'var(--accent-primary)' }}>
+                    View
+                  </button>
+                </div>
               </div>
             </div>
           ))}
