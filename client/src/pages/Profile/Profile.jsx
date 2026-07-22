@@ -121,8 +121,8 @@ const Profile = () => {
               </div>
             </div>
 
-            <div style={{ padding: "32px", fontFamily: "'Fira Code', monospace", background: "#0a0a0c" }}>
-              <div style={{ color: "#ff5f56", fontWeight: 700, marginBottom: "24px", display: "flex", alignItems: "center" }}>
+            <div style={{ padding: "32px", fontFamily: "'Fira Code', monospace", background: "#0a0a0c", overflowX: "hidden" }}>
+              <div style={{ color: "#ff5f56", fontWeight: 700, marginBottom: "24px", display: "flex", alignItems: "center", flexWrap: "wrap", wordBreak: "break-word" }}>
                 <span>root@collabspace:~#</span>
                 <span style={{ color: "#c9d1d9", fontWeight: 400, marginLeft: "8px" }}>./configure_profile.sh --interactive</span>
               </div>
@@ -135,7 +135,7 @@ const Profile = () => {
                 </div>
               </div>
 
-              <form onSubmit={updateProfile} style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
+              <form onSubmit={updateProfile} style={{ display: "flex", flexDirection: "column", gap: "32px", width: "100%" }}>
                 <div className="terminal-input-group">
                   <label htmlFor="username" className="terminal-label" style={{ color: "#bd93f9", marginBottom: "4px", display: "block" }}>? Enter [USERNAME]:</label>
                   <div style={{ display: "flex", alignItems: "center", background: "#111116", border: "1px solid #2a2a35", borderRadius: "4px", padding: "0 14px", transition: "border-color 0.2s ease" }} onFocus={(e) => e.currentTarget.style.borderColor = "#34d399"} onBlur={(e) => e.currentTarget.style.borderColor = "#2a2a35"}>
@@ -147,7 +147,7 @@ const Profile = () => {
                        value={formData.username}
                        onChange={addData}
                        required
-                       style={{ border: "none", background: "transparent", padding: "12px 0", flexGrow: 1, outline: "none", color: "#c9d1d9", fontFamily: "'Fira Code', monospace", fontSize: "0.9rem" }}
+                       style={{ border: "none", background: "transparent", padding: "12px 0", flex: 1, width: "100%", outline: "none", color: "#c9d1d9", fontFamily: "'Fira Code', monospace", fontSize: "0.9rem" }}
                      />
                   </div>
                 </div>
@@ -161,7 +161,7 @@ const Profile = () => {
                        name="bio"
                        value={formData.bio}
                        onChange={addData}
-                       style={{ border: "none", background: "transparent", padding: "0", flexGrow: 1, outline: "none", color: "#c9d1d9", fontFamily: "'Fira Code', monospace", fontSize: "0.9rem", minHeight: "100px", resize: "vertical" }}
+                       style={{ border: "none", background: "transparent", padding: "0", flex: 1, width: "100%", outline: "none", color: "#c9d1d9", fontFamily: "'Fira Code', monospace", fontSize: "0.9rem", minHeight: "100px", resize: "vertical" }}
                      />
                   </div>
                 </div>
@@ -176,7 +176,7 @@ const Profile = () => {
                        name="githubProfile"
                        value={formData.githubProfile}
                        onChange={addData}
-                       style={{ border: "none", background: "transparent", padding: "12px 0", flexGrow: 1, outline: "none", color: "#c9d1d9", fontFamily: "'Fira Code', monospace", fontSize: "0.9rem" }}
+                       style={{ border: "none", background: "transparent", padding: "12px 0", flex: 1, width: "100%", outline: "none", color: "#c9d1d9", fontFamily: "'Fira Code', monospace", fontSize: "0.9rem" }}
                      />
                   </div>
                 </div>
