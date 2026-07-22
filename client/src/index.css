@@ -1024,6 +1024,24 @@ input, button, textarea, select {
     width: 100%;
     justify-content: center;
   }
+
+  /* Profile UI Mobile Adjustments */
+  .mobile-terminal-wrap {
+    flex-wrap: wrap;
+    word-break: break-all;
+  }
+  .mobile-terminal-wrap span {
+    word-break: break-all;
+  }
+  .mobile-profile-info > div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+  .mobile-profile-info span.profile-label {
+    width: auto !important;
+  }
 }
 
 /* IDE Components (Cards, Buttons, Inputs) */
