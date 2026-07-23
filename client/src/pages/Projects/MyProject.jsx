@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import api from "../../api/axios";
 import Chat from "../chat/Chat";
 import { Rnd } from "react-rnd";
-
+import WorkspaceCanvas from "../../components/Workspace/WorkspaceCanvas";
 
 const MyProject = () => {
   const [openChat, setopenChat] = useState(null);
+  const [isWorkspaceOpen, setIsWorkspaceOpen] = useState(null);
   const [projects, setProjects] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -122,10 +123,14 @@ const MyProject = () => {
                 </div>
 
                 <div className="terminal-footer">
-                  <div className="terminal-members">
+                  <div className="terminal-members" style={{ display: "flex", gap: "8px" }}>
                     <button onClick={() => setopenChat(project._id)} className="terminal-btn" style={{ borderColor: '#888', color: '#888', display: 'flex', alignItems: 'center', gap: '4px' }}>
                       <span className="material-symbols-outlined" style={{ fontSize: "14px" }}>forum</span>
                       Chat
+                    </button>
+                    <button onClick={() => setIsWorkspaceOpen(project)} className="terminal-btn" style={{ borderColor: "#38bdf8", color: "#38bdf8", display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      <span className="material-symbols-outlined" style={{ fontSize: "14px" }}>account_tree</span>
+                      Workspace
                     </button>
                   </div>
                   <div style={{ display: "flex", gap: "8px" }}>
@@ -213,7 +218,7 @@ const MyProject = () => {
             dragHandleClassName="chat-header-handle"
             style={{ zIndex: 2000 }}
           >
-            <div className="ide-card chat-modal-card" style={{ display: 'flex', flexDirection: 'column', height: '100%', margin: 0, padding: 0, overflow: 'hidden' }}>
+            <div className="ide-card chat-modal-card" style={{ position: 'relative', display: 'flex', flexDirection: 'column', height: '100%', margin: 0, padding: 0, overflow: 'hidden' }}>
               <div
                 className="chat-header-handle"
                 style={{
@@ -240,9 +245,18 @@ const MyProject = () => {
               <div style={{ flexGrow: 1, overflowY: "auto", padding: "16px" }}>
                 <Chat projectId={openChat} members={projects.find((p) => p._id === openChat)?.members} />
               </div>
+              {/* Resize Handle Indicator */}
+              <div style={{ position: "absolute", bottom: "2px", right: "2px", pointerEvents: "none", color: "#888", zIndex: 100 }}>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 0L0 12H12V0Z" fill="currentColor" opacity="0.2"/>
+                  <path d="M12 4L4 12H12V4Z" fill="currentColor" opacity="0.4"/>
+                  <path d="M12 8L8 12H12V8Z" fill="currentColor" opacity="0.6"/>
+                </svg>
+              </div>
             </div>
           </Rnd>
         )}
+        {isWorkspaceOpen && <WorkspaceCanvas project={isWorkspaceOpen} onClose={() => setIsWorkspaceOpen(null)} />}
       </div>
     </>
   );

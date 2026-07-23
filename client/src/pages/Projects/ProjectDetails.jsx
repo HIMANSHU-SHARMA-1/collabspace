@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import api from "../../api/axios";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate, useParams } from "react-router-dom";
-import WorkspaceCanvas from "../../components/Workspace/WorkspaceCanvas";
 
 const ProjectDetails = () => {
   const navigate = useNavigate();
@@ -12,7 +11,6 @@ const ProjectDetails = () => {
   const [loading, setLoading] = useState(false);
   const [project, setProject] = useState({});
   const [error, setError] = useState("");
-  const [isWorkspaceOpen, setIsWorkspaceOpen] = useState(false);
 
   const [isEditing, setIsEditing] = useState(false);
   const [skillName, setSkillName] = useState("");
@@ -125,10 +123,6 @@ const ProjectDetails = () => {
           </div>
           {!isEditing && isLeader && (
             <div className="responsive-btn-group">
-              <button onClick={() => setIsWorkspaceOpen(true)} className="terminal-btn" style={{ borderColor: "#38bdf8", color: "#38bdf8" }}>
-                <span className="material-symbols-outlined" style={{ fontSize: "16px", marginRight: "4px" }}>account_tree</span>
-                Visual Workspace
-              </button>
               <button onClick={startEditing} className="terminal-btn">
                 <span className="material-symbols-outlined" style={{ fontSize: "16px", marginRight: "4px" }}>edit</span>
                 Edit Specs
@@ -339,7 +333,6 @@ const ProjectDetails = () => {
           </div>
         )}
       </div>
-      {isWorkspaceOpen && <WorkspaceCanvas project={project} onClose={() => setIsWorkspaceOpen(false)} />}
     </>
   );
 };

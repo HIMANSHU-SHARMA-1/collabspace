@@ -144,6 +144,7 @@ const JoinedProjects = () => {
           >
             <div
               style={{
+                position: "relative",
                 width: "100%",
                 height: "100%",
                 display: "flex",
@@ -182,6 +183,14 @@ const JoinedProjects = () => {
               </div>
               <div style={{ flexGrow: 1, overflowY: "auto", padding: "16px" }}>
                 <Chat projectId={openChat} members={projects.find((p) => p._id === openChat)?.members} />
+              </div>
+              {/* Resize Handle Indicator */}
+              <div style={{ position: "absolute", bottom: "2px", right: "2px", pointerEvents: "none", color: "#888", zIndex: 100 }}>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 0L0 12H12V0Z" fill="currentColor" opacity="0.2"/>
+                  <path d="M12 4L4 12H12V4Z" fill="currentColor" opacity="0.4"/>
+                  <path d="M12 8L8 12H12V8Z" fill="currentColor" opacity="0.6"/>
+                </svg>
               </div>
             </div>
           </Rnd>
