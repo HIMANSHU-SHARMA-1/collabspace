@@ -138,9 +138,10 @@ const JoinedProjects = () => {
             }}
             minWidth={280}
             minHeight={300}
-            bounds="window"
+            cancel=".cancel-drag"
             dragHandleClassName="chat-header-handle"
-            style={{ zIndex: 2000 }}
+            enableResizing={{ top: true, right: true, bottom: true, left: true, topRight: true, bottomRight: true, bottomLeft: true, topLeft: true }}
+            style={{ zIndex: 2000, position: "fixed" }}
           >
             <div
               style={{
@@ -172,10 +173,12 @@ const JoinedProjects = () => {
               >
                 <h4 style={{ fontFamily: "'Fira Code', monospace", color: "#38bdf8", fontWeight: 700, margin: 0 }}>&gt; Team Chat</h4>
                 <button
+                  className="cancel-drag"
                   onClick={(e) => {
                     e.stopPropagation();
                     setopenChat(null);
                   }}
+                  onPointerDown={(e) => e.stopPropagation()}
                   style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", color: "#888", zIndex: 10 }}
                 >
                   <span className="material-symbols-outlined">close</span>
