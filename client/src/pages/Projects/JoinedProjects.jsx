@@ -138,6 +138,7 @@ const JoinedProjects = () => {
             }}
             minWidth={280}
             minHeight={300}
+            bounds="body"
             cancel=".cancel-drag"
             dragHandleClassName="chat-header-handle"
             enableResizing={{ top: true, right: true, bottom: true, left: true, topRight: true, bottomRight: true, bottomLeft: true, topLeft: true }}
