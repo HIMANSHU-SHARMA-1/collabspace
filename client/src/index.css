@@ -1042,6 +1042,12 @@ input, button, textarea, select {
   .mobile-profile-info span.profile-label {
     width: auto !important;
   }
+  
+  .terminal-footer {
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: flex-start !important;
+  }
 }
 
 /* IDE Components (Cards, Buttons, Inputs) */
