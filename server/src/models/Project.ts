@@ -1,6 +1,17 @@
-const mongoose = require('mongoose')
+import mongoose = require('mongoose')
 
-const projectSchema = new mongoose.Schema({
+interface IProject extends mongoose.Document{
+    projectname:string,
+    requiredSkill:string[],
+    teamsize:number,
+    githubLink:string,
+    description:string,
+    leader:mongoose.Types.ObjectId,
+    members:mongoose.Types.ObjectId[],
+    status:'open'|'in-progress'|'done'
+}
+
+const projectSchema = new mongoose.Schema<IProject>({
     projectname:{type:String,required:true},
     requiredSkill:[{type:String}],
     teamsize:{type:Number},
@@ -11,6 +22,6 @@ const projectSchema = new mongoose.Schema({
     status:{type:String, enum:['open','in-progress','done'], default:'open'}
 }, {timestamps:true})
 
-const Project = mongoose.model('Project', projectSchema)
+const Project = mongoose.model<IProject>('Project', projectSchema)
 
-module.exports=Project;
+export=Project;
