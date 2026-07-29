@@ -1,6 +1,21 @@
-const mongoose = require('mongoose')
+import mongoose = require('mongoose')
 
-const userSchema = new mongoose.Schema({
+interface ISkill{
+    name:string,
+    rating:number
+}
+
+interface IUser extends mongoose.Document{
+    username:string,
+    email:string,
+    password:string,
+    bio:string,
+    githubProfile:string,
+    profilePicture:string,
+    skills:ISkill[]
+}
+
+const userSchema = new mongoose.Schema<IUser>({
     username: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
@@ -10,6 +25,6 @@ const userSchema = new mongoose.Schema({
     skills: [{ name: {type:String,}, rating:{type: Number} }],
 },{timestamps: true})
 
-const User = mongoose.model('User', userSchema)
+const User = mongoose.model<IUser>('User', userSchema)
 
-module.exports = User;
+export = User;
