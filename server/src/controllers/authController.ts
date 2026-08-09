@@ -1,9 +1,20 @@
-const User = require('../models/User')
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
+import User = require('../models/User')
+import bcrypt = require('bcryptjs')
+import jwt = require('jsonwebtoken')
+import type {Request, Response} from 'express'
+
+
+interface RegisterBody{
+    username:string,
+    email:string,
+    password:string,
+    bio?:string,
+    skills?:{name:string,rating:number}[],
+    githubProfile?:string
+}
 
 //! this function below register and check the if user exist or not,and hashing password processing, it uses a new method of creating a user which first creates a user and then save it to db
-const register = async(req,res)=>{
+const register = async(req:Request<{},{},RegisterBody>,res:Response)=>{
    try{
     const{username, email,  password, bio, skills, githubProfile} = req.body
     const existingUser = await User.findOne({email})
@@ -37,12 +48,18 @@ const register = async(req,res)=>{
    }
    catch(err){
     res.status(500).json({
-        message:err.message
+        message:err instanceof Error ? err.message:'Unknown Error'
     })
    }
 }
 
-const login = async(req,res)=>{
+
+interface LoginBody{
+    email:string,
+    password:string
+}
+
+const login = async(req:Request<{},{},LoginBody>,res:Response)=>{
     try{
         // console.log('login route hit')
 
@@ -60,6 +77,11 @@ const login = async(req,res)=>{
                 message:'Invalid credentials'
             })
          }
+
+         if(!process.env.JWT_SECRET){
+            throw new Error('JWT Secret is not defined')
+         }
+
         const token = jwt.sign(
             {id:findUser._id},
             process.env.JWT_SECRET,
@@ -77,20 +99,20 @@ const login = async(req,res)=>{
        
     }
     catch(err){
-        console.log('login error:', err.message)
+        // console.log('login error:', err.message)
         res.status(500).json({
-            message: err.message
+            message: err instanceof Error? err.message:'Unknown Error'
         })
     }
-    // catch(err){
-    //    res.status(500).json({
-    //     message:err.message
-    //    })
-    // }
+  
 }
 
-const getCurrentUser =async(req,res)=>{
+
+const getCurrentUser =async(req:Request,res:Response)=>{
     try{
+        if(!req.user){
+            return res.status(401).json({success:false, message:'Unauthorized'})
+        }
         const user = await User.findById(req.user.id)
     if(!user){
         return res.status(404).json({success:false,message:'User not Found'})
@@ -107,17 +129,29 @@ const getCurrentUser =async(req,res)=>{
             profilePicture:user.profilePicture
         }
     })
+
     }catch(err){
         res.status(500).json({
             success:false,
-            message:err.message || 'Internal server error'
+            message: err instanceof Error? err.message : 'Internal server error'
         })
 
     }
 }
 
-const updateProfile = async(req,res)=>{
+
+interface UpdateProfileBody {
+    username?:string,
+    bio?:string,
+    githubProfile?:string,
+    skills?:{name:string,rating:number}[]
+}
+
+const updateProfile = async(req:Request<{},{},UpdateProfileBody>,res:Response)=>{
     try{
+        if(!req.user){
+            return res.status(404).json({success:false, message: 'Unauthorized'})
+        }
         const {username, bio, githubProfile, skills} = req.body
         const updateUser = await User.findByIdAndUpdate(req.user.id,
             {$set:{username,bio,githubProfile,skills}},
@@ -132,8 +166,10 @@ const updateProfile = async(req,res)=>{
             data: updateUser
         })
     }catch(err){
-        res.status(500).json({ message: err.message || 'Internal server error' });
+        res.status(500).json({
+             message: err instanceof Error? err.message : 'Internal server error' 
+    })
     }
 }
 
-module.exports= {register,login,getCurrentUser,updateProfile}
+export= {register,login,getCurrentUser,updateProfile}
