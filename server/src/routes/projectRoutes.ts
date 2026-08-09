@@ -1,7 +1,7 @@
-const express = require('express')
+import express = require('express')
 const router = express.Router()
-const projectController = require('../controllers/projectController')
-const auth = require('../middleware/auth')
+import projectController = require('../controllers/projectController')
+import auth = require('../middleware/auth')
 
 router.post('/create',auth,projectController.createProject)
 router.get('/getAll', auth, projectController.getAllProjects)
@@ -12,4 +12,4 @@ router.put('/update/:id',auth, projectController.updateProjects)
 router.delete('/removeMember/:projectId/:memberId',auth, projectController.removeMember)
 router.delete('/delete/:id',auth, projectController.deleteProjects)
 
-module.exports = router;
+export = router;
