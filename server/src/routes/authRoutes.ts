@@ -1,7 +1,7 @@
-const express = require('express')
+import express = require('express')
 const router = express.Router()
-const authController = require('../controllers/authController')
-const auth = require('../middleware/auth')
+import authController = require('../controllers/authController')
+import auth = require('../middleware/auth')
 
 router.post('/register',authController.register)
 
@@ -17,4 +17,4 @@ router.put('/update-profile', auth, authController.updateProfile)
 
 
 
-module.exports = router;
+export = router;
