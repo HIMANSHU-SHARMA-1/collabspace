@@ -1,18 +1,27 @@
-const Project = require('../models/Project')
-const Request = require('../models/joinRequest')
+import Project = require('../models/Project')
+import joinRequest = require('../models/joinRequest')
+import type {Request,Response} from 'express'
 // const authController = require('../controllers/authController')
-const Notification = require('../models/notification')
+import Notification = require('../models/notification')
 
-const createProject = async(req,res)=>{
+
+interface ProjectBody{
+    projectname:string,
+    teamsize:number,
+    requiredSkill:string[],
+    githubLink:string,
+    description:string,
+    members:string[],
+    status:string
+    
+
+}
+const createProject = async(req:Request<{},{},ProjectBody>,res:Response)=>{
     try{
         const {projectname, requiredSkill, teamsize, githubLink, description, members, status} = req.body
-        // const isProjectExist = await Project.findOne({projectname})
-        // if(isProjectExist){
-        //     return res.status(400).json({
-        //         success:false,
-        //         message:'Project already existed'
-        //     })
-        // }
+        if(!req.user){
+            return res.status(404).json({success:false,message:'User not found'})
+        }
         const project = new Project({
             projectname,
             requiredSkill,
@@ -43,12 +52,13 @@ const createProject = async(req,res)=>{
     }
     catch(err){
         res.status(500).json({
-            message:err.message
+            message:err instanceof Error? err.message : 'Unknown error'
+
         })
     }
 }
 
-const getAllProjects = async(req,res)=>{
+const getAllProjects = async(req:Request,res:Response)=>{
     try{
         const getProjects = await Project.find().populate('leader', 'username email')
         return res.status(200).json({
@@ -60,12 +70,13 @@ const getAllProjects = async(req,res)=>{
         })    
     }catch(err){
         res.status(500).json({
-            message:err.message
+            message:err instanceof Error? err.message : 'Unknown error'
+
         })
     }
 }
 
-const getProjectbyID = async(req,res)=>{
+const getProjectbyID = async(req:Request<{id:string}>,res:Response)=>{
     try{
         const projectByid = await Project.findById(req.params.id).populate('leader' ,'username email').populate('members', 'username email')
         if(projectByid){
@@ -88,14 +99,18 @@ const getProjectbyID = async(req,res)=>{
     }
     catch(err){
         res.status(500).json({
-            message:err.message||'internal server error'
+            message:err instanceof Error? err.message : 'Unknown error'
+
         })
     }
             
 }
 
-const getJoinedProjects = async(req,res)=>{
+const getJoinedProjects = async(req:Request,res:Response)=>{
    try{
+    if(!req.user){
+        return res.status(404).json({success:false,message:'User not found'})
+    }
     const getProjects = await Project.find({members:req.user.id}).populate('leader', 'username email')
     if(getProjects.length === 0){
         return res.status(200).json({
@@ -108,16 +123,20 @@ const getJoinedProjects = async(req,res)=>{
     })
    }catch(err){
     res.status(500).json({
-        message:err.message||'Internal server Error!'
+        message:err instanceof Error? err.message : 'Unknown error'
+
     })
    }
 }
 
 //fetch all the projects where req.user.id === leader
-const getMyProjects = async(req,res)=>{
+const getMyProjects = async(req:Request,res:Response)=>{
 try{
+    if(!req.user){
+        return res.status(404).json({success:false,message:'User not found'})
+    }
     const myProjects = await Project.find({leader:req.user.id}).populate('leader','username email')
-    if(!myProjects.length===0){
+    if(myProjects.length===0){
         return res.status(404).json({
             message:"You haven't created any project"
         })
@@ -133,17 +152,31 @@ try{
 }
 catch(err){
     res.status(500).json({
-        message:err.message || 'Internal server Error'
+        message:err instanceof Error? err.message : 'Unknown error'
+
     })
 }
 }
 
-const updateProjects = async(req,res)=>{
+
+interface updateProjectBody{
+    projectname:string,
+    requiredSkill:string[],
+    githubLink:string,
+    description:string,
+    teamsize:number,
+    status:string
+    
+}
+const updateProjects = async(req:Request<{id:string},{},updateProjectBody>,res:Response)=>{
     const {projectname,requiredSkill,githubLink,description,teamsize,status} = req.body
    try{
     const project = await Project.findById(req.params.id)
     if(!project){
         return res.status(404).json({message:'project not found'})
+    }
+    if(!req.user){
+        return res.status(404).json({success:false,message:'User not found'})
     }
     if(project.leader.equals(req.user.id )){
         const updateProject = await Project.findByIdAndUpdate(req.params.id,
@@ -181,17 +214,21 @@ const updateProjects = async(req,res)=>{
 }
     catch(err){
         res.status(500).json({
-            message:err.message||'Internal Server Error'
+            message:err instanceof Error? err.message : 'Unknown error'
+
         })
     }
 }
-const removeMember = async (req, res) => {
+const removeMember = async (req:Request<{projectId:string, memberId:string}>,res:Response) => {
     try {
         const {projectId, memberId} = req.params
 
         const project = await Project.findById(projectId)
         if(!project){
             return res.status(404).json({message:'Project not found'})
+        }
+        if(!req.user){
+            return res.status(404).json({success:false,message:'User not found'})
         }
         if(!project.leader.equals(req.user.id)){
             return res.status(403).json({message:'You are not authorized to remove members.'})
@@ -222,23 +259,27 @@ const removeMember = async (req, res) => {
 
     } catch (err) {
         res.status(500).json({
-            message: err.message || 'Internal Server Error'
+            message:err instanceof Error? err.message : 'Unknown error'
+
         })
     }
 }
 
-const deleteProjects = async(req,res)=>{
+const deleteProjects = async(req:Request<{id:string}>,res:Response)=>{
     try{
         const project = await Project.findById(req.params.id)
         if(!project){
             return res.status(404).json({message:'Project not found to delete'})
+        }
+        if(!req.user){
+            return res.status(404).json({success:false,message:'User not found'})
         }
         if(!project.leader.equals(req.user.id)){
             return res.status(403).json({success:false,message:'Unauthaorized activity'})
         }
         const deleteProject = await Project.findByIdAndDelete(req.params.id)
     if(deleteProject){
-        await Request.deleteMany({project:req.params.id})
+        await joinRequest.deleteMany({project:req.params.id})
         return res.status(200).json({
             success:true,
             statuscode:200,
@@ -251,10 +292,10 @@ const deleteProjects = async(req,res)=>{
     }
     catch(err){
         res.status(500).json({
-            message:err.message || 'internal server error'
+            message:err instanceof Error? err.message : 'Unknown error'
         })
     }
 }
 
 
-module.exports= {createProject,getAllProjects, getProjectbyID, updateProjects, deleteProjects,getMyProjects, getJoinedProjects, removeMember}
+export= {createProject,getAllProjects, getProjectbyID, updateProjects, deleteProjects,getMyProjects, getJoinedProjects, removeMember}
