@@ -1,9 +1,13 @@
-const Request = require('../models/joinRequest')
-const Project = require('../models/Project')
-const Notification = require('../models/notification')
+import joinRequest = require('../models/joinRequest')
+import Project = require('../models/Project')
+import Notification = require('../models/notification')
+import type {Request , Response} from 'express'
 
-const sendRequest = async(req,res)=>{
+const sendRequest = async(req: Request,res:Response)=>{
     try{
+        if(!req.user){
+            return res.status(404).json({success:false,message:'User not found'})
+        }
         const requesteeId = req.user.id
         const {projectId} = req.body
 
@@ -16,14 +20,14 @@ const sendRequest = async(req,res)=>{
             })
         }
         const receiverId = project.leader
-        const isRequest = await Request.findOne({project:projectId,requestee:requesteeId,status:'pending'})
+        const isRequest = await joinRequest.findOne({project:projectId,requestee:requesteeId,status:'pending'})
         if(isRequest){
             return res.status(400).json({
                 message:'already applied'
             })
         }
         
-            const newRequest = new Request({
+            const newRequest = new joinRequest({
                 project:projectId,
                 requestee:requesteeId,
                 receiver:receiverId,
@@ -32,7 +36,7 @@ const sendRequest = async(req,res)=>{
         const savedRequest = await newRequest.save()
         const newNotification = new Notification({
             user: receiverId,
-            message:'New join Request Received',
+            message:'New join joinRequest Received',
         })
         const savedNotification = await newNotification.save()
 
@@ -54,14 +58,14 @@ const sendRequest = async(req,res)=>{
     }
     catch(err){
         res.status(500).json({
-            message:err.message||'Internal server error'
+            message:err instanceof Error? err.message : 'Unknown error'
         })
     }
 }
 
-const approveRequest = async(req,res)=>{//this takes request id not the leader id
+const approveRequest = async(req:Request,res:Response)=>{//this takes request id not the leader id
     try{
-        const request = await Request.findById(req.params.id)
+        const request = await joinRequest.findById(req.params.id)
         if(!request){
             return res.status(404).json({
                 success:false,
@@ -72,13 +76,17 @@ const approveRequest = async(req,res)=>{//this takes request id not the leader i
         if(request.status !== 'pending'){
             return res.status(400).json({message:'Request already processed'})
         }
+
+        if(!req.user){
+            return res.status(404).json({success:false,message:'User not found'})
+        }
           if((request.receiver.toString()) !== req.user.id ){
                 return res.status(403).json({
                 success:false,
                 message:'Not project leader'
             })
           }
-          const updatedRequest = await Request.findByIdAndUpdate(req.params.id,{
+          const updatedRequest = await joinRequest.findByIdAndUpdate(req.params.id,{
             $set:{status:'approved'}
         },{new:true,runValidators:true})
 
@@ -105,14 +113,15 @@ const approveRequest = async(req,res)=>{//this takes request id not the leader i
     }
     catch(err){
         res.status(500).json({
-            message:err.message||'Internal server error'
+                     message:err instanceof Error? err.message : 'Unknown error'
+
         })
     }
 }
 
-const rejectRequest = async(req,res)=>{
+const rejectRequest = async(req:Request,res:Response)=>{
     try{
-        const request = await Request.findById(req.params.id)
+        const request = await joinRequest.findById(req.params.id)
 
         if(!request){
             return res.status(404).json({
@@ -123,11 +132,14 @@ const rejectRequest = async(req,res)=>{
         if(request.status !== 'pending'){
             return res.status(400).json({message:'Request already processed'})
         }
+        if(!req.user){
+            return res.status(404).json({success:false,message:'User not found'})
+        }
         if(request.receiver.toString() !== req.user.id){
             return res.status(403).json({message:'not project leader, forbidden !'})
         }
         
-        const updatedRequest = await Request.findByIdAndUpdate(req.params.id,{
+        const updatedRequest = await joinRequest.findByIdAndUpdate(req.params.id,{
             $set:{status:'rejected'}
         },{new:true,runValidators:true})
 
@@ -147,14 +159,15 @@ const rejectRequest = async(req,res)=>{
     }
     catch(err){
         res.status(500).json({
-            message:err.message || 'internal server error'
+            message:err instanceof Error? err.message : 'Unknown error'
+
         })
     }
 }
 
-const getAllRequest = async(req,res)=>{
+const getAllRequest = async(req:Request<{projectId:string}>,res:Response)=>{
     try{
-        const allRequest = await Request.find({project:req.params.projectId}).populate('requestee','username email')
+        const allRequest = await joinRequest.find({project:req.params.projectId}).populate('requestee','username email')
             res.status(200).json({
             success:true,
             statusCode:200,
@@ -165,7 +178,7 @@ const getAllRequest = async(req,res)=>{
     }
     catch(err){
         res.status(500).json({
-            message:err.message || 'internal server error'
+           message:err instanceof Error? err.message : 'Unknown error'
         })
 
     }
