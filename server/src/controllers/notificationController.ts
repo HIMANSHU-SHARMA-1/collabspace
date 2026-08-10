@@ -1,8 +1,12 @@
-const Notification = require('../models/notification')
+import Notification = require('../models/notification')
+import type {Request, Response} from 'express'
 
 
-const getNotifications = async(req,res)=>{
+const getNotifications = async(req: Request, res: Response)=>{
     try{
+        if(!req.user){
+            return res.status(404).json({success:false, message:'User not found'})
+        }
         const notifications = await Notification.find({user:req.user.id}).sort({createdAt:-1})
         res.status(200).json({
             success:true,
@@ -12,13 +16,13 @@ const getNotifications = async(req,res)=>{
     }
     catch(err){
         res.status(500).json({
-            message:err.message || 'internal Server error'
+            message:err instanceof Error? err.message : 'Unknown error'
         })
 
     }
 }
 
-const markAsRead = async(req,res)=>{
+const markAsRead = async(req:Request<{id:string}>,res:Response)=>{
     try{
         const notification = await Notification.findByIdAndUpdate(req.params.id,{
             $set:{isRead:true}
@@ -36,9 +40,10 @@ const markAsRead = async(req,res)=>{
     }
     catch(err){
         res.status(500).json({
-            message:err.message || 'Internal server error'
+            message:err instanceof Error? err.message : 'Unknown error'
+        
         })
     }
 }
 
-module.exports = {getNotifications, markAsRead};
+export = {getNotifications, markAsRead};
