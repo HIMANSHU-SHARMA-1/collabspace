@@ -183,4 +183,4 @@ const getAllRequest = async(req:Request<{projectId:string}>,res:Response)=>{
 
     }
 }
-module.exports= {sendRequest, approveRequest, rejectRequest, getAllRequest};
+export= {sendRequest, approveRequest, rejectRequest, getAllRequest};
