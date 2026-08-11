@@ -1,15 +1,5 @@
 import mongoose = require('mongoose')
-
-interface IProject extends mongoose.Document{
-    projectname:string,
-    requiredSkill:string[],
-    teamsize:number,
-    githubLink:string,
-    description:string,
-    leader:mongoose.Types.ObjectId,
-    members:mongoose.Types.ObjectId[],
-    status:'open'|'in-progress'|'done'
-}
+import type {IProject} from '../types/model'
 
 const projectSchema = new mongoose.Schema<IProject>({
     projectname:{type:String,required:true},

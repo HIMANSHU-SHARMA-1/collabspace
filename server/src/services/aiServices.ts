@@ -1,5 +1,6 @@
-//const openAi = require('openai');
-const {callAi} = require('./openRouterService')
+import openRouterService = require('./openRouterService')
+const {callAi} = openRouterService
+import type {ISkill,IProject} from '../types/model'
 
 
 const testAIConnection = async()=>{
@@ -9,7 +10,7 @@ const testAIConnection = async()=>{
 
 };
 
-const getProjectRecommendations = async(userskills, projects)=>{
+const getProjectRecommendations = async(userskills:ISkill[], projects:IProject[])=>{
 
     const skillText = userskills.map(
         skill => `${skill.name} (${skill.rating}/5)`).join(',');
@@ -53,6 +54,9 @@ const getProjectRecommendations = async(userskills, projects)=>{
     ]
     `;   
     const response = await callAi(prompt);
+        if(!response){
+            throw new Error('Response is empty')
+        }
 
     const cleanedResponse = response
         .replace(/```json/g, '')
@@ -68,4 +72,4 @@ catch(err){
 }
     }
 
-module.exports = {testAIConnection, getProjectRecommendations}
+export = {testAIConnection, getProjectRecommendations}

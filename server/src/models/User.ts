@@ -1,9 +1,5 @@
 import mongoose = require('mongoose')
-
-interface ISkill{
-    name:string,
-    rating:number
-}
+import type {ISkill} from '../types/model'
 
 interface IUser extends mongoose.Document{
     username:string,
