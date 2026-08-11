@@ -1,16 +1,18 @@
 require('./instrument')
-const cors = require('cors')
-const http = require('http')
-const {Server} = require('socket.io')
-const express = require('express')
+import cors = require('cors')
+import http = require('http')
+import socketio = require('socket.io')
+const {Server} = socketio
+import express = require('express')
+import type {Request,Response} from 'express'
 require('dotenv').config()
-const connectDB =  require('./config/db')
-const authRoutes = require('./routes/authRoutes')
-const projectRoutes = require('./routes/projectRoutes')
-const joinRequestRoutes = require('./routes/joinRequestRoutes')
-const messageRoutes = require('./routes/messageRoutes')
-const notificationRoutes = require('./routes/notificationRoutes')
-const aiRoutes = require('./routes/aiRoutes')
+import connectDB =  require('./config/db')
+import authRoutes = require('./routes/authRoutes')
+import projectRoutes = require('./routes/projectRoutes')
+import joinRequestRoutes = require('./routes/joinRequestRoutes')
+import messageRoutes = require('./routes/messageRoutes')
+import notificationRoutes = require('./routes/notificationRoutes')
+import aiRoutes = require('./routes/aiRoutes')
 const app = express()
 
 app.use(cors({
@@ -32,7 +34,7 @@ initSocket(io)
 
 app.use(express.json())
 
-app.get('/', (req,res)=>{
+app.get('/', (req:Request,res:Response)=>{
     res.send('Collabspace Server is Running')
 })
 
@@ -43,7 +45,7 @@ app.use('/api/message',messageRoutes)
 app.use('/api/notifications', notificationRoutes)
 app.use('/api/openAi',aiRoutes)
 
-const Sentry = require('@sentry/node')
+import Sentry = require('@sentry/node')
 Sentry.setupExpressErrorHandler(app)
 
 //for test to trigger

@@ -1,24 +1,31 @@
-const Message = require('../models/Message')
+import type {Server, Socket} from 'socket.io'
+import Message = require('../models/Message')
 
-module.exports = (io) =>{
+interface sendMessagePayload{
+    projectId:string,
+    senderId:string,
+    content:string
+}
 
-    io.on('connection', (socket)=>{
+const initSocket = (io:Server) =>{
+
+    io.on('connection', (socket:Socket)=>{
         //user connected log
         console.log('A user connected', socket.id)
     
         //listen for joinRoom Event
         
-        socket.on('joinRoom', (projectId)=>{
+        socket.on('joinRoom', (projectId:string)=>{
             //join room with projectId
             socket.join(projectId)
             console.log(`User joined the room ${projectId}`)
         })
         //Listen for event per user to send message
-        socket.on('registerUser',(UserId)=>{
+        socket.on('registerUser',(UserId:string)=>{
             socket.join(UserId)
         })
     //listen for sendMessage Event
-    socket.on('sendMessage', async (data)=>{
+    socket.on('sendMessage', async (data:sendMessagePayload)=>{
         const {projectId, senderId, content} = data
         const message = new Message({
             sender: senderId,
@@ -37,5 +44,7 @@ module.exports = (io) =>{
     
     })
 }
+
+export = initSocket
 
 
