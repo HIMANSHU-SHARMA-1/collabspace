@@ -1,5 +1,6 @@
 import jwt = require('jsonwebtoken')
 import type { Request, Response, NextFunction } from 'express'
+import type express = require('../types/express')
 
 const auth = async(req:Request,res:Response,next:NextFunction)=>{
     try{
@@ -15,7 +16,11 @@ const auth = async(req:Request,res:Response,next:NextFunction)=>{
             throw new Error('JWT_SECRET is not defined')
         }
         const decode = jwt.verify(token, process.env.JWT_SECRET)
-        req.user= decode
+
+        if(typeof decode === 'string' || typeof decode.id !== 'string'){
+            return res.status(400).json({message:'Invalid token format'})
+        }
+        req.user= decode as express.AuthTokenPayload
         next()
     }
     catch(err:unknown){
