@@ -21,12 +21,7 @@ const [user, setUser] = useState(() => {
     setUser(null)
   }
 
-  const logout = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('user')
-    setToken(null)
-    setUser(null)
-  }
+
 
   return (
     <AuthContext.Provider value={{user, setUser, token, setToken, logout}}>
