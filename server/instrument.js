@@ -1,0 +1,9 @@
+require('dotenv').config()
+const Sentry = require('@sentry/node')
+
+Sentry.init({
+    dsn: process.env.SENTRY_DSN
+})
+// console.log("my DSN:"+process.env.SENTRY_DSN)
+
+module.exports = Sentry

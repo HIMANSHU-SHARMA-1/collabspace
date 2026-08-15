@@ -1,3 +1,4 @@
+require('./instrument')
 const cors = require('cors')
 const http = require('http')
 const {Server} = require('socket.io')
@@ -41,6 +42,9 @@ app.use('/api/joinRequest',joinRequestRoutes)
 app.use('/api/message',messageRoutes)
 app.use('/api/notifications', notificationRoutes)
 app.use('/api/openAi',aiRoutes)
+
+const Sentry = require('@sentry/node')
+Sentry.setupExpressErrorHandler(app)
 
 //for test to trigger
 if(require.main === module){

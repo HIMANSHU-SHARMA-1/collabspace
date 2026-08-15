@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../../api/axios";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate, useParams } from "react-router-dom";
-import Nav from "../../components/Navbar/Nav";
 
 const ProjectDetails = () => {
   const navigate = useNavigate();
@@ -111,25 +110,25 @@ const ProjectDetails = () => {
   const isLeader = project.leader?._id === user.id;
 
   return (
-    <Nav>
+    <>
       <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-        <div style={{ marginBottom: "32px", display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+        <div className="responsive-header" style={{ marginBottom: "32px" }}>
           <div>
             <h1 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "2rem", fontWeight: 700 }}>
               {isEditing ? "Edit Project" : project.projectname}
             </h1>
-            <p style={{ color: "var(--text-secondary)", marginTop: "4px" }}>
+            <p style={{ color: "#888", marginTop: "4px" }}>
               {isEditing ? "Update your project configurations" : `Project ID: ${projectId}`}
             </p>
           </div>
           {!isEditing && isLeader && (
-            <div style={{ display: "flex", gap: "10px" }}>
-              <button onClick={startEditing} className="ceramic-btn">
-                <span className="material-symbols-outlined">edit</span>
+            <div className="responsive-btn-group">
+              <button onClick={startEditing} className="terminal-btn">
+                <span className="material-symbols-outlined" style={{ fontSize: "16px", marginRight: "4px" }}>edit</span>
                 Edit Specs
               </button>
-              <button onClick={deleteProject} className="ceramic-btn" style={{ color: "var(--danger)", borderColor: "var(--danger)" }}>
-                <span className="material-symbols-outlined">delete</span>
+              <button onClick={deleteProject} className="terminal-btn" style={{ color: "#ff5f56", borderColor: "#ff5f56" }}>
+                <span className="material-symbols-outlined" style={{ fontSize: "16px", marginRight: "4px" }}>delete</span>
                 Delete
               </button>
             </div>
@@ -137,18 +136,19 @@ const ProjectDetails = () => {
         </div>
 
         {loading ? (
-          <div style={{ display: "flex", justifyContent: "center", padding: "80px 0" }}>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "16px", padding: "80px 0" }}>
             <span className="indicator-light"></span>
+            <div style={{ color: "#bd93f9", fontWeight: 700, fontFamily: "'Fira Code', monospace" }}>Fetching data...</div>
           </div>
         ) : error ? (
-          <div className="ceramic-card" style={{ textAlign: "center", color: "var(--danger)" }}>
+          <div className="ide-card" style={{ textAlign: "center", color: "#f87171" }}>
             <p>{error}</p>
           </div>
         ) : isEditing ? (
-          <div className="ceramic-card" style={{ padding: "40px" }}>
+          <div className="terminal-card" style={{ padding: "40px" }}>
             <form onSubmit={editDetails} style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-              <div className="ceramic-input-group">
-                <label htmlFor="projectname">Project Name</label>
+              <div className="terminal-input-group">
+                <label htmlFor="projectname" className="terminal-label">"project_name":</label>
                 <input
                   id="projectname"
                   type="text"
@@ -156,48 +156,48 @@ const ProjectDetails = () => {
                   value={formData.projectname}
                   onChange={addData}
                   required
-                  className="ceramic-input"
+                  className="terminal-input"
                 />
               </div>
 
-              <div className="ceramic-input-group">
-                <label htmlFor="description">Description</label>
+              <div className="terminal-input-group">
+                <label htmlFor="description" className="terminal-label">"description":</label>
                 <textarea
                   id="description"
                   name="description"
                   value={formData.description}
                   onChange={addData}
                   required
-                  className="ceramic-input"
+                  className="terminal-input"
                   style={{ minHeight: "100px", resize: "vertical" }}
                 />
               </div>
 
-              <div className="ceramic-card" style={{ boxShadow: "var(--shadow-inset)", padding: "20px" }}>
-                <div className="ceramic-input-group" style={{ marginBottom: "12px" }}>
-                  <label htmlFor="skillName">Required Skill / Tech Stack</label>
-                  <div style={{ display: "flex", gap: "12px" }}>
+              <div className="terminal-card" style={{ padding: "20px", border: "1px solid #2a2a35", background: "#0B0B0F" }}>
+                <div className="terminal-input-group" style={{ marginBottom: "12px" }}>
+                  <label htmlFor="skillName" className="terminal-label">"required_skills":</label>
+                  <div className="responsive-input-row">
                     <input
                       id="skillName"
                       type="text"
                       value={skillName}
                       onChange={(e) => setSkillName(e.target.value)}
                       placeholder="e.g. React"
-                      className="ceramic-input"
+                      className="terminal-input"
                       style={{ flexGrow: 1 }}
                     />
-                    <button type="button" onClick={handleAddSkill} className="ceramic-btn">
-                      Add
+                    <button type="button" onClick={handleAddSkill} className="terminal-btn" style={{ color: "#34d399", borderColor: "#34d399" }}>
+                      + Add
                     </button>
                   </div>
                 </div>
 
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
                   {formData.requiredSkill.map((skill, index) => (
-                    <span key={index} className="skill-tag">
+                    <span key={index} className="terminal-skill-tag">
                       {skill}
-                      <button type="button" onClick={() => handleRemoveSkill(index)} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--danger)" }}>
-                        <span className="material-symbols-outlined" style={{ fontSize: "16px" }}>close</span>
+                      <button type="button" onClick={() => handleRemoveSkill(index)} style={{ background: "none", border: "none", cursor: "pointer", color: "#ff5f56", marginLeft: "6px", display: "flex" }}>
+                        <span className="material-symbols-outlined" style={{ fontSize: "14px" }}>close</span>
                       </button>
                     </span>
                   ))}
@@ -205,8 +205,8 @@ const ProjectDetails = () => {
               </div>
 
               <div className="responsive-grid-2-col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
-                <div className="ceramic-input-group">
-                  <label htmlFor="teamsize">Target Team Size</label>
+                <div className="terminal-input-group">
+                  <label htmlFor="teamsize" className="terminal-label">"target_team_size":</label>
                   <input
                     id="teamsize"
                     type="number"
@@ -214,13 +214,13 @@ const ProjectDetails = () => {
                     value={formData.teamsize}
                     onChange={addData}
                     required
-                    className="ceramic-input"
+                    className="terminal-input"
                   />
                 </div>
 
-                <div className="ceramic-input-group">
-                  <label htmlFor="status">Project Status</label>
-                  <select id="status" name="status" value={formData.status} onChange={addData} className="ceramic-input" style={{ appearance: "none" }}>
+                <div className="terminal-input-group">
+                  <label htmlFor="status" className="terminal-label">"project_status":</label>
+                  <select id="status" name="status" value={formData.status} onChange={addData} className="terminal-input" style={{ appearance: "none" }}>
                     <option value="open">Open</option>
                     <option value="in-progress">In Progress</option>
                     <option value="done">Done</option>
@@ -228,23 +228,23 @@ const ProjectDetails = () => {
                 </div>
               </div>
 
-              <div className="ceramic-input-group">
-                <label htmlFor="githubLink">Github Repository Link</label>
+              <div className="terminal-input-group">
+                <label htmlFor="githubLink" className="terminal-label">"github_link":</label>
                 <input
                   id="githubLink"
                   type="text"
                   name="githubLink"
                   value={formData.githubLink}
                   onChange={addData}
-                  className="ceramic-input"
+                  className="terminal-input"
                 />
               </div>
 
               <div style={{ display: "flex", justify: "flex-end", gap: "16px", marginTop: "12px" }}>
-                <button type="button" onClick={() => setIsEditing(false)} className="ceramic-btn">
+                <button type="button" onClick={() => setIsEditing(false)} className="terminal-btn" style={{ color: "#888", borderColor: "#333" }}>
                   Cancel
                 </button>
-                <button type="submit" className="ceramic-btn primary">
+                <button type="submit" className="terminal-btn" style={{ color: "#34d399", borderColor: "#34d399" }}>
                   Save Changes
                 </button>
               </div>
@@ -252,30 +252,30 @@ const ProjectDetails = () => {
           </div>
         ) : (
           <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
-            <div className="ceramic-card" style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+            <div className="terminal-card" style={{ display: "flex", flexDirection: "column", gap: "24px", padding: "24px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <span className="skill-tag" style={{ background: "var(--accent-glow)", color: "var(--accent-primary)", fontWeight: 700 }}>
-                  STATUS: {project.status?.toUpperCase()}
+                <span className="terminal-skill-tag" style={{ color: "#34d399", fontWeight: 700 }}>
+                  &gt; STATUS: {project.status?.toUpperCase()}
                 </span>
                 {project.githubLink && (
-                  <a href={project.githubLink} target="_blank" rel="noopener noreferrer" className="ceramic-btn" style={{ textDecoration: "none" }}>
-                    <span className="material-symbols-outlined">code</span>
+                  <a href={project.githubLink} target="_blank" rel="noopener noreferrer" className="terminal-btn" style={{ textDecoration: "none" }}>
+                    <span className="material-symbols-outlined" style={{ fontSize: "16px", marginRight: "4px" }}>code</span>
                     GitHub Repo
                   </a>
                 )}
               </div>
 
               <div>
-                <h3 style={{ fontSize: "1.1rem", fontWeight: 600, color: "var(--text-secondary)", marginBottom: "8px" }}>
+                <h3 style={{ fontSize: "1.1rem", fontWeight: 600, color: "#888", marginBottom: "8px" }}>
                   Project Description
                 </h3>
-                <p style={{ fontSize: "1rem", lineHeight: 1.6, color: "var(--text-primary)" }}>
+                <p style={{ fontSize: "1rem", lineHeight: 1.6, color: "#fff" }}>
                   {project.description}
                 </p>
               </div>
 
               <div>
-                <h3 style={{ fontSize: "1.1rem", fontWeight: 600, color: "var(--text-secondary)", marginBottom: "12px" }}>
+                <h3 style={{ fontSize: "1.1rem", fontWeight: 600, color: "#888", marginBottom: "12px" }}>
                   Required Stack
                 </h3>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
@@ -290,8 +290,8 @@ const ProjectDetails = () => {
 
             <div className="responsive-grid-2-col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "32px" }}>
               {/* Leader info */}
-              <div className="ceramic-card" style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-                <h3 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1.15rem", fontWeight: 700, borderBottom: "1px solid var(--border-color)", paddingBottom: "12px" }}>
+              <div className="ide-card" style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                <h3 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1.15rem", fontWeight: 700, borderBottom: "1px solid #1a1a24", paddingBottom: "12px" }}>
                   Project Leader
                 </h3>
                 <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
@@ -300,19 +300,19 @@ const ProjectDetails = () => {
                   </div>
                   <div>
                     <h4 style={{ fontWeight: 600 }}>{project.leader?.username}</h4>
-                    <p style={{ fontSize: "0.8rem", color: "var(--text-secondary)" }}>{project.leader?.email}</p>
+                    <p style={{ fontSize: "0.8rem", color: "#888" }}>{project.leader?.email}</p>
                   </div>
                 </div>
               </div>
 
               {/* Members management */}
-              <div className="ceramic-card" style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-                <h3 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1.15rem", fontWeight: 700, borderBottom: "1px solid var(--border-color)", paddingBottom: "12px" }}>
+              <div className="ide-card" style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                <h3 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1.15rem", fontWeight: 700, borderBottom: "1px solid #1a1a24", paddingBottom: "12px" }}>
                   Team Members ({project.members?.length} / {project.teamsize})
                 </h3>
                 <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
                   {project.members?.length === 0 ? (
-                    <p style={{ fontSize: "0.9rem", color: "var(--text-secondary)", fontStyle: "italic" }}>
+                    <p style={{ fontSize: "0.9rem", color: "#888", fontStyle: "italic" }}>
                       No members have joined yet.
                     </p>
                   ) : (
@@ -320,7 +320,7 @@ const ProjectDetails = () => {
                       <div key={m._id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 12px", background: "var(--tag-bg)", borderRadius: "12px" }}>
                         <span style={{ fontSize: "0.9rem", fontWeight: 600 }}>{m.username}</span>
                         {isLeader && (
-                          <button onClick={() => removeMember(m._id)} className="ceramic-btn" style={{ padding: "4px 8px", borderRadius: "8px", fontSize: "0.75rem", color: "var(--danger)", borderColor: "var(--danger)" }}>
+                          <button onClick={() => removeMember(m._id)} className="ide-btn" style={{ padding: "4px 8px", borderRadius: "8px", fontSize: "0.75rem", color: "#f87171", borderColor: "#f87171" }}>
                             Remove
                           </button>
                         )}
@@ -333,7 +333,7 @@ const ProjectDetails = () => {
           </div>
         )}
       </div>
-    </Nav>
+    </>
   );
 };
 

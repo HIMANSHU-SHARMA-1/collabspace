@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../../api/axios";
-import Nav from "../../components/Navbar/Nav";
 import Chat from "../chat/Chat";
 import { Rnd } from "react-rnd";
+import WorkspaceCanvas from "../../components/Workspace/WorkspaceCanvas";
 
 const MyProject = () => {
   const [openChat, setopenChat] = useState(null);
+  const [isWorkspaceOpen, setIsWorkspaceOpen] = useState(null);
   const [projects, setProjects] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -60,91 +61,88 @@ const MyProject = () => {
   }, []);
 
   return (
-    <Nav>
+    <>
       <div>
         <div style={{ marginBottom: "32px" }}>
           <h1 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "2rem", fontWeight: 700 }}>
             My Projects
           </h1>
-          <p style={{ color: "var(--text-secondary)", marginTop: "4px" }}>
+          <p style={{ color: "#888", marginTop: "4px" }}>
             Manage projects you created and review applications
           </p>
         </div>
 
         {loading ? (
-          <div style={{ display: "flex", justifyContent: "center", padding: "80px 0" }}>
-            <span className="indicator-light" style={{ width: "20px", height: "20px" }}></span>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "16px", padding: "80px 0" }}>
+            <span className="indicator-light" style={{ width: "20px", height: "20px", background: "#bd93f9", boxShadow: "0 0 10px #bd93f9" }}></span>
+            <div style={{ color: "#bd93f9", fontWeight: 700, fontFamily: "'Fira Code', monospace" }}>Fetching data...</div>
           </div>
         ) : error ? (
-          <div className="ceramic-card" style={{ textAlign: "center", color: "var(--danger)" }}>
+          <div className="ide-card" style={{ textAlign: "center", color: "#f87171" }}>
             <p>{error}</p>
           </div>
         ) : projects.length === 0 ? (
-          <div className="ceramic-card" style={{ textAlign: "center", padding: "60px 0" }}>
-            <span className="material-symbols-outlined" style={{ fontSize: "48px", color: "var(--text-secondary)" }}>
+          <div className="ide-card" style={{ textAlign: "center", padding: "60px 0" }}>
+            <span className="material-symbols-outlined" style={{ fontSize: "48px", color: "#888" }}>
               folder_open
             </span>
-            <p style={{ marginTop: "16px", color: "var(--text-secondary)" }}>You have not created any projects yet.</p>
+            <p style={{ marginTop: "16px", color: "#888" }}>You have not created any projects yet.</p>
           </div>
         ) : (
-          <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+          <div className="ide-grid">
             {projects.map((project, index) => (
-              <div key={index} className="ceramic-card" style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "16px" }}>
-                  <div>
-                    <h3 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1.3rem", fontWeight: 700 }}>
-                      {project.projectname}
-                    </h3>
-                    <p style={{ color: "var(--text-secondary)", fontSize: "0.85rem", marginTop: "2px" }}>
-                      Created by you • Status: <span style={{ fontWeight: 600, color: "var(--accent-primary)" }}>{project.status.toUpperCase()}</span>
-                    </p>
+              <div key={index} className="terminal-card">
+                <div className="terminal-header">
+                  <div className="mac-dot red"></div>
+                  <div className="mac-dot yellow"></div>
+                  <div className="mac-dot green"></div>
+                </div>
+
+                <div className="terminal-title-row">
+                  <div className="terminal-title">{project.projectname}</div>
+                  <div className="terminal-meta">{project.status === 'open' ? 'Active' : project.status}</div>
+                </div>
+
+                <div className="terminal-skills">
+                  {project.requiredSkill.map((skill, i) => (
+                    <span key={i} className="terminal-skill-tag">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Progress/Storage mock indicator */}
+                <div style={{ marginTop: '8px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#888', marginBottom: '6px' }}>
+                    <span>Team Fill Rate</span>
+                    <span>{project.members.length} / {project.teamsize}</span>
                   </div>
-                  <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-                    <button onClick={() => setopenChat(project._id)} className="ceramic-btn">
-                      <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>forum</span>
-                      Chat Room
+                  <div style={{ width: '100%', height: '4px', backgroundColor: '#2a2a35', borderRadius: '2px', overflow: 'hidden' }}>
+                    <div style={{ width: `${(project.members.length / project.teamsize) * 100}%`, height: '100%', backgroundColor: 'var(--accent-primary)' }}></div>
+                  </div>
+                </div>
+
+                <div className="terminal-footer">
+                  <div className="terminal-members" style={{ display: "flex", gap: "8px" }}>
+                    <button onClick={() => setopenChat(project._id)} className="terminal-btn" style={{ borderColor: '#888', color: '#888', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      <span className="material-symbols-outlined" style={{ fontSize: "14px" }}>forum</span>
+                      Chat
                     </button>
-                    <button onClick={() => fetchRequests(project._id)} className="ceramic-btn primary">
-                      <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>group_work</span>
+                    <button onClick={() => setIsWorkspaceOpen(project)} className="terminal-btn" style={{ borderColor: "#38bdf8", color: "#38bdf8", display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      <span className="material-symbols-outlined" style={{ fontSize: "14px" }}>account_tree</span>
+                      Workspace
+                    </button>
+                  </div>
+                  <div style={{ display: "flex", gap: "8px" }}>
+                    <button onClick={() => fetchRequests(project._id)} className="terminal-btn">
                       Applications
                     </button>
                   </div>
                 </div>
 
-                <p style={{ color: "var(--text-primary)", fontSize: "0.92rem", lineHeight: 1.6 }}>
-                  {project.description}
-                </p>
-
-                {/* Team metrics row */}
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "24px",
-                    background: "var(--tag-bg)",
-                    padding: "16px 24px",
-                    borderRadius: "16px",
-                  }}
-                >
-                  <div style={{ flexGrow: 1 }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.85rem", fontWeight: 600, marginBottom: "8px" }}>
-                      <span>Team Fill Rate</span>
-                      <span>
-                        {project.members.length} / {project.teamsize} Joined
-                      </span>
-                    </div>
-                    <div className="ceramic-progress-track">
-                      <div
-                        className="ceramic-progress-bar"
-                        style={{ width: `${(project.members.length / project.teamsize) * 100}%` }}
-                      ></div>
-                    </div>
-                  </div>
-                </div>
-
                 {/* Applications list */}
                 {requests[project._id] && (
-                  <div className="ceramic-card" style={{ boxShadow: "var(--shadow-inset)", padding: "20px", marginTop: "12px" }}>
+                  <div className="ide-card" style={{ boxShadow: "var(--shadow-inset)", padding: "20px", marginTop: "12px" }}>
                     <h4 style={{ fontFamily: "Space Grotesk, sans-serif", fontSize: "1rem", fontWeight: 700, marginBottom: "16px" }}>
                       Incoming Join Requests
                     </h4>
@@ -156,39 +154,43 @@ const MyProject = () => {
                             display: "flex",
                             justifyContent: "space-between",
                             alignItems: "center",
-                            padding: "12px 18px",
-                            borderRadius: "12px",
-                            background: "var(--panel-bg)",
-                            border: "1px solid var(--border-color)",
+                            flexWrap: "wrap",
+                            gap: "12px",
+                            padding: "12px 16px",
+                            borderRadius: "4px",
+                            background: "#111116",
+                            border: "1px solid #2a2a35",
                             opacity: req.status === "pending" ? 1 : 0.6,
                           }}
                         >
-                          <div>
-                            <span style={{ fontWeight: 600 }}>{req.requestee.username}</span>
-                            <span style={{ fontSize: "0.8rem", color: "var(--text-secondary)", marginLeft: "12px" }}>
+                          <div style={{ display: "flex", flexDirection: "column", minWidth: 0, flex: "1 1 200px" }}>
+                            <span style={{ fontWeight: 700, fontSize: "0.95rem", color: "#38bdf8", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                              &gt; {req.requestee.username}
+                            </span>
+                            <span style={{ fontSize: "0.8rem", color: "#888", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                               {req.requestee.email}
                             </span>
                           </div>
 
                           {req.status === "pending" ? (
-                            <div style={{ display: "flex", gap: "8px" }}>
+                            <div style={{ display: "flex", gap: "8px", flexShrink: 0 }}>
                               <button
                                 onClick={() => handleApprove(req._id, project._id)}
-                                className="ceramic-btn"
-                                style={{ padding: "6px 12px", borderRadius: "12px", fontSize: "0.8rem", color: "var(--accent-secondary)" }}
+                                className="terminal-btn"
+                                style={{ color: "#34d399", borderColor: "#34d399" }}
                               >
                                 Approve
                               </button>
                               <button
                                 onClick={() => handleReject(req._id, project._id)}
-                                className="ceramic-btn"
-                                style={{ padding: "6px 12px", borderRadius: "12px", fontSize: "0.8rem", color: "var(--danger)" }}
+                                className="terminal-btn"
+                                style={{ color: "#ff5f56", borderColor: "#ff5f56" }}
                               >
                                 Reject
                               </button>
                             </div>
                           ) : (
-                            <span style={{ fontSize: "0.85rem", fontWeight: 600, color: "var(--text-secondary)" }}>
+                            <span style={{ fontSize: "0.85rem", fontWeight: 600, color: "#888" }}>
                               {req.status.toUpperCase()}
                             </span>
                           )}
@@ -202,54 +204,44 @@ const MyProject = () => {
           </div>
         )}
 
-        {/* Chat modal overlay */}
         {openChat && (
           <Rnd
             default={{
-              x: window.innerWidth > 900 ? window.innerWidth - 420 : 16,
-              y: window.innerHeight > 900 ? window.innerHeight - 520 : window.innerHeight - 520 - 90,
-              width: window.innerWidth > 900 ? 400 : window.innerWidth - 32,
-              height: 500,
+              x: (window.innerWidth - Math.min(400, window.innerWidth - 20)) / 2,
+              y: (window.innerHeight - Math.min(500, window.innerHeight - 20)) / 2,
+              width: Math.min(400, window.innerWidth - 20),
+              height: Math.min(500, window.innerHeight - 20)
             }}
-            minWidth={300}
-            minHeight={400}
+            minWidth={280}
+            minHeight={300}
+            bounds="body"
+            cancel=".cancel-drag"
             dragHandleClassName="chat-header-handle"
-            cancel="button"
-            resizeHandleStyles={{
-              bottomRight: { width: "40px", height: "40px", right: "0", bottom: "0" }
-            }}
-            resizeHandleComponent={{
-              bottomRight: (
-                <div style={{ position: "absolute", right: "4px", bottom: "4px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: "20px", color: "var(--text-secondary)", transform: "rotate(45deg)" }}>
-                    unfold_more
-                  </span>
-                </div>
-              )
-            }}
+            enableResizing={{ top: true, right: true, bottom: true, left: true, topRight: true, bottomRight: true, bottomLeft: true, topLeft: true }}
             style={{ zIndex: 2000, position: "fixed" }}
           >
-            <div className="ceramic-card chat-modal-card">
+            <div className="ide-card chat-modal-card" style={{ position: 'relative', display: 'flex', flexDirection: 'column', height: '100%', margin: 0, padding: 0, overflow: 'hidden' }}>
               <div
                 className="chat-header-handle"
                 style={{
                   padding: "16px 20px",
-                  borderBottom: "1px solid var(--border-color)",
+                  borderBottom: "1px solid #1a1a24",
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
                   background: "var(--tag-bg)",
+                  cursor: "grab"
                 }}
               >
                 <h4 style={{ fontWeight: 700, margin: 0 }}>Team Chat</h4>
                 <button
+                  className="cancel-drag"
                   onClick={(e) => {
                     e.stopPropagation();
                     setopenChat(null);
                   }}
-                  onMouseDown={(e) => e.stopPropagation()}
-                  onTouchStart={(e) => e.stopPropagation()}
-                  style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", zIndex: 10 }}
+                  onPointerDown={(e) => e.stopPropagation()}
+                  style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", color: "#888", zIndex: 10 }}
                 >
                   <span className="material-symbols-outlined">close</span>
                 </button>
@@ -257,11 +249,20 @@ const MyProject = () => {
               <div style={{ flexGrow: 1, overflowY: "auto", padding: "16px" }}>
                 <Chat projectId={openChat} members={projects.find((p) => p._id === openChat)?.members} />
               </div>
+              {/* Resize Handle Indicator */}
+              <div style={{ position: "absolute", bottom: "2px", right: "2px", pointerEvents: "none", color: "#888", zIndex: 100 }}>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 0L0 12H12V0Z" fill="currentColor" opacity="0.2"/>
+                  <path d="M12 4L4 12H12V4Z" fill="currentColor" opacity="0.4"/>
+                  <path d="M12 8L8 12H12V8Z" fill="currentColor" opacity="0.6"/>
+                </svg>
+              </div>
             </div>
           </Rnd>
         )}
+        {isWorkspaceOpen && <WorkspaceCanvas project={isWorkspaceOpen} onClose={() => setIsWorkspaceOpen(null)} />}
       </div>
-    </Nav>
+    </>
   );
 };
 
