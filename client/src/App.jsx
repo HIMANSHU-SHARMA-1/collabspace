@@ -13,7 +13,6 @@ import JoinedProjects from './pages/Projects/JoinedProjects'
 import ProjectDetails from './pages/Projects/ProjectDetails'
 import Profile from './pages/Profile/Profile'
 import { initTheme } from './utils/theme'
-import NetworkBackground from './components/NetworkBackground/NetworkBackground'
 import CustomCursor from './components/CustomCursor/CustomCursor'
 import IDEShell from './components/Layout/IDEShell'
 
@@ -25,7 +24,6 @@ const App = () => {
   return (
     <>
       <CustomCursor />
-      <NetworkBackground />
       <Routes>
         <Route path='/' element={<PublicRoute><Login/></PublicRoute>}/>
         <Route path='/register' element={<PublicRoute><Register/></PublicRoute>}/>
